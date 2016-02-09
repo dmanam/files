@@ -1,0 +1,13 @@
+#!/bin/sh
+
+xrdb -merge .Xresources
+numlockx &
+compton -Cb &
+~/.fehbg &
+urxvtd -o -f &
+unclutter &
+parcellite &
+qjackctl &
+#synergys --config /etc/synergy.conf --address 192.168.122.1
+
+exec bash --login -c 'TMUX="" SHELL="/bin/bash" ssh-agent dbus-launch --sh-syntax --exit-with-session xmonad'

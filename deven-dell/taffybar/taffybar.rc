@@ -1,0 +1,26 @@
+gtk_color_scheme = "black:#000000\nwhite:#d7d7d7\ngreen:#afd787\nred:#ff5f5f"
+
+style "default" {
+  bg[NORMAL]   = @black
+  fg[NORMAL]   = @white
+  text[NORMAL] = @white
+  fg[PRELIGHT] = @black
+  bg[PRELIGHT] = @white
+  font_name    = "SourceCodePro 10"
+  engine "murrine" {
+    rgba       = TRUE
+  }
+}
+
+style "active-window" = "default" {
+  fg[NORMAL] = @green
+}
+
+style "notification-button" = "default" {
+  text[NORMAL] = @red
+  fg[NORMAL]   = @red
+}
+
+widget "Taffybar*" style "default"
+widget "Taffybar*WindowSwitcher*label" style "active-window"
+widget "*NotificationCloseButton" style "notification-button"
