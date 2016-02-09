@@ -32,7 +32,7 @@ let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['fish', 'tex
 
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
-let g:notes_directories = ['~/Documents/Dropbox (MIT)/notes']
+let g:notes_directories = ['~/Documents/class/notes']
 
 Bundle 'tpope/vim-eunuch'
 
