@@ -51,4 +51,4 @@ function __prompt_command () {
 #[[ -z "$SSH_AGENT_PID" ]] && eval $(ssh-agent)
 
 FORTUNE_MOD="zippy paradoxum linux wisdom songs-poems science riddles politics platitudes pets people news medicine literature linuxcookie law goedel fortunes food education drugs definitions cookie computers ascii-art art tao taow chalkboard zx-error kernelcookies"
-/usr/bin/fortune $FORTUNE_MOD | ~/Documents/Dropbox\ \(MIT\)/scripts/animalsay.sh # | /usr/bin/lolcat
+/usr/bin/fortune $FORTUNE_MOD | ~/Documents/files/scripts/animalsay.sh # | /usr/bin/lolcat
