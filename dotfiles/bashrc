@@ -20,7 +20,7 @@ fi
 alias ls='ls --color=auto -N'
 
 export GOPATH=~/Documents/go
-export PATH="$HOME/Documents/Dropbox (MIT)/scripts:$GOPATH:$GOPATH/bin:$PATH"
+export PATH="$HOME/Documents/files/scripts:$GOPATH:$GOPATH/bin:$PATH"
 
 shopt -s histappend
 
