@@ -1,0 +1,8 @@
+black='\e[30;40m'
+red='\e[31;40m'
+green='\e[32;40m'
+yellow='\e[33;40m'
+blue='\e[34;40m'
+magenta='\e[35;40m'
+cyan='\e[36;40m'
+white='\e[37;40m'
