@@ -119,7 +119,6 @@ myStartupHook = do
   setDefaultCursor xC_left_ptr 
   io $ createDirectoryIfMissing True screenshotDir
   spawn "taffybar"
-  spawn "dropbox"
   spawn "sleep 5; pgrep wpa_gui || wpa_gui -t"
 
 main = do
