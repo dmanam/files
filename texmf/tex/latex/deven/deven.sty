@@ -1,0 +1,121 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{deven}[2016/03/13 Deven custom macros]
+
+\RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
+\RequirePackage[no-math]{fontspec}
+\RequirePackage{enumerate}
+\RequirePackage{scrlayer-scrpage}
+\RequirePackage{ifthen}
+\RequirePackage{xparse}
+\RequirePackage{clrscode4e}
+  \let\id\relax
+\RequirePackage[american]{babel}
+\RequirePackage{csquotes}
+
+\DeclareOption{koma}{
+  \setkomafont{disposition}{\normalfont\scshape}
+  \setkomafont{section}{\normalsize}
+  \ihead{\textrm{\large \@author, \@title\ifthenelse{\equal{\@sectname}{}}{}{, part \@sectname}}, page \thepage~of \pageref{\@sectname end}}
+  \cfoot{}\ifoot{}\ofoot{}
+  \newcommand{\sect}[1]{
+    \label{\@sectname end}
+    \cleardoublepage
+    \setcounter{page}{1}
+    \sectname{#1}
+  }
+  \renewcommand{\thesection}{\arabic{section}}
+  \newcommand{\sectheader}[2]{
+    \sect{\thesection}
+    \section{\textpipe\hspace{1ex}#1\hspace{1ex}\textpipe\hspace{1ex}#2}
+  }
+}
+
+\DeclareOption{6046}{
+  \let\reals\relax
+  \let\integers\relax
+  \let\naturals\relax
+  \let\rationals\relax
+  \let\complex\relax
+  \let\abs\relax
+  \let\card\relax
+  \let\floor\relax
+  \let\ceil\relax
+  \let\ang\relax
+  \let\sbrace\relax
+  \let\cbrace\relax
+  \let\paren\relax
+  \let\prob\relax
+  \let\expect\relax
+  \let\expectsq\relax
+  \let\variance\relax
+  \let\choose\relax
+  \let\goesto\relax
+  \let\pmod\relax
+  \let\matx\relaj
+  \let\Adj\relax
+  \let\percent\relax
+  \let\transpose\relax
+}
+
+\ProcessOptions\relax
+
+\setmainfont[Mapping=tex-text, Ligatures={Common}, Numbers={Proportional, OldStyle}]{LinLibertineO}
+\MakeAutoQuote{<}{>}
+\linespread{1.25}
+
+\newcommand{\sectname}[1]{\renewcommand{\@sectname}{#1}}
+  \newcommand{\@sectname}{}
+\AtEndDocument{
+  \label{\@sectname end}
+}
+
+% paired delimiters
+  \DeclarePairedDelimiter{\prn}{(}{)}
+  \DeclarePairedDelimiter{\brk}{[}{]}
+  \DeclarePairedDelimiter{\brc}{\{}{\}}
+  \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
+  \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+  \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+  \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+% generic 
+  \renewcommand*{\vec}[1]{\mathbf{#1}}
+  \newcommand*{\conj}[1]{\overline{#1}}
+  \let\ceil\relax
+    \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+  \DeclareMathOperator{\dom}{dom}
+  \DeclareMathOperator{\im}{im}
+  \DeclareMathOperator{\id}{id}
+  \newcommand{\isom}{\cong}
+  \newcommand{\bij}{\xrightarrow{\sim}}
+
+% analysis
+  \newcommand{\dd}{\mathop{}\!\mathrm{d}}
+  \newcommand*{\der}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\dd #2}{\dd #3}}{\frac{\dd^#1 #2}{{\dd #3}^#1}}}
+  \newcommand*{\pd}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\partial #2}{\partial #3}}{\frac{\partial^#1 #2}{{\partial #3}^#1}}}
+  \DeclareMathOperator{\bdry}{bdry}
+
+% probability
+  \DeclareMathOperator{\Expect}{E}
+  \DeclareMathOperator{\Var}{Var}
+
+% algebra
+  \DeclareMathOperator{\Tr}{Tr}
+  \newcommand*{\pmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+  \DeclareMathOperator{\Ind}{Ind}
+  \DeclareMathOperator{\Res}{Res}
+  \newcommand{\dominatedby}{\triangleleft}
+  \newcommand{\dominates}{\triangleright}
+
+% logic and set theory
+  \DeclareMathOperator{\Succ}{S}
+  \DeclareMathOperator{\fst}{fst}
+  \DeclareMathOperator{\snd}{snd}
+  \DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+  \newcommand{\proves}{\vdash}
+  \newcommand{\model}{\vDash}
+  \newcommand{\liff}{\leftrightarrow}
+  \newcommand{\limpl}{\to}
+  \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
+
+\endinput
