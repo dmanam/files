@@ -6,13 +6,12 @@
 \RequirePackage{enumerate}
 \RequirePackage{scrlayer-scrpage}
 \RequirePackage{ifthen}
-\RequirePackage{xparse}
 \RequirePackage{clrscode4e}
   \let\id\relax
 \RequirePackage[american]{babel}
 \RequirePackage{csquotes}
 
-\DeclareOption{koma}{
+\DeclareOption{scrartcl}{
   \setkomafont{disposition}{\normalfont\scshape}
   \setkomafont{section}{\normalsize}
   \ihead{\textrm{\large \@author, \@title\ifthenelse{\equal{\@sectname}{}}{}{, part \@sectname}}, page \thepage~of \pageref{\@sectname end}}
