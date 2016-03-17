@@ -15,9 +15,19 @@
   \sectname{#1}
 }
 \renewcommand{\thesection}{\arabic{section}}
-\newcommand{\sectheader}[2]{
+\newcommand{\sectheader}[2][]{
   \sect{\thesection}
-  \section{\textpipe\hspace{1ex}#1\hspace{1ex}\textpipe\hspace{1ex}#2}
+  \section{
+    \hspace{-1ex}
+    \ifx&#1&
+    \else
+      \textpipe\hspace{1ex}#1\hspace{0.7ex}
+    \fi
+    \ifx&#2&
+    \else
+      \textpipe\hspace{1ex}#2
+    \fi
+  }
 }
 
 \endinput
