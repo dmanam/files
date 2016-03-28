@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2016/03/13 Deven custom macros]
+\ProvidesPackage{deven}[2016/03/28 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
 \RequirePackage[no-math]{fontspec}
@@ -59,15 +59,15 @@
   \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
   \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
   \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+  \let\ceil\relax
+    \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 % generic 
   \renewcommand*{\vec}[1]{\mathbf{#1}}
   \newcommand*{\conj}[1]{\overline{#1}}
-  \let\ceil\relax
-    \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
   \DeclareMathOperator{\dom}{dom}
   \DeclareMathOperator{\im}{im}
-  \DeclareMathOperator{\id}{id}
+  \newcommand{\id}{\mathrm{id}}
   \newcommand{\isom}{\cong}
   \newcommand{\bij}{\xrightarrow{\sim}}
 
@@ -101,7 +101,8 @@
   \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
   \newcommand*{\lquot}[1]{\text{\fontspec{DejaVu Sans ExtraLight}\char"2E22}#1\text{\fontspec{DejaVu Sans ExtraLight}\char"2E23}}
   \DeclareMathOperator{\Bew}{Bew}
-  \DeclareMathOperator{\PA}{PA}
-  \DeclareMathOperator{\QE}{Q_E}
+  \DeclareMathOperator{\proof}{B}
+  \newcommand{\PA}{\mathrm{PA}}
+  \newcommand{\QE}{\mathrm{Q_E}}
 
 \endinput
