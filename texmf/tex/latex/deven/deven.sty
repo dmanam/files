@@ -10,6 +10,7 @@
   \let\id\relax
 \RequirePackage[american]{babel}
 \RequirePackage{csquotes}
+\RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 \DeclareOption{6046}{
   \let\reals\relax
@@ -44,6 +45,8 @@
 \setmainfont[Mapping=tex-text, Ligatures={Common}, Numbers={Proportional, OldStyle}]{LinLibertineO}
 \MakeAutoQuote{<}{>}
 \linespread{1.25}
+
+\newcommand{\TODO}{{\color{red} \ttfamily TODO}}
 
 \newcommand{\sectname}[1]{\renewcommand{\@sectname}{#1}}
   \newcommand{\@sectname}{}
