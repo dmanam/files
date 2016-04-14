@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2016/03/28 Deven custom macros]
+\ProvidesPackage{deven}[2016/04/13 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
 \RequirePackage[no-math]{fontspec}
@@ -73,6 +73,7 @@
   \newcommand*{\der}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\dd #2}{\dd #3}}{\frac{\dd^#1 #2}{{\dd #3}^#1}}}
   \newcommand*{\pd}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\partial #2}{\partial #3}}{\frac{\partial^#1 #2}{{\partial #3}^#1}}}
   \DeclareMathOperator{\bdry}{bdry}
+  \DeclareMathOperator{\interior}{int}
 
 % probability
   \DeclareMathOperator{\Expect}{E}
