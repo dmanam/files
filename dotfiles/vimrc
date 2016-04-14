@@ -1,7 +1,3 @@
-"if &shell =~# 'fish$'
-"  set shell=dash
-"endif
-
 syntax on
 set nocompatible
 set encoding=utf-8
@@ -14,18 +10,9 @@ call vundle#begin()
 
 Bundle 'VundleVim/Vundle.vim'
 
-"set background=dark
-
 Bundle 'sjl/gundo.vim'
 
-"Bundle 'altercation/vim-colors-solarized'
-"set background=dark
-"let g:solarized_termcolors=256
-"let g:solarized_termtrans=1
-
 Bundle 'jonathanfilip/vim-lucius'
-
-"Bundle 'dag/vim-fish'
 
 Bundle 'scrooloose/syntastic'
 let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['fish', 'tex']}
@@ -45,10 +32,6 @@ au FileType coq call coquille#FNMapping()
 au FileType coq map <F8> :CoqLaunch<CR>
 au FileType coq map <F9> :CoqKill<CR>
 
-"Bundle 'vim-scripts/CoqIDE'
-"let g:CoqIDE_coqtop = '/usr/bin/coqtop'
-"let g:CoqIDEDefaultMap = 1
-
 call vundle#end()
 
 filetype plugin indent on
@@ -61,8 +44,6 @@ set tabstop=2 shiftwidth=2
 set expandtab
 set ai
 set si
-
-set autoread
 
 set backspace=indent,eol,start
 
@@ -87,10 +68,9 @@ set mouse=a
 set foldenable
 nnoremap <space> za
 set foldmethod=syntax
+
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
-
-au BufEnter *.hs compiler ghc
 
 let mapleader=","
 
@@ -120,25 +100,8 @@ inoremap <buffer> <silent> <Down> <C-o>gj
 inoremap <buffer> <silent> <Home> <C-o>g<Home>
 inoremap <buffer> <silent> <End>  <C-o>g<End>
 
-"nnoremap B ^
-"vnoremap B ^
-"nnoremap E $
-"vnoremap E $
-"nnoremap ^ <nop>
-"vnoremap ^ <nop>
-"nnoremap $ <nop>
-"vnoremap $ <nop>
-
 nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>s :mksession<CR>
-
-"if exists('$TMUX')
-"  let &t_SI = "\<Esc>Ptmux;\<Exc>\<Exc>]50;CursorShape=1\x7<Esc>\\"
-"  let &t_EI = "\<Esc>Ptmux;\<Exc>\<Exc>]50;CursorShape=0\x7<Esc>\\"
-"else
-"  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-"endif
+"nnoremap <leader>s :mksession<CR>
 
 au BufEnter *.hs compiler ghc
 let g:haddock_browser = "xdg-open"
