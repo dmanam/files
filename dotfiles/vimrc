@@ -72,6 +72,11 @@ set foldmethod=syntax
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
+set undodir=~/.vim/undo
+set undofile
+set undolevels=1000
+set undoreload=10000
+
 let mapleader=","
 
 noremap <silent> <leader>w :call ToggleWrap()<CR>
@@ -101,7 +106,6 @@ inoremap <buffer> <silent> <Home> <C-o>g<Home>
 inoremap <buffer> <silent> <End>  <C-o>g<End>
 
 nnoremap <leader>u :GundoToggle<CR>
-"nnoremap <leader>s :mksession<CR>
 
 au BufEnter *.hs compiler ghc
 let g:haddock_browser = "xdg-open"
