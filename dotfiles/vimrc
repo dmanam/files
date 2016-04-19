@@ -3,8 +3,6 @@ set nocompatible
 set encoding=utf-8
 set showcmd
 
-filetype off
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'sjl/gundo.vim'
@@ -28,7 +26,6 @@ Plug 'the-lambda-church/coquille', { 'for': 'coq' }
 au FileType coq call coquille#FNMapping()
 au FileType coq map <F8> :CoqLaunch<CR>
 au FileType coq map <F9> :CoqKill<CR>
-
 
 call plug#end()
 
