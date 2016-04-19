@@ -5,34 +5,32 @@ set showcmd
 
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Bundle 'VundleVim/Vundle.vim'
+Plug 'sjl/gundo.vim'
 
-Bundle 'sjl/gundo.vim'
+Plug 'jonathanfilip/vim-lucius'
 
-Bundle 'jonathanfilip/vim-lucius'
-
-Bundle 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['fish', 'tex']}
 
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
 let g:notes_directories = ['~/Documents/notes']
 
-Bundle 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'
 
-Bundle 'sbl/scvim'
-let g:sclangTerm = "urxvt -e"
+"Plug 'sbl/scvim'
+"let g:sclangTerm = "urxvt -e"
 
-Bundle 'def-lkb/vimbufsync'
-Bundle 'the-lambda-church/coquille'
+Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
+Plug 'the-lambda-church/coquille', { 'for': 'coq' }
 au FileType coq call coquille#FNMapping()
 au FileType coq map <F8> :CoqLaunch<CR>
 au FileType coq map <F9> :CoqKill<CR>
 
-call vundle#end()
+
+call plug#end()
 
 filetype plugin indent on
 
