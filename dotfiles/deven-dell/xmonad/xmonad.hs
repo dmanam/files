@@ -10,9 +10,12 @@ import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Core (windowset)
 import qualified XMonad.StackSet as W
 import XMonad.Util.WorkspaceScreenshot
+import XMonad.Prompt (XPConfig (..), defaultXPConfig, XPPosition (Top))
+import XMonad.Prompt.Shell (shellPrompt)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
 import Data.Monoid
 import qualified Data.Map as M
+import Data.List (isInfixOf)
 import Control.Monad (void)
 import System.Exit
 import System.Directory (createDirectoryIfMissing, renameFile)
@@ -31,7 +34,19 @@ myWorkspaces    = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
 myNormalBorderColor  = "#121212"
 myFocusedBorderColor = "#d7d7d7"
 
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myXPConfig = defaultXPConfig
+  { font              = "xft:DejaVuSansMono:size=10"
+  , bgColor           = "#000000"
+  , fgColor           = "#d7d7d7"
+  , fgHLight          = "#000000"
+  , bgHLight          = "#87d7ff"
+  , promptBorderWidth = 0
+  , position          = Top
+  , height            = 25
+  , searchPredicate   = isInfixOf
+  }
+
+myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     [ ((modm .|.   shiftMask, xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal
     , ((modm,                 xK_f     ), spawn "firefox-bin") -- open firefox
     , ((modm,                 xK_s     ), spawn "xinput enable 'ELAN Touchscreen'") -- enable touchscreen
@@ -42,7 +57,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 --  , ((0,                    xK_Print ), spawn $ "cd " ++ screenshotDir ++ "; scrot") -- ++ screenshotDir ++ "'/%Y-%m-%d-%H%M%S_$wx$h_scrot.png'") -- screenshot all
     , ((0,                    xK_Print ), captureWorkspacesWhenId activePredicate moveHook horizontally)
     , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
-    , ((modm,                 xK_p     ), spawn "dmenu_run") -- launch dmenu
+--  , ((modm,                 xK_p     ), spawn "dmenu_run") -- launch dmenu
+    , ((modm,                 xK_p     ), shellPrompt myXPConfig) -- command launcher
     , ((modm .|.   shiftMask, xK_c     ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
     , ((modm,                 xK_space ), sendMessage NextLayout) -- rotate through the available layout algorithms
     , ((modm .|.   shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf) -- reset the layouts on the current workspace to default
@@ -84,7 +100,7 @@ moveHook fp = do
   let filename = formatTime defaultTimeLocale "%0Y-%m-%d-%H-%M-%S-%q" localtime ++ ".png"
   renameFile fp (screenshotDir </> filename)
 
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
+myMouseBindings XConfig{XMonad.modMask = modm} = M.fromList
     [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)   -- grab and drag
     , ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster) -- grab and resize
 --  , ((modm, button3), \w -> focus w >> windows W.shiftMaster)                        -- grab
