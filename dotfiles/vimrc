@@ -67,7 +67,7 @@ nnoremap <space> za
 set foldmethod=syntax
 
 autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+autocmd BufWinEnter *.* silent! loadview
 
 set undodir=~/.vim/undo
 set undofile
