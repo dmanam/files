@@ -10,7 +10,7 @@ alias ls='ls --color=auto -N'
 export GOPATH=~/Documents/go
 export PATH="$HOME/Documents/files/scripts:$GOPATH:$GOPATH/bin:$PATH"
 
-export VISUAL='/usr/bin/vim'
+export VISUAL='/usr/bin/nvim'
 export EDITOR="$VISUAL"
 export BROWSER='/usr/bin/firefox-bin'
 
