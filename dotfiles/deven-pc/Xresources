@@ -1,4 +1,3 @@
-!*background:  #121212
 *background:  #000000
 *foreground:  #d7d7d7
 *cursorColor: #87afd7
@@ -49,5 +48,14 @@ dmenu.foreground:    #d7d7d7
 dmenu.selforeground: #000000
 dmenu.selbackground: #87d7ff
 
-!Xcursor*theme: default
-!Xcursor*size:  64
+rofi.bg: #000000
+rofi.bgalt: #000000
+rofi.bc: #d7d7d7
+rofi.bw: 0
+rofi.fg: #d7d7d7
+rofi.hlbg: #87d7ff
+rofi.hlfg: #000000
+rofi.font: Dejavu Sans Mono 15
+rofi.separator-style: none
+rofi.location: 2
+rofi.width: 100
