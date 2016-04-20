@@ -41,7 +41,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                    xK_Print ), captureWorkspacesWhenId activePredicate moveHook horizontally)
     , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
     , ((modm,                 xK_p     ), spawn "dmenu_run") -- launch dmenu
-    , ((modm .|.   shiftMask, xK_c     ), sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
+    , ((modm .|.   shiftMask, xK_c     ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
     , ((modm,                 xK_space ), sendMessage NextLayout) -- rotate through the available layout algorithms
     , ((modm .|.   shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf) -- reset the layouts on the current workspace to default
     , ((modm,                 xK_n     ), refresh) -- resize viewed windows to the correct size
