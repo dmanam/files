@@ -6,7 +6,7 @@ style "default" {
   text[NORMAL] = @white
   fg[PRELIGHT] = @black
   bg[PRELIGHT] = @white
-  font_name    = "SourceCodePro 10"
+  font_name    = "DejaVuSansMono 10"
   engine "murrine" {
     rgba       = TRUE
   }
