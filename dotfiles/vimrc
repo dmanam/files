@@ -18,8 +18,10 @@ let g:notes_directories = ['~/Documents/notes']
 
 Plug 'tpope/vim-eunuch'
 
-"Plug 'sbl/scvim'
-"let g:sclangTerm = "urxvt -e"
+Plug 'sbl/scvim', { 'for': 'supercollider' }
+let g:sclangTerm = "urxvt -e"
+
+Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
 
 Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
 Plug 'the-lambda-church/coquille', { 'for': 'coq' }
