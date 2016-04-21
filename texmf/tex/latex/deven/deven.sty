@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2016/04/13 Deven custom macros]
+\ProvidesPackage{deven}[2016/04/21 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
 \RequirePackage[no-math]{fontspec}
@@ -68,6 +68,9 @@
   \newcommand{\id}{\mathrm{id}}
   \newcommand{\isom}{\cong}
   \newcommand{\bij}{\xrightarrow{\sim}}
+
+% computer science
+  \DeclareMathOperator{\polylog}{polylog}
 
 % analysis
   \newcommand{\dd}{\mathop{}\!\mathrm{d}}
