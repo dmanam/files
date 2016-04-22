@@ -10,9 +10,12 @@ import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Core (windowset)
 import qualified XMonad.StackSet as W
 import XMonad.Util.WorkspaceScreenshot
+import XMonad.Prompt (XPConfig (..), defaultXPConfig, XPPosition (Top))
+import XMonad.Prompt.Shell (shellPrompt)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
 import Data.Monoid
 import qualified Data.Map as M
+import Data.List (isInfixOf)
 import Control.Monad (void)
 import System.Exit
 import System.Directory (createDirectoryIfMissing, renameFile)
