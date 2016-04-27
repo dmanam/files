@@ -100,12 +100,26 @@
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
   \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
-  \newcommand*{\lquot}[1]{\text{\fontspec{DejaVu Sans ExtraLight}\char"2E22}#1\text{\fontspec{DejaVu Sans ExtraLight}\char"2E23}}
+  %for \lquot
+    \newbox\gnBoxA
+    \newdimen\gnCornerHgt
+    \setbox\gnBoxA=\hbox{$\ulcorner$}
+    \global\gnCornerHgt=\ht\gnBoxA
+    \newdimen\gnArgHgt
+    \def\lquot #1{%
+    \setbox\gnBoxA=\hbox{$#1$}%
+    \gnArgHgt=\ht\gnBoxA%
+    \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
+    \else \advance \gnArgHgt by -\gnCornerHgt%
+    \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
+    \raise\gnArgHgt\hbox{$\urcorner$}}
   \newcommand*{\bq}[1]{\brk*{\lquot{#1}}}
   \DeclareMathOperator{\Bew}{Bew}
   \DeclareMathOperator{\proof}{B}
   \DeclareMathOperator{\Con}{Con}
   \newcommand{\PA}{\mathrm{PA}}
   \newcommand{\QE}{\mathrm{Q_E}}
+  \newcommand{\lbox}{\Box}
+  \newcommand{\ldiam}{\Diamond}
 
 \endinput
