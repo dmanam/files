@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2016/04/21 Deven custom macros]
+\ProvidesPackage{deven}[2016/04/29 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
 \RequirePackage[no-math]{fontspec}
@@ -71,6 +71,10 @@
 
 % computer science
   \DeclareMathOperator{\polylog}{polylog}
+
+% number theory
+  \newcommand{\divides}{\mid}
+  \newcommand{\ndivides}{\nmid}
 
 % analysis
   \newcommand{\dd}{\mathop{}\!\mathrm{d}}
