@@ -120,6 +120,8 @@ myLayout = avoidStruts $ tall ||| wide ||| full
 -- use 'title' to match on WM_NAME
 myManageHook = composeAll
     [ manageDocks
+    , className =? "qjackctl"       --> doFloat
+    , className =? "Qjackctl"       --> doFloat
 --  , className =? "MPlayer"        --> doFloat
 --  , className =? "Gimp"           --> doFloat
 --  , resource  =? "desktop_window" --> doIgnore
@@ -135,7 +137,8 @@ myStartupHook = do
   setDefaultCursor xC_left_ptr 
   io $ createDirectoryIfMissing True screenshotDir
   spawn "taffybar"
-  spawn "sleep 5; pgrep wpa_gui || wpa_gui -t"
+  spawn "which dropbox && dropbox"
+  spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
 
 main = do
   initCapturing

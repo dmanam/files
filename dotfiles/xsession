@@ -1,0 +1,15 @@
+#!/bin/sh
+
+xrdb -merge ~/.dotfiles/Xresources
+xrdb -merge ~/.dotfiles/`hostname`/Xresources
+compton -Cb
+~/.fehbg
+xinput disable 'ELAN Touchscreen'
+
+urxvtd -o -f
+unclutter &
+parcellite &
+
+. ~/.dotfiles/`hostname`/xsession
+
+exec bash --login -c 'TMUX="" SHELL="/bin/bash" ssh-agent dbus-launch --sh-syntax --exit-with-session xmonad'

@@ -1,0 +1,60 @@
+*background:  #000000
+*foreground:  #d7d7d7
+*cursorColor: #87afd7
+*color0:      #121212
+*color8:      #121212
+*color1:      #ff5f5f
+*color9:      #ff5f5f
+*color2:      #afd787
+*color10:     #afd787
+*color3:      #d7d7af
+*color11:     #d7d7af
+*color4:      #87d7ff
+*color12:     #87d7ff
+*color5:      #d7afd7
+*color13:     #d7afd7
+*color6:      #87d7af
+*color14:     #87d7af
+*color7:      #d7d7d7
+*color15:     #d7d7d7
+
+Xft*antialias: True
+Xft*hinting:   Full
+
+URxvt*depth:             32
+URxvt*font:              xft:DejaVuSansMono:size=10
+URxvt*background:        [80]#000000
+URxvt*scrollstyle:       plain
+URxvt*scrollBar:         false
+URxvt*saveLines:         99999
+URxvt*perl-ext-common:   default,matcher
+URxvt*print-pipe:        "cat>/dev/null"
+URxvt*underlineURLs:     True
+URxvt*url-launcher:      /usr/bin/firefox-bin
+URxvt*matcher.button:    1
+URxvt*colorUL:           #4682b4
+URxvt*cursorBlink:       true
+URxvt*cursorUnderline:   false
+URxvt*pointerBlank:      true
+URxvt*intensityStyles:   false
+URxvt*scrollTtyOutput:   false
+URxvt*scrollWithBuffer:  true
+URxvt*scrollTtyKeypress: true
+
+dmenu.font:          DejaVuSansMono-10
+dmenu.background:    #000000
+dmenu.foreground:    #d7d7d7
+dmenu.selforeground: #000000
+dmenu.selbackground: #87d7ff
+
+rofi.bg: #000000
+rofi.bgalt: #000000
+rofi.bc: #d7d7d7
+rofi.bw: 0
+rofi.fg: #d7d7d7
+rofi.hlbg: #87d7ff
+rofi.hlfg: #000000
+rofi.font: Dejavu Sans Mono 15
+rofi.separator-style: none
+rofi.location: 2
+rofi.width: 100
