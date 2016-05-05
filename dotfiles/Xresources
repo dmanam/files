@@ -47,14 +47,12 @@ dmenu.foreground:    #d7d7d7
 dmenu.selforeground: #000000
 dmenu.selbackground: #87d7ff
 
-rofi.bg: #000000
-rofi.bgalt: #000000
-rofi.bc: #d7d7d7
+rofi.color-normal: #000000,#d7d7d7,#000000,#87d7ff,#000000
 rofi.bw: 0
-rofi.fg: #d7d7d7
-rofi.hlbg: #87d7ff
-rofi.hlfg: #000000
-rofi.font: Dejavu Sans Mono 15
+rofi.padding: 0
+rofi.line-margin: 0
+rofi.font: Dejavu Sans Mono 10
 rofi.separator-style: none
 rofi.location: 2
 rofi.width: 100
+rofi.hide-scrollbar: true
