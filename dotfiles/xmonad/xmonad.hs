@@ -8,6 +8,7 @@ import XMonad.Actions.NoBorders
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Core (windowset)
+import qualified XMonad.Util.ExtensibleState as XS
 import qualified XMonad.StackSet as W
 import XMonad.Util.WorkspaceScreenshot
 import XMonad.Prompt (XPConfig (..), defaultXPConfig, XPPosition (Top))
@@ -16,7 +17,7 @@ import System.Taffybar.Hooks.PagerHints (pagerHints)
 import Data.Monoid
 import qualified Data.Map as M
 import Data.List (isInfixOf)
-import Control.Monad (void)
+import Control.Monad (void, when)
 import System.Exit
 import System.Directory (createDirectoryIfMissing, renameFile)
 import System.FilePath ((</>))
@@ -29,7 +30,9 @@ myTerminal      = "urxvtc"
 myFocusFollowsMouse = False
 myClickJustFocuses = False
 myBorderWidth   = 1
-screenshotDir = "/home/deven/Pictures/screenshots"
+homeDir = "/home/deven"
+screenshotDir = homeDir </> "Pictures/screenshots"
+backgroundDir = homeDir </> "Pictures/backgrounds"
 myWorkspaces    = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
 myNormalBorderColor  = "#121212"
 myFocusedBorderColor = "#d7d7d7"
@@ -82,7 +85,7 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     ]
     -- mod-[1..0], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
-    ++ [((m .|. modm, k), windows $ f i)
+    ++ [((m .|. modm, k), windows (f i))
         | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]] 
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -130,6 +133,17 @@ myManageHook = composeAll
 
 -- return (All True) to run default handler afterwards
 myEventHook = fullscreenEventHook
+
+data BackgroundState = BackgroundState WorkspaceId deriving Typeable
+instance ExtensionClass BackgroundState where
+  initialValue = BackgroundState ""
+updateBackground = do
+  BackgroundState oldws <- XS.get
+  newws <- W.tag . W.workspace . W.current <$> gets windowset
+  when (newws /= oldws) $ do
+    newBackground newws
+    XS.put $ BackgroundState newws
+newBackground ws = spawn $ "feh --bg-fill --no-fehbg " <> (backgroundDir </> ws) <> ".png"
 
 myLogHook = return ()
 
