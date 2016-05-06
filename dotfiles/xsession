@@ -3,8 +3,7 @@
 xrdb -merge ~/.dotfiles/Xresources
 xrdb -merge ~/.dotfiles/`hostname`/Xresources
 compton -Cb
-~/.fehbg
-xinput disable 'ELAN Touchscreen'
+find -print0 ~/Pictures/background | shuf -z -n1 | xargs -0 feh --bg-fill --no-fehbg
 
 urxvtd -o -f
 unclutter &
