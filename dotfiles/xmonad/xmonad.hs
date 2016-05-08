@@ -145,7 +145,7 @@ updateBackground = do
     XS.put $ BackgroundState newws
 newBackground ws = spawn $ "feh --bg-fill --no-fehbg " <> (backgroundDir </> ws) <> ".png"
 
-myLogHook = return ()
+myLogHook = updateBackground
 
 myStartupHook = do
   setDefaultCursor xC_left_ptr 
