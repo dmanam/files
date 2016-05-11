@@ -1,5 +1,19 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven-koma}[2016/04/13 Deven custom macros for KOMA docs]
+\ProvidesClass{deven-scrartcl}[2016/05/11 Deven custom macros for scrartcl]
+
+\DeclareOption{default}{
+  \PassOptionsToClass{12pt, letterpaper, twoside}{scrartcl}
+}
+
+\DeclareOption*{
+  \PassOptionsToClass{\CurrentOption}{scrartcl}
+}
+
+\ExecuteOptions{default}
+
+\ProcessOptions\relax
+
+\LoadClass{scrartcl}
 
 \RequirePackage{deven}
 \RequirePackage{scrlayer-scrpage}
