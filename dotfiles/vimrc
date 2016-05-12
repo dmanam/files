@@ -9,8 +9,11 @@ Plug 'sjl/gundo.vim'
 
 Plug 'jonathanfilip/vim-lucius'
 
-Plug 'scrooloose/syntastic'
-let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['fish', 'tex']}
+"Plug 'scrooloose/syntastic'
+"let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['fish', 'tex']}
+
+Plug 'neomake/neomake'
+autocmd! BufWritePost * Neomake
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'

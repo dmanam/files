@@ -6,9 +6,11 @@
 # anything or bad things will happen !
 
 alias ls='ls --color=auto -N'
+alias owl='mosh -- deywos@mint-square.mit.edu screen -dr'
 
 export GOPATH=~/Documents/go
 export PATH="$HOME/Documents/files/scripts:$GOPATH:$GOPATH/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 
 export VISUAL='/usr/bin/nvim'
 export EDITOR="$VISUAL"
