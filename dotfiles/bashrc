@@ -6,7 +6,7 @@
 # anything or bad things will happen !
 
 alias ls='ls --color=auto -N'
-alias owl='mosh -- deywos@mint-square.mit.edu screen -dr'
+alias owl='mosh -- deywos@mint-square.mit.edu screen -x owl'
 
 export GOPATH=~/Documents/go
 export PATH="$HOME/Documents/files/scripts:$GOPATH:$GOPATH/bin:$PATH"
