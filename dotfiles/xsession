@@ -11,4 +11,4 @@ parcellite &
 
 . ~/.dotfiles/`hostname`/xsession
 
-exec bash --login -c 'TMUX="" SHELL="/bin/bash" ssh-agent dbus-launch --sh-syntax --exit-with-session xmonad'
+exec bash --login -c 'TMUX="" SHELL="/bin/bash" dbus-launch --sh-syntax --exit-with-session xmonad'
