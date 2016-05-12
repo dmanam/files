@@ -5,7 +5,7 @@ import XMonad.Util.Cursor
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Actions.NoBorders
-import XMonad.Layout.NoBorders (noBorders, smartBorders)
+import XMonad.Layout.NoBorders (noBorders, lessBorders, Ambiguity (Screen))
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Core (windowset)
 import qualified XMonad.Util.ExtensibleState as XS
@@ -114,7 +114,7 @@ myLayout = avoidStruts $ tall ||| wide ||| full
   where tall    = renamed [Replace "|"] tiled
         wide    = renamed [Replace "―"] (Mirror tiled)
         full    = renamed [Replace "☐"] . noBorders $ Full
-        tiled   = smartBorders $ Tall nmaster delta ratio
+        tiled   = lessBorders Screen $ Tall nmaster delta ratio
         nmaster = 1
         ratio   = 1/2
         delta   = 3/100
