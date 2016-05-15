@@ -26,6 +26,8 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+aklog
+
 # Put your fun stuff here.
 
 export PROMPT_COMMAND=__prompt_command
