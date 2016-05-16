@@ -143,7 +143,7 @@ updateBackground = do
   when (newws /= oldws) $ do
     newBackground newws
     XS.put $ BackgroundState newws
-newBackground ws = spawn $ "feh --bg-fill --no-fehbg " <> (backgroundDir </> ws) <> ".png"
+newBackground ws = spawn $ "feh --bg-fill --no-fehbg '" <> backgroundDir </> ws <> ".png'"
 
 myLogHook = updateBackground
 
