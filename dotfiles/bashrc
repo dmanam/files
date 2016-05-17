@@ -26,7 +26,7 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
-klist >/dev/null 2>&1 && aklog
+klist >/dev/null 2>&1 && kinit -R && aklog
 
 # Put your fun stuff here.
 
