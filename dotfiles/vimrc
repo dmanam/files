@@ -118,5 +118,6 @@ vnoremap ; :
 
 ca W SudoWrite
 ca w!! SudoWrite
+ca ww SudoWrite
 
 dig (t 9115 (m 9116 (b 9117 )t 9118 )m 9119 )b 9120 It 8992 Im 9134 Ib 8993 <( 10216 )> 10217 ns 8345 /E 8713 /C 8836 ~= 8773 TO 8868 BO 8869 TS 8866 DT 8872 NN 8469 RR 8477 -. 8230
