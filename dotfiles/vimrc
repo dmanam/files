@@ -17,7 +17,7 @@ autocmd! BufWritePost * Neomake
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
-let g:notes_directories = ['~/Documents/notes']
+let g:notes_directories = ['~/Athena/Documents/notes']
 
 Plug 'tpope/vim-eunuch'
 
