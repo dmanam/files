@@ -11,6 +11,7 @@ alias owl='mosh -- deywos@mint-square.mit.edu screen -x owl'
 export GOPATH=~/Documents/go
 export PATH="$HOME/Documents/files/scripts:$GOPATH:$GOPATH/bin:$PATH"
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+export TEXMFHOME="/home/deven/Documents/files/texmf"
 
 export VISUAL='/usr/bin/nvim'
 export EDITOR="$VISUAL"
