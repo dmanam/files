@@ -24,6 +24,7 @@ import System.FilePath ((</>))
 import Data.Functor ((<$>))
 import Data.Default
 import Data.Time (getCurrentTime, getCurrentTimeZone, utcToLocalTime, formatTime, defaultTimeLocale)
+import System.Random (randomR, newStdGen)
 
 myModMask       = mod4Mask
 myTerminal      = "urxvtc"
@@ -121,15 +122,13 @@ myLayout = avoidStruts $ tall ||| wide ||| full
 
 -- use `xprop | grep WM_CLASS` and click to find the class
 -- use 'title' to match on WM_NAME
-myManageHook = composeAll
+myManageHook = composeAll $
     [ manageDocks
     , className =? "qjackctl"       --> doFloat
     , className =? "Qjackctl"       --> doFloat
---  , className =? "MPlayer"        --> doFloat
---  , className =? "Gimp"           --> doFloat
---  , resource  =? "desktop_window" --> doIgnore
---  , resource  =? "kdesktop"       --> doIgnore
     ]
+--    [ title =? snd bg --> doBackground (fst bg) | bg <- bgs]
+--    where doBackground ws = ask >>= (\w -> liftX (sendMessage . Merge "bgs" $ [w]) >> doF (W.shiftWin ws w))
 
 -- return (All True) to run default handler afterwards
 myEventHook = fullscreenEventHook
@@ -150,12 +149,25 @@ myLogHook = updateBackground
 myStartupHook = do
   setDefaultCursor xC_left_ptr 
   io $ createDirectoryIfMissing True screenshotDir
+--  spawnBgs bgs
   spawn "taffybar"
   spawn "which dropbox && dropbox"
   spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
 
+--spawnBgs = mapM_ $ \(ws, w) -> spawn $ "feh '" <> backgroundDir </> ws <> ".png' -^'" <> w <> "'"
+
+randStrings r n gen = randStrings' r gen !! n
+  where randStrings' r gen = iterate (randString r n) (gen, [])
+randString r n (gen, strs) = (gen', str:strs)
+  where (gen', str) = randString' r gen !! n
+        randString' r gen = iterate (randString'' r) (gen, [])
+        randString'' r (gen, str) = (gen', c:str)
+          where (c, gen') = randomR r gen
+
 main = do
   initCapturing
+--  rands <- snd . randStrings ('a', 'z') 20 <$> newStdGen
+--  let bgs = zip myWorkspaces $ rands
   xmonad $ ewmh . pagerHints $ def
     { terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
