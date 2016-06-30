@@ -49,12 +49,12 @@ pager colors = taffyPagerNew $ defaultPagerConfig { activeWindow     = escape . 
                                                   , widgetSep        = "  "
                                                   }
 note = notifyAreaNew defaultNotificationConfig
-wea colors = weatherNew ((defaultWeatherConfig "KBOS") {weatherTemplate = "$tempF$°F", weatherFormatter = WeatherFormatter ((++ "°F") . fmt)}) 10
-  where fmt WI {tempF = temp}
-          | temp > 85 = colorize (colors !! 1) "" . show $ temp
-          | temp > 78 = colorize (colors !! 3) "" . show $ temp
-          | temp > 60 = colorize (colors !! 2) "" . show $ temp
-          | otherwise = colorize (colors !! 4) "" . show $ temp
+wea colors = weatherNew ((defaultWeatherConfig "KBOS") {weatherTemplate = "$tempC$°F", weatherFormatter = WeatherFormatter ((++ " K") . fmt)}) 10
+  where fmt WI {tempC = temp}
+          | temp > 30 = colorize (colors !! 1) "" . show $ temp + 273
+          | temp > 26 = colorize (colors !! 3) "" . show $ temp + 273
+          | temp > 15 = colorize (colors !! 2) "" . show $ temp + 273
+          | otherwise = colorize (colors !! 4) "" . show $ temp + 273
 --mpris = mprisNew defaultMPRISConfig
 --mpris2 = mpris2New
 mem = pollingGraphNew memCfg 1 memCallback
