@@ -52,7 +52,7 @@ myXPConfig = defaultXPConfig
 
 myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     [ ((modm .|.   shiftMask, xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal
-    , ((modm,                 xK_f     ), spawn "firefox-bin") -- open firefox
+    , ((modm,                 xK_f     ), spawn "firefox") -- open firefox
     , ((modm,                 xK_s     ), spawn "xinput enable 'ELAN Touchscreen'") -- enable touchscreen
     , ((modm .|.   shiftMask, xK_s     ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z     ), spawn "slock") -- lock screen
