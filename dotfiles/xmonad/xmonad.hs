@@ -25,6 +25,8 @@ import Data.Functor ((<$>))
 import Data.Default
 import Data.Time (getCurrentTime, getCurrentTimeZone, utcToLocalTime, formatTime, defaultTimeLocale)
 import System.Random (randomR, newStdGen)
+import System.Environment (lookupEnv)
+import Data.Maybe (fromMaybe)
 
 myModMask       = mod4Mask
 myTerminal      = "urxvtc"
@@ -50,9 +52,9 @@ myXPConfig = defaultXPConfig
   , searchPredicate   = isInfixOf
   }
 
-myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
+myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     [ ((modm .|.   shiftMask, xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal
-    , ((modm,                 xK_f     ), spawn "firefox") -- open firefox
+    , ((modm,                 xK_f     ), spawn browser) -- open the default browser
     , ((modm,                 xK_s     ), spawn "xinput enable 'ELAN Touchscreen'") -- enable touchscreen
     , ((modm .|.   shiftMask, xK_s     ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z     ), spawn "slock") -- lock screen
@@ -168,6 +170,8 @@ main = do
   initCapturing
 --  rands <- snd . randStrings ('a', 'z') 20 <$> newStdGen
 --  let bgs = zip myWorkspaces $ rands
+  browserEnv <- fromMaybe "" <$> lookupEnv "BROWSER"
+  let browser = if browserEnv == "" then "firefox" else browserEnv
   xmonad $ ewmh . pagerHints $ def
     { terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
@@ -177,7 +181,7 @@ main = do
     , workspaces         = myWorkspaces
     , normalBorderColor  = myNormalBorderColor
     , focusedBorderColor = myFocusedBorderColor
-    , keys               = myKeys
+    , keys               = myKeys browser
     , mouseBindings      = myMouseBindings
     , layoutHook         = myLayout
     , manageHook         = myManageHook
