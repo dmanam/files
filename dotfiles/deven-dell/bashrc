@@ -1,0 +1,1 @@
+export LIBVIRT_DEFAULT_URI="qemu+ssh://deven@deven-pc/system"
