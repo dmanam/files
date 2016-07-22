@@ -1,6 +1,3 @@
-alias ls='ls --color=auto -N'
-alias owl='mosh -- owl screen -x owl'
-
 export GOPATH="${HOME}/Documents/go"
 export PATH="${HOME}/Documents/files/scripts:${GOPATH}:${GOPATH}/bin:${PATH}"
 export LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"

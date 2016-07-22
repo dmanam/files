@@ -15,6 +15,9 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+alias ls='ls --color=auto -N'
+alias owl='mosh -- owl screen -x owl'
+
 klist >/dev/null 2>&1 && kinit -R && aklog
 
 # Put your fun stuff here.
