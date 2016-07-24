@@ -4,8 +4,12 @@
 [push]
 	default = simple
 [core]
-  editor = vim
+	editor = nvim
+[merge]
+	tool = nvimdiff
+[mergetool "nvimdiff"]
+	cmd = "nvim -d \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c '$wincmd w' -c 'wincmd J'"
 [diff]
-  tool = vimdiff
-[difftool]
-  prompt = false
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
