@@ -1,0 +1,3 @@
+[submodule "git-annex-remote-rclone"]
+	path = git-annex-remote-rclone
+	url = https://github.com/DanielDent/git-annex-remote-rclone.git
