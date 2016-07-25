@@ -1,9 +1,16 @@
 syntax on
+filetype plugin indent on
 set nocompatible
 set encoding=utf-8
 set showcmd
 
 call plug#begin('~/.vim/plugged')
+
+" from vim-plug docs
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 Plug 'sjl/gundo.vim'
 
@@ -15,8 +22,8 @@ Plug 'jonathanfilip/vim-lucius'
 Plug 'neomake/neomake'
 autocmd! BufWritePost * Neomake
 
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc',	Cond(match(@%, 'note:') == 0)
+Plug 'xolox/vim-notes', Cond(match(@%, 'note:') == 0)
 let g:notes_directories = ['~/Athena/Documents/notes']
 
 Plug 'tpope/vim-eunuch'
@@ -34,8 +41,6 @@ au FileType coq map <F9> :CoqKill<CR>
 
 call plug#end()
 
-filetype plugin indent on
-
 colorscheme lucius
 let g:lucius_no_term_bg=1
 LuciusBlack
@@ -44,6 +49,10 @@ set tabstop=8 softtabstop=8 shiftwidth=8
 "set expandtab
 set ai
 set si
+
+set showbreak=↪\ 
+set list
+set listchars=tab:»\ ,eol:↲,nbsp:␣,trail:█,extends:⟩,precedes:⟨
 
 set backspace=indent,eol,start
 
@@ -86,11 +95,11 @@ function ToggleWrap()
     setlocal nowrap
   else
     echo "Wrap ON"
-    setlocal wrap linebreak nolist
+    setlocal wrap linebreak
   endif
 endfunction
 
-set wrap linebreak nolist
+set wrap linebreak
 noremap  <buffer> <silent> <Up>   gk
 noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> k      gk
