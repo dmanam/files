@@ -22,8 +22,9 @@ Plug 'jonathanfilip/vim-lucius'
 Plug 'neomake/neomake'
 autocmd! BufWritePost * Neomake
 
-Plug 'xolox/vim-misc',	Cond(match(@%, 'note:') == 0)
-Plug 'xolox/vim-notes', Cond(match(@%, 'note:') == 0)
+let isnotefile = match(@%, 'note:') == 0
+Plug 'xolox/vim-misc', Cond(isnotefile)
+Plug 'xolox/vim-notes', Cond(isnotefile)
 let g:notes_directories = ['~/Athena/Documents/notes']
 
 Plug 'tpope/vim-eunuch'
