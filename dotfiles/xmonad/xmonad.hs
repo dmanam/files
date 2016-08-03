@@ -153,7 +153,6 @@ myStartupHook = do
   io $ createDirectoryIfMissing True screenshotDir
 --  spawnBgs bgs
   spawn "taffybar"
-  spawn "which dropbox && dropbox"
   spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
 
 --spawnBgs = mapM_ $ \(ws, w) -> spawn $ "feh '" <> backgroundDir </> ws <> ".png' -^'" <> w <> "'"
