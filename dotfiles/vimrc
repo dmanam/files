@@ -40,6 +40,8 @@ au FileType coq call coquille#FNMapping()
 au FileType coq map <F8> :CoqLaunch<CR>
 au FileType coq map <F9> :CoqKill<CR>
 
+Plug 'vim-scripts/delview'
+
 call plug#end()
 
 colorscheme lucius
