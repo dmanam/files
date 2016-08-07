@@ -47,7 +47,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 
 " haskell
 	Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
-	autocmd FileType haskell compiler ghc
+	autocmd FileType *.hs compiler ghc
 	let g:haddock_browser = "xdg-open"
 	let g:haddock_browser_callformat="sh -c '%s file://%s >/dev/null 2>&1 &'"
 	autocmd FileType haskell setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
