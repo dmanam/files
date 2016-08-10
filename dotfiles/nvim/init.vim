@@ -120,6 +120,8 @@ call plug#end()
 	set undoreload=10000
 
 " wrapping
+	set colorcolumn=80
+	highlight ColorColumn ctermbg=8
 	noremap <silent> <leader>w :call ToggleWrap()<CR>
 	function ToggleWrap()
 		if &wrap
@@ -144,6 +146,9 @@ call plug#end()
 	inoremap <buffer> <silent> <Down> <C-o>gj
 	inoremap <buffer> <silent> <Home> <C-o>g<Home>
 	inoremap <buffer> <silent> <End>  <C-o>g<End>
+
+" title
+	set title titlestring=%F
 
 " tex
 	autocmd FileType tex setlocal indentexpr&
