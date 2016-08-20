@@ -5,6 +5,7 @@
 	set encoding=utf-8
 	set showcmd
 	set backspace=indent,eol,start
+	let g:netrw_dirhistmax=0
 
 " more convenient leader
 	let mapleader=","
@@ -36,6 +37,10 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	let g:notes_directories = ['~/athena/documents/notes']
 
 " general utilities
+	Plug 'tpope/vim-repeat'
+	Plug 'tpope/vim-endwise'
+	Plug 'tpope/vim-commentary'
+	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-eunuch'
 	ca W SudoWrite
 	ca w!! SudoWrite
