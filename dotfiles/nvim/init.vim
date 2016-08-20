@@ -33,7 +33,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	let isnotefile = match(@%, 'note:') == 0
 	Plug 'xolox/vim-misc', Cond(isnotefile)
 	Plug 'xolox/vim-notes', Cond(isnotefile)
-	let g:notes_directories = ['~/Athena/Documents/notes']
+	let g:notes_directories = ['~/athena/documents/notes']
 
 " general utilities
 	Plug 'tpope/vim-eunuch'
