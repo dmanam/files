@@ -1,0 +1,17 @@
+Config { font = "xft:Source Code Pro:size=12:antialias=true"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Static { xpos = 0, ypos = 0, width = 3008, height = 24 }
+       , lowerOnStart = True
+       , commands = [ Run Weather "KHOU" ["-t","<tempF>F","-L","59","-H","88","--normal","green","--high","red","--low","lightblue"] 9000
+                    , Run Com "whoami" [] "" 0
+                    , Run Com "uname" ["-n"] "" 0
+                    , Run Date "%a %d %b %Y %T" "date" 10
+                    , Run Volume "default" "Master" [] 1
+		        		    , Run Com "/home/deven/Documents/scripts/xmobar_battery.sh" [] "battery" 20
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %default:Master% || %battery% || <fc=#ee9a00>%date%</fc> || %KHOU% || <fc=#00ff80>%whoami%@%uname%</fc>"
+       }
