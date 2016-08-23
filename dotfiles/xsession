@@ -2,9 +2,7 @@
 
 xrdb -merge ~/.dotfiles/xresources
 xrdb -merge ~/.dotfiles/`hostname`/xresources
-setxkbmap -option caps:swapescape
 compton -Cb
-#find -print0 ~/Pictures/background | shuf -z -n1 | xargs -0 feh --bg-fill --no-fehbg
 
 bash --login -c 'urxvtd -o -f'
 unclutter &
