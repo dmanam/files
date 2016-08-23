@@ -6,7 +6,7 @@ setxkbmap -option caps:swapescape
 compton -Cb
 #find -print0 ~/Pictures/background | shuf -z -n1 | xargs -0 feh --bg-fill --no-fehbg
 
-urxvtd -o -f
+bash --login -c 'urxvtd -o -f'
 unclutter &
 parcellite &
 

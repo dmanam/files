@@ -13,7 +13,7 @@ export CABAL_CONFIG="${XDG_CONFIG_HOME}/cabal/config"
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export INPUTRC="${XDG_CONFIG_HOME}/readline/inputrc"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/init.py"
-export GIMP2_DIRECOTYR="${XDG_CONFIG_HOME}/gimp"
+export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
 export MATHEMATICA_USERBASE="${XDG_CONFIG_HOME}/mathematica"
 export TEXMFCONFIG="${XDG_CONFIG_HOME}/texmf"
 
