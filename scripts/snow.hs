@@ -1,5 +1,4 @@
 #!/usr/bin/env runhaskell
-{-# LANGUAGE RecordWildCards #-}
 module Main (main) where
 
 import Data.Default (Default (..))
