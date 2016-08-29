@@ -4,6 +4,7 @@ export LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
 export TEXMFHOME="${HOME}/documents/files/texmf"
 
 export BROWSER='firefox'
+export TERMINAL='urxvtc -e'
 
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_CACHE_HOME="${HOME}/.cache"
