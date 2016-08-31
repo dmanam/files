@@ -58,6 +58,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	autocmd FileType haskell setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	autocmd FileType cabal setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	autocmd BufRead,BufNewFile *.hsc setlocal filetype=haskell
+	autocmd BufRead,BufNewFile *.chs setlocal filetype=haskell
 
 " coq
 	Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
