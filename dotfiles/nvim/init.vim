@@ -57,6 +57,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	let g:haddock_browser_callformat="sh -c '%s file://%s >/dev/null 2>&1 &'"
 	autocmd FileType haskell setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	autocmd FileType cabal setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
+	autocmd BufRead,BufNewFile *.hsc setlocal filetype=haskell
 
 " coq
 	Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
