@@ -158,6 +158,7 @@ call plug#end()
 	set title titlestring=%F
 
 " tex
+	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
 	let g:tex_flavor = "latex"
 
