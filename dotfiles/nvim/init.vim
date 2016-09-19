@@ -160,6 +160,7 @@ call plug#end()
 " tex
 	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
+	autocmd FileType tex setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
 	let g:tex_flavor = "latex"
 
 " easier to press ; than :
