@@ -1,6 +1,6 @@
 export GOPATH="${HOME}/documents/go"
 export PATH="${HOME}/documents/files/scripts:${GOPATH}:${GOPATH}/bin:${PATH}"
-export LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${HOME}/.local/lib:${LD_LIBRARY_PATH}"
 export TEXMFHOME="${HOME}/documents/files/texmf"
 
 export BROWSER='firefox'
