@@ -2,6 +2,13 @@
 \ProvidesPackage{deven}[2016/05/11 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
+\RequirePackage{physics}
+  \let\abs\relax
+  \let\norm\relax
+  \let\dd\relax
+  \let\Tr\relax
+  \let\pmat\relax
+  \let\Res\relax
 \RequirePackage[no-math]{fontspec}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{ifthen}
@@ -60,7 +67,7 @@
   \let\ceil\relax
     \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
-% generic 
+% generic
   \renewcommand*{\vec}[1]{\mathbf{#1}}
   \newcommand*{\conj}[1]{\overline{#1}}
   \DeclareMathOperator{\dom}{dom}
