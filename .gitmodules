@@ -1,3 +1,6 @@
 [submodule "git-annex-remote-rclone"]
 	path = git-annex-remote-rclone
 	url = https://github.com/DanielDent/git-annex-remote-rclone.git
+[submodule "texmf/tex/latex/tikz-feynman"]
+	path = texmf/tex/latex/tikz-feynman
+	url = https://github.com/JP-Ellis/tikz-feynman.git
