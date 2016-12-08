@@ -19,7 +19,7 @@
 \RequirePackage{csquotes}
 \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
-\DeclareOption{6046}{
+\DeclareOption{6046}{%
   \let\reals\relax
   \let\integers\relax
   \let\naturals\relax
@@ -50,7 +50,7 @@
 
 \ProcessOptions\relax
 
-\setmainfont[Mapping=tex-text, Ligatures={Common}, Numbers={Proportional, OldStyle}]{LinLibertineO}
+\setmainfont[Ligatures={TeX, Common}, Numbers={Proportional, OldStyle}]{LinLibertineO}
 \MakeAutoQuote{<}{>}
 \linespread{1.25}
 
