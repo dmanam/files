@@ -34,10 +34,17 @@
   \fi
 }
 
+\newcommand{\beforenextsect}[1]{\newcommand{\@beforenextsect}{#1}}
+
 \newcommand{\sect}[1]{
   \label{\@sectname end}
   \cleardoublepage
   \setcounter{page}{1}
+  \ifx\@beforenextsect\undefined
+  \else
+    \@beforenextsect
+    \let\@beforenextsect\relax
+  \fi
   \sectname{#1}
 }
 

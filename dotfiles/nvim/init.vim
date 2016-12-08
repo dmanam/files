@@ -67,6 +67,9 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	au FileType coq map <F8> :CoqLaunch<CR>
 	au FileType coq map <F9> :CoqKill<CR>
 
+" bluespec system verilog
+	Plug 'mtikekar/vim-bsv', { 'for': 'bsv' }
+
 " easily delete view files
 	Plug 'vim-scripts/delview'
 	ca delview Delview
@@ -160,6 +163,7 @@ call plug#end()
 " tex
 	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
+	autocmd FileType tex setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
 	let g:tex_flavor = "latex"
 
 " easier to press ; than :

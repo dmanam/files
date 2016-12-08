@@ -93,7 +93,7 @@ haddock
   -- contents-location:
 
 install-dirs user
-prefix: /home/deven/.local
+  prefix: /home/deven/.local
   -- bindir: $prefix/bin
   -- libdir: $prefix/lib
   -- libsubdir: $abi/$libname

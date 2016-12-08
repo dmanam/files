@@ -2,6 +2,13 @@
 \ProvidesPackage{deven}[2016/05/11 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,mathtools,mathrsfs}
+\RequirePackage{physics, slashed}
+  \let\abs\relax
+  \let\norm\relax
+  \let\dd\relax
+  \let\Tr\relax
+  \let\pmat\relax
+  \let\Res\relax
 \RequirePackage[no-math]{fontspec}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{ifthen}
@@ -51,7 +58,9 @@
 
 % paired delimiters
   \DeclarePairedDelimiter{\prn}{(}{)}
+  \DeclarePairedDelimiter{\dprn}{(\!(}{)\!)}
   \DeclarePairedDelimiter{\brk}{[}{]}
+  \DeclarePairedDelimiter{\dbrk}{[\![}{]\!]}
   \DeclarePairedDelimiter{\brc}{\{}{\}}
   \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
   \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
@@ -60,18 +69,24 @@
   \let\ceil\relax
     \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
-% generic 
+% general
   \renewcommand*{\vec}[1]{\mathbf{#1}}
   \newcommand*{\conj}[1]{\overline{#1}}
+  \newcommand*{\closure}[1]{\overline{#1}}
   \DeclareMathOperator{\dom}{dom}
   \DeclareMathOperator{\im}{im}
   \newcommand{\id}{\mathrm{id}}
   \newcommand{\isom}{\cong}
   \newcommand{\bij}{\xrightarrow{\sim}}
+  \newcommand{\tensor}{\otimes}
   % use \varphi instead of \phi by default
     \let\temp\phi
     \let\phi\varphi
     \let\varphi\temp
+  % same for \varnothing and \emptyset
+    \let\temp\emptyset
+    \let\emptyset\varnothing
+    \let\varnothing\temp
     \let\temp\relax
 
 % computer science
@@ -80,6 +95,7 @@
 % number theory
   \newcommand{\divides}{\mid}
   \newcommand{\ndivides}{\nmid}
+  \DeclareMathOperator{\Cl}{Cl}
 
 % analysis
   \newcommand{\dd}{\mathop{}\!\mathrm{d}}
@@ -94,11 +110,24 @@
 
 % algebra
   \DeclareMathOperator{\Tr}{Tr}
+  \DeclareMathOperator{\N}{N}
+  \newcommand{\herm}{\dagger}
   \newcommand*{\pmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
   \DeclareMathOperator{\Ind}{Ind}
   \DeclareMathOperator{\Res}{Res}
   \newcommand{\dominatedby}{\triangleleft}
   \newcommand{\dominates}{\triangleright}
+  \newcommand*{\residue}[1]{\overline{#1}}
+  \DeclareMathOperator{\Gal}{Gal}
+  \DeclareMathOperator{\Aut}{Aut}
+  \DeclareMathOperator{\Frac}{Frac}
+  \newcommand*{\completion}[1]{\widehat{#1}}
+
+% algebraic geometry
+  \DeclareMathOperator{\Div}{Div}
+  \let\div\relax
+  \DeclareMathOperator{\div}{div}
+  \DeclareMathOperator{\Pic}{Pic}
 
 % logic and set theory
   \DeclareMathOperator{\Succ}{S}
@@ -130,5 +159,9 @@
   \newcommand{\QE}{\mathrm{Q_E}}
   \newcommand{\lbox}{\Box}
   \newcommand{\ldiam}{\Diamond}
+
+% physics
+  \newcommand{\outarrow}{\odot}
+  \newcommand{\inarrow}{\otimes}
 
 \endinput
