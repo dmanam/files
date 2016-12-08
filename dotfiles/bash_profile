@@ -22,7 +22,7 @@ export XCOMPOSEFILE="${XDG_CONFIG_HOME}/x11/compose"
 export HISTFILE="${XDG_CACHE_HOME}/bash/history"
 export DISTCC_DIR="${XDG_CACHE_HOME}/distcc"
 export TEXMFVAR="${XDG_CACHE_HOME}/texmf"
-export XAUTHORITY="${XDG_CACHE_HOME}/x11/authority"
+export XAUTHORITY="${XAUTHORITY:-${XDG_CACHE_HOME}/x11/authority}"
 export LESSHISTFILE=-
 
 export WINEPREFIX="${XDG_DATA_HOME}/wine"
