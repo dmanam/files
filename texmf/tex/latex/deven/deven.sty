@@ -124,6 +124,12 @@
   \DeclareMathOperator{\Aut}{Aut}
   \DeclareMathOperator{\Frac}{Frac}
   \newcommand*{\completion}[1]{\widehat{#1}}
+  \let\@projlim\varprojlim
+  \let\@injlim\varinjlim
+  \let\varprojlim\projlim
+  \let\varinjlim\injlim
+  \renewcommand*{\projlim}{\@projlim\limits}
+  \renewcommand*{\injlim}{\@injlim\limits}
 
 % algebraic geometry
   \DeclareMathOperator{\Div}{Div}
