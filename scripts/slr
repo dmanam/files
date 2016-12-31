@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+as=("" "-a")
+ls=("" "-l")
+Fs=("" "-F")
+cs=("" "-c")
+
+while true; do
+	a="${as[$((RANDOM %2))]}"
+	l="${ls[$((RANDOM %2))]}"
+	F="${Fs[$((RANDOM %2))]}"
+	c="${cs[$((RANDOM %2))]}"
+	sl "${a}" "${l}" "${F}" "${c}"
+done
