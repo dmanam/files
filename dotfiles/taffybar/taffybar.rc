@@ -9,15 +9,15 @@ style "taffybar-default" {
   font_name    = "DejaVuSansMono 10"
 }
 
-style "active-window" = "default" {
+style "taffybar-active-window" = "taffybar-default" {
   fg[NORMAL] = @green
 }
 
-style "notification-button" = "default" {
+style "taffybar-notification-button" = "taffybar-default" {
   text[NORMAL] = @red
   fg[NORMAL]   = @red
 }
 
 widget "Taffybar*" style "taffybar-default"
-widget "Taffybar*WindowSwitcher*label" style "active-window"
-widget "*NotificationCloseButton" style "notification-button"
+widget "Taffybar*WindowSwitcher*label" style "taffybar-active-window"
+widget "*NotificationCloseButton" style "taffybar-notification-button"
