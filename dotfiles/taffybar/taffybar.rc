@@ -1,6 +1,6 @@
 gtk_color_scheme = "black:#000000\nwhite:#d7d7d7\ngreen:#afd787\nred:#ff5f5f"
 
-style "default" {
+style "taffybar-default" {
   bg[NORMAL]   = @black
   fg[NORMAL]   = @white
   text[NORMAL] = @white
@@ -18,6 +18,6 @@ style "notification-button" = "default" {
   fg[NORMAL]   = @red
 }
 
-widget "Taffybar*" style "default"
+widget "Taffybar*" style "taffybar-default"
 widget "Taffybar*WindowSwitcher*label" style "active-window"
 widget "*NotificationCloseButton" style "notification-button"
