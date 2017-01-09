@@ -18,10 +18,10 @@ import qualified Data.Text.Encoding as T
 instance BinaryStringRep String where
   fromStringRep = T.unpack . T.decodeUtf8
   toStringRep = T.encodeUtf8 . T.pack
-type InstalledPackageInfo' = InstalledPackageInfo String String String String String
+type InstalledPackageInfo' = InstalledPackageInfo String String String String
 
 findPkgs :: String -> [InstalledPackageInfo'] -> [InstalledPackageInfo']
-findPkgs mod = filter $ (ExposedModule mod Nothing Nothing `elem`) . exposedModules
+findPkgs mod = filter $ (ExposedModule mod Nothing `elem`) . exposedModules
 
 main = do
   dbfile <- init <$> readProcess "ghc" ["--print-global-package-db"] ""
