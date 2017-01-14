@@ -18,6 +18,7 @@ export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
 export MATHEMATICA_USERBASE="${XDG_CONFIG_HOME}/mathematica"
 export TEXMFCONFIG="${XDG_CONFIG_HOME}/texmf"
 export XCOMPOSEFILE="${XDG_CONFIG_HOME}/x11/compose"
+export DCL_NODE_FILE="${XDG_CONFIG_HOME}/dcl.nodes"
 
 export HISTFILE="${XDG_CACHE_HOME}/bash/history"
 export DISTCC_DIR="${XDG_CACHE_HOME}/distcc"
