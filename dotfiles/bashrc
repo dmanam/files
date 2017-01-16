@@ -9,6 +9,7 @@ shopt -s histappend
 
 alias ls='ls --color=auto -N'
 alias owl='mosh -- owl screen -x owl'
+alias qmv='qmv -fdo'
 
 (kinit -R && aklog &) >/dev/null 2>&1
 
