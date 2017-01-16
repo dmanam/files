@@ -13,6 +13,7 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.WorkspaceScreenshot
 import XMonad.Prompt (XPConfig (..), defaultXPConfig, XPPosition (Top))
 import XMonad.Prompt.Shell (shellPrompt)
+import XMonad.Prompt.Env (envPrompt)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
 import Data.Monoid
 import qualified Data.Map as M
@@ -65,6 +66,7 @@ myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
 --  , ((modm,                 xK_p     ), spawn "dmenu_run") -- launch dmenu
     , ((modm,                 xK_p     ), shellPrompt myXPConfig) -- command launcher
+    , ((modm .|.   shiftMask, xK_n     ), envPrompt myXPConfig) -- environment variable changer
     , ((modm .|.   shiftMask, xK_c     ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
     , ((modm,                 xK_space ), sendMessage NextLayout) -- rotate through the available layout algorithms
     , ((modm .|.   shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf) -- reset the layouts on the current workspace to default
