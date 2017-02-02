@@ -11,7 +11,7 @@ alias ls='ls --color=auto -N'
 alias owl='mosh -- owl screen -x owl'
 alias qmv='qmv -fdo'
 
-(kinit -R && aklog &) >/dev/null 2>&1
+(kinit -R && aklog && aklog -cell csail.mit.edu &) >/dev/null 2>&1
 
 # Test for an interactive shell.  There is no need to set anything
 # past this point for scp and rcp, and it's important to refrain from
