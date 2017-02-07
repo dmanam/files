@@ -3,6 +3,7 @@
 xrdb -merge ~/.dotfiles/xresources
 xrdb -merge ~/.dotfiles/`hostname`/xresources
 compton -Cb
+setxkbmap -option caps:swapescape -option compose:ralt
 
 bash --login -c 'urxvtd -o -f'
 unclutter &
