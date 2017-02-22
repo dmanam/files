@@ -5,6 +5,7 @@ import XMonad.Util.Cursor
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Actions.NoBorders
+import XMonad.Layout.TwoPane
 import XMonad.Layout.NoBorders (noBorders, lessBorders, Ambiguity (Screen))
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Core (windowset)
@@ -115,10 +116,11 @@ myMouseBindings XConfig{XMonad.modMask = modm} = M.fromList
     ]
 
 -- layouts: use 'mod-shift-space' after updating
-myLayout = avoidStruts $ tall ||| wide ||| full
-  where tall    = renamed [Replace "|"] tiled
-        wide    = renamed [Replace "―"] (Mirror tiled)
-        full    = renamed [Replace "☐"] . noBorders $ Full
+myLayout = avoidStruts $ two ||| tall ||| wide ||| full
+  where tall    = renamed [Replace "▥"] tiled
+        wide    = renamed [Replace "▤"] (Mirror tiled)
+        full    = renamed [Replace "□"] . noBorders $ Full
+        two     = renamed [Replace "◫"] . lessBorders Screen $ TwoPane delta ratio
         tiled   = lessBorders Screen $ Tall nmaster delta ratio
         nmaster = 1
         ratio   = 1/2
