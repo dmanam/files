@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-date1=`date +%s`
+date1=$((`date +%s` - $1))
 
 while true; do
 	echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"
