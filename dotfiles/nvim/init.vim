@@ -60,6 +60,22 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	autocmd BufRead,BufNewFile *.hsc setlocal filetype=haskell
 	autocmd BufRead,BufNewFile *.chs setlocal filetype=haskell
 
+" tex
+	Plug 'lervag/vimtex', { 'for': 'tex' }
+	let g:vimtex_view_method = "zathura"
+	let g:vimtex_latexmk_progname = "nvr"
+	let g:vimtex_quickfix_open_on_warning = 0
+	augroup vimtex_config
+		au!
+		au User VimtexEventQuit VimtexClean
+	augroup END
+	au FileType tex map <F8> :VimtexCompileToggle<CR>
+	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
+	autocmd FileType tex setlocal indentexpr&
+	autocmd FileType tex setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
+	let g:tex_flavor = "latex"
+
+
 " coq
 	Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
 	Plug 'the-lambda-church/coquille', { 'for': 'coq' }
@@ -159,12 +175,6 @@ call plug#end()
 
 " title
 	set title titlestring=%F
-
-" tex
-	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
-	autocmd FileType tex setlocal indentexpr&
-	autocmd FileType tex setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
-	let g:tex_flavor = "latex"
 
 " easier to press ; than :
 	nnoremap ; :
