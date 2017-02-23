@@ -3,4 +3,6 @@ map k navigate previous
 map J scroll down
 map K scroll up
 
+set vertical-center true
+set zoom-center true
 set font "18px DejaVuSansMono"
