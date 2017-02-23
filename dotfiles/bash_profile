@@ -25,6 +25,7 @@ export DISTCC_DIR="${XDG_CACHE_HOME}/distcc"
 export TEXMFVAR="${XDG_CACHE_HOME}/texmf"
 export XAUTHORITY="${XAUTHORITY:-${XDG_CACHE_HOME}/x11/authority}"
 export LESSHISTFILE=-
+export KRB5CCNAME="KEYRING:persistent:$(id -u)"
 
 export WINEPREFIX="${XDG_DATA_HOME}/wine"
 
