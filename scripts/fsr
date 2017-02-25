@@ -1,0 +1,374 @@
+#!/usr/bin/env perl
+$ID = q$Id: fsr,v 1.4 2015/05/31 22:25:48 jmorzins Exp $;
+#
+# fsr -- Recursively apply AFS fs commands.
+#
+# Written by Carol Oliver
+# Portions by Russ Allbery <rra@stanford.edu>
+# Inspired by a script written by Larry Schwimmer
+# Copyright 1999, 2004 Board of Trustees, Leland Stanford Jr. University
+#
+# This program is free software; you may redistribute it and/or modify it
+# under the same terms as Perl itself.
+
+##############################################################################
+# Site configuration
+##############################################################################
+
+# The full path to fs.  Allow for Linux where the preferred location may be on
+# local disk.  Fall back to the user's path.
+($FS)  = grep { -x $_ } qw(/usr/bin/fs /usr/afsws/bin/fs /usr/pubsw/bin/fs /bin/athena/fs);
+$FS ||= 'fs';
+
+##############################################################################
+# Modules and declarations
+##############################################################################
+
+require 5.003;
+
+use strict;
+use vars qw($CROSSMOUNTS $FS $ID $NOMOUNTS $VERBOSE);
+
+use File::Find qw(find);
+use Getopt::Long qw(GetOptions);
+
+# We fork fs lsmount inside a grep (in File::Find) and expect to be able to do
+# an exec after fork, neither of which work with the native Windows
+# ActiveState Perl fork emulation.
+BEGIN {
+    if ($^O eq 'MSWin32') {
+        $0 =~ s%.*/%%;
+        warn "$0 doesn't work with native Windows (but may with Cygwin)\n";
+        exit;
+    }
+}
+
+##############################################################################
+# Command-line parsing
+##############################################################################
+
+# Given an fs subcommand and its arguments, parse it into three lists.  The
+# first list contains all of the arguments, including the subcommand, to pass
+# fs before a directory name.  The second list contains all of the directories
+# the command should be applied to.  The third list contains everything after
+# the directory name.
+sub parse_fs_command {
+    my (@args) = @_;
+    my $command = shift @args;
+
+    # fs commands can either take their arguments in a particular order or can
+    # have them flagged with a particular option.  We use this table to encode
+    # information about how to parse each fs command.
+    #
+    # The first value in this table says whether there are positional
+    # arguments before the files we'll recurse on.  The second value says
+    # whether the files we'll recurse on are the last positional arguments
+    # (and we can suck up everything to the end of the arguments unless
+    # there's a flag).  The third value gives the option letter for the option
+    # that takes a list of directories.
+    my %commands = (cleanacl  => [undef, 'yes', 'p'],
+                    copyacl   => ['yes', 'yes', 't'],
+                    ca        => ['yes', 'yes', 't'],
+                    examine   => [undef, 'yes', 'p'],
+                    flush     => [undef, 'yes', 'p'],
+                    listacl   => [undef, 'yes', 'p'],
+                    la        => [undef, 'yes', 'p'],
+                    listquota => [undef, 'yes', 'p'],
+                    lq        => [undef, 'yes', 'p'],
+                    lsmount   => [undef, 'yes', 'd'],
+                    setacl    => [undef, undef, 'd'],
+                    sa        => [undef, undef, 'd'],
+                    setquota  => [undef, undef, 'p'],
+                    sq        => [undef, undef, 'p'],
+                    whereis   => [undef, 'yes', 'p']);
+
+    # These are fs options for various commands that take arguments.  (There
+    # are other options that don't take arguments; these are special because
+    # we have to pull their arguments out of the argument list.)
+    my %options = map { $_ => 1 } qw(a d f p t);
+
+    # Figure out what fs command we're dealing with.
+    my @fscmds = grep { /^$command/ } keys %commands;
+    if (@fscmds > 1) {
+        die "$0: ambiguous fs command $command";
+    } elsif (!@fscmds) {
+        die "$0: unknown or unapplicable fs command $command\n";
+    }
+    $command = $fscmds[0];
+    my @props = @{ $commands{$command} };
+
+    # First we take a pass through all of our arguments, pulling out anything
+    # that's an option (and all of the arguments that go with it).  Then, if
+    # we don't find the list of directories that way, we pull them out of the
+    # remaining positional arguments which are now simple to parse.
+    #
+    # We pull all options out into the prefix (the part that we're going to
+    # put before the directories) since we can provide them in any order and
+    # that's easiest.  The non-option arguments go into @tail.
+    #
+    # The $seen_from flag is set if we've seen a -fromdir option and the
+    # command is expecting a -todir option.  This is so that if we see a
+    # -fromdir option, we won't assume that non-option arguments are the
+    # fromdir.
+    #
+    # The $required flag is set if we need to put the right option flag before
+    # the directory argument to fs.  $flag holds the command-line flag used to
+    # introduce a directory.
+    my (@head, @dirs, @tail, $seen_from, $flag, $required);
+    while (@args) {
+        local $_ = shift @args;
+        if ($_ =~ /^-(.)/) {
+            my $option = $1;
+            if ($option eq $props[2]) {
+                $flag = $_;
+                push (@dirs, shift @args) while (@args && $args[0] !~ /^-/);
+            } elsif ($options{$option}) {
+                push (@head, $_);
+                push (@head, shift @args)
+                    while (@args && $args[0] !~ /^-/);
+                if ($props[2] eq 't' && $option eq 'f') {
+                    $seen_from = 1;
+                }
+                $required = 1;
+            } else {
+                push (@head, $_);
+            }
+        } else {
+            push (@tail, $_);
+        }
+    }
+    if (@dirs) {
+        push (@head, $flag);
+    } else {
+        push (@head, shift @tail) if ($props[0] && !$seen_from);
+        push (@head, "-$props[2]") if $required;
+        if ($props[1]) {
+            push (@dirs, shift @tail)
+                while (@tail && $tail[0] !~ /^-/);
+        } else {
+            push (@dirs, shift @tail);
+        }
+    }
+    unshift (@head, $command);
+    return (\@head, \@dirs, \@tail);
+}
+
+##############################################################################
+# AFS probing
+##############################################################################
+
+# Given a path, returns true if it is a mount point.  Fork off fs the hard way
+# since we don't care about its output and want to protect against weird
+# directory names.
+sub ismount {
+    my ($path) = @_;
+    my $pid = fork;
+    if (!defined $pid) {
+        die "$0: can't fork: $!\n";
+    } elsif ($pid == 0) {
+        open (STDOUT, '> /dev/null') or die "$0: can't open /dev/null: $!\n";
+        open (STDERR, '>&STDOUT') or die "$0: can't dup stdout: $!\n";
+        exec ($FS, 'lsmount', $path) or die "$0: can't exec $FS: $!\n";
+    } else {
+        waitpid ($pid, 0);
+    }
+    return ($? == 0);
+}
+
+# The function that runs fs on all appropriate directories.  Run from inside
+# the invocation of find.  Takes the file to operate on, a reference to an
+# array holding the initial part of the fs command, and a reference to an
+# array holding the final part of the fs command.
+sub run_fs {
+    my ($path, $head, $tail) = @_;
+    return if (-l $path || !-d _);
+    unless ($CROSSMOUNTS) {
+        if (ismount $path) {
+            $File::Find::prune = 1;
+            return;
+        }
+    }
+
+    # The $FS command will interpret path names starting with "-"
+    # as command-line options.  Workaround by prefixing with "./"
+    $path =~ s/^-/.\/-/;
+
+    print "\nDirectory: $File::Find::name\n" if $VERBOSE;
+    system ($FS, @$head, $path, @$tail) == 0
+        or warn "$0: $FS @$head $path @$tail failed\n";
+}
+
+##########################################################################
+# Main routine
+##########################################################################
+
+# Get output in the right order.
+$| = 1;
+
+# Trim extraneous garbage from the path.
+my $fullpath = $0;
+$0 =~ s%.*/%%;
+
+# Parse command line options.
+my ($help, $nomounts, $version);
+Getopt::Long::config ('bundling', 'no_ignore_case', 'require_order');
+GetOptions ('help|h'         => \$help,
+            'no-mounts|M'    => \$nomounts,
+            'cross-mounts|m' => \$CROSSMOUNTS,
+            'verbose|V'      => \$VERBOSE,
+            'version|v'      => \$version) or exit 1;
+if ($help) {
+    print "Feeding myself to perldoc, please wait....\n";
+    exec ('perldoc', '-t', $0) or die "Cannot fork: $!\n";
+} elsif ($version) {
+    my $version = join (' ', (split (' ', $ID))[1..3]);
+    $version =~ s/,v\b//;
+    $version =~ s/(\S+)$/($1)/;
+    $version =~ tr%/%-%;
+    print $version, "\n";
+    exit 0;
+}
+die "Usage: $0 [-hMmVv] <fs-command> [<fs-options>]\n" unless @ARGV;
+
+# @ARGV now contains the fs command and its options.  We need to parse it out
+# into three lists.  The first contains the fs subcommand and any options that
+# should occur before the directory, the second contains the set of
+# directories to operate on, and the third contains all the options that
+# should occur after the directory.
+my ($head, $dirs, $tail) = parse_fs_command (@ARGV);
+
+# If -M was used, we need to filter out any mount points or non-directories
+# from the set of directories provided.
+if ($nomounts) {
+    @$dirs = grep { !-l $_ && -d _ && !ismount ($_) } @$dirs;
+}
+foreach my $bogusdir (grep { !-e $_ } @$dirs) {
+    print "No such directory $bogusdir\n";
+}
+@$dirs = grep { -e $_ } @$dirs;
+die "$0: no directories to process\n" unless @$dirs;
+
+# Now, do the actual work.  Run find on each of the provided directories,
+# passing in to the function the head and tail of the fs command.
+$File::Find::dont_use_nlink = 1;
+find (sub { run_fs ($_, $head, $tail) }, @$dirs);
+exit 0;
+__END__
+
+##############################################################################
+# Documentation
+##############################################################################
+
+=head1 NAME
+
+fsr - Recursively apply AFS fs commands
+
+=head1 SYNOPSIS
+
+fsr [B<-hMmVv>] I<fs-command> I<fs-options>
+
+=head1 DESCRIPTION
+
+B<fsr> wraps the basic AFS B<fs> command to make it recursive.  It only
+works with the B<fs> subcommands that act on directories, namely
+C<cleanacl>, C<copyacl>, C<listacl>, C<listquota>, C<lsmount>, C<setacl>,
+C<setquota>, and C<whereis>.  All aliases for those commands are also
+supported.
+
+To apply an B<fs> command recursively, just run B<fsr> instead of B<fs>,
+leaving all of the other options and command ordering the same.  To use any
+of the options specific to B<fsr>, give them immediately after C<fsr> on the
+command line and before the B<fs> subcommand.
+
+Note that for C<copyacl>, only the target directory will be recursive.  In
+other words, B<fsr> will let you copy the ACLs from a single directory to
+every directory in a target tree, but won't let you copy ACLs from one
+directory hierarchy to another matching hierarchy.
+
+Run C<fs help> for more usage information for B<fs>.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-h>, B<--help>
+
+Print out this documentation (which is done simply by feeding the script to
+C<perldoc -t>) and then exit.
+
+=item B<-m>, B<--cross-mounts>
+
+Enable crossing of mountpoints.  Be very careful with this option, since
+when using it, B<fsr> will happily recurse into arbitrarily deep file
+systems.  No check is made for whether a given volume had already been
+visited, so recursive volume structures will cause B<fsr> to descend
+indefinitely deep.  Only use this option if you know the structure of the
+directory tree you're using it on.
+
+=item B<-M>, B<--no-mounts>
+
+Normally, B<fsr> will recurse into all directories specified on the command
+line, regardless of whether those directories are mount points or not.  Only
+mount points underneath those directories won't be crossed (in the absence
+of the B<-m> option).  With this option, any directories specified on the
+command line that are actually mount points will also be skipped.
+
+=item B<-V>, B<--verbose>
+
+Print out each directory that B<fsr> acts on as it does so.
+
+=item B<-v>, B<--version>
+
+Print the version of B<fsr> and exit.
+
+=back
+
+=head1 EXAMPLES
+
+Give person1 all AFS permissions (rlidwka) on the group directory F<mygroup>
+and removes all AFS permissions to that directory for person2:
+
+    fsr sa /afs/ir/group/mygroup person1 all person2 none
+
+Gives personX AFS read permissions (rl) recursively to the directories
+beginning with C<cs> in the current working directory, except for any
+subdirectories that are actually mount points:
+
+    fsr sa -dir cs* -acl personX read
+
+Same as above, but recursively descends across mountpoints (be very careful
+with this):
+
+    fsr -m sa -dir cs* -acl personX read
+
+Gives personX AFS read permissions to all directories in the current
+directory and recursively to non-mount-point directories below them, but
+skipping any directories in the current directory that are actually mount
+points:
+
+    fsr -M sa -dir * -acl personX read
+
+=head1 NOTES
+
+B<fsr> ignores symlinks.
+
+=head1 SEE ALSO
+
+fs(1)
+
+The current version of this program is available from its web page at
+L<http://www.eyrie.org/~eagle/software/fsr/>.
+
+=head1 AUTHORS
+
+Written by Russ Allbery <rra@stanford.edu> and Carol Oliver.  Inspired by a
+script written by Larry Schwimmer.
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 1999, 2004 Board of Trustees, Leland Stanford Jr. University.
+
+This program is free software; you may redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
