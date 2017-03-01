@@ -55,11 +55,11 @@
     \hspace{-1ex}
     \ifx&#1&
     \else
-      \textpipe\hspace{1ex}#1\hspace{0.7ex}
+      |\hspace{1ex}#1\hspace{0.7ex}
     \fi
     \ifx&#2&
     \else
-      \textpipe\hspace{1ex}#2
+      |\hspace{1ex}#2
     \fi
   }
 }
