@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesClass{deven-scrartcl}[2016/05/11 Deven custom macros for scrartcl]
+\ProvidesClass{deven-scrartcl}[2017/03/02 Deven custom macros for scrartcl]
 
 \DeclareOption{default}{
   \PassOptionsToClass{12pt, letterpaper, twoside}{scrartcl}
@@ -20,7 +20,7 @@
 
 \setkomafont{disposition}{\normalfont\scshape}
 \setkomafont{section}{\normalsize}
-\ihead{\textrm{\large \@author, \@title\ifthenelse{\equal{\@sectname}{}}{}{, part \@sectname}}, page \thepage~of \pageref{\@sectname end}}
+\ihead{\textnormal{\ligatured \large \@author, \@title\ifthenelse{\equal{\@sectname}{}}{}{, part \@sectname},} \ligatured page \thepage~of \pageref{\@sectname end}}
 \cfoot{}\ifoot{}\ofoot{}
 
 \newcommand{\sectname}[1]{\renewcommand{\@sectname}{#1}}
