@@ -2,7 +2,7 @@
 \ProvidesClass{deven-scrartcl}[2017/03/02 Deven custom macros for scrartcl]
 
 \DeclareOption{default}{
-  \PassOptionsToClass{12pt, letterpaper, twoside}{scrartcl}
+  \PassOptionsToClass{12pt, letterpaper, twoside, parskip}{scrartcl}
 }
 
 \DeclareOption*{
