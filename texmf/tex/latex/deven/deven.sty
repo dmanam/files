@@ -19,6 +19,9 @@
 \RequirePackage{csquotes}
 \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \RequirePackage[protrusion=true,expansion=true]{microtype}
+\RequirePackage[osf,theoremfont]{newtxtext}
+\RequirePackage[vvarbb,libertine]{newtxmath}
+\RequirePackage{eulervm,libertine,inconsolata}
 
 \DeclareOption{6046}{%
   \let\reals\relax
@@ -51,7 +54,7 @@
 
 \ProcessOptions\relax
 
-\setmainfont[Ligatures={TeX, Common}, Numbers={Proportional, OldStyle}]{LinLibertineO}
+\setmainfont[Ligatures={TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \MakeAutoQuote{<}{>}
 \linespread{1.25}
 
@@ -69,6 +72,12 @@
   \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
   \let\ceil\relax
     \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+% theorem environments
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lemma}{Lemma}
+  \newtheorem{definition}{Definition}
+  \newtheorem{hypothesis}{Hypothesis}
 
 % general
   \let\varvec\vec\relax
@@ -151,7 +160,7 @@
   \DeclareMathOperator{\Succ}{S}
   \DeclareMathOperator{\fst}{fst}
   \DeclareMathOperator{\snd}{snd}
-  \DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+  \newcommand{\card}[1]{\abs*{#1}}
   \newcommand{\proves}{\vdash}
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
