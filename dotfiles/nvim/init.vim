@@ -65,6 +65,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	let g:vimtex_view_method = "zathura"
 	let g:vimtex_latexmk_progname = "nvr"
 	let g:vimtex_quickfix_open_on_warning = 0
+	let g:vimtex_indent_enabled = 0
 	augroup vimtex_config
 		au!
 		au User VimtexEventQuit VimtexClean
