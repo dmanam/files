@@ -72,6 +72,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	augroup END
 	au FileType tex map <F8> :VimtexCompileToggle<CR>
 	au FileType tex map <leader>s :VimtexStatus<CR>
+	au FileType tex set indentkeys=
 	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
 	autocmd FileType tex setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
