@@ -72,7 +72,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 		au!
 		au User VimtexEventQuit VimtexClean
 	augroup END
-	au FileType tex map <F5> :VimtexCompile<CR>
+	au FileType tex map <leader>c :VimtexCompile<CR>
 	au FileType tex map <leader>s :VimtexStatus<CR>
 	au FileType tex map <leader>v :VimtexView<CR>
 	autocmd BufWritePost tex VimtexCompile
