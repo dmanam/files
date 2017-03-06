@@ -66,16 +66,20 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	let g:vimtex_latexmk_progname = "nvr"
 	let g:vimtex_quickfix_open_on_warning = 0
 	let g:vimtex_indent_enabled = 0
+	let g:vimtex_latexmk_continuous = 0
+	let g:vimtex_latexmk_background = 1
 	augroup vimtex_config
 		au!
 		au User VimtexEventQuit VimtexClean
 	augroup END
-	au FileType tex map <F8> :VimtexCompileToggle<CR>
+	au FileType tex map <F5> :VimtexCompile<CR>
 	au FileType tex map <leader>s :VimtexStatus<CR>
+	au FileType tex map <leader>v :VimtexView<CR>
+	autocmd BufWritePost tex VimtexCompile
 	au FileType tex set indentkeys=
 	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
-	autocmd FileType tex setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
+	autocmd FileType tex setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	let g:tex_flavor = "latex"
 
 
