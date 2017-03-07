@@ -75,7 +75,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	au FileType tex map <leader>c :VimtexCompile<CR>
 	au FileType tex map <leader>s :VimtexStatus<CR>
 	au FileType tex map <leader>v :VimtexView<CR>
-	autocmd BufWritePost tex VimtexCompile
+	autocmd BufWritePost *.tex VimtexCompile
 	au FileType tex set indentkeys=
 	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
