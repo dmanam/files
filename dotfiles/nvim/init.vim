@@ -6,6 +6,7 @@
 	set showcmd
 	set backspace=indent,eol,start
 	let g:netrw_dirhistmax=0
+	nnoremap Y y$
 
 " more convenient leader
 	let mapleader=","
