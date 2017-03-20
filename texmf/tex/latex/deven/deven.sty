@@ -40,7 +40,6 @@
   \let\norm\relax
   \let\floor\relax
   \let\ceil\relax
-  \let\ang\relax
   \let\sbrace\relax
   \let\cbrace\relax
   \let\paren\relax
@@ -104,6 +103,7 @@
   \DeclareMathOperator{\im}{im}
   \newcommand{\id}{\mathrm{id}}
   \newcommand{\isom}{\cong}
+  \newcommand{\from}{\leftarrow}
   \newcommand{\bij}{\xrightarrow{\sim}}
   \newcommand{\tensor}{\otimes}
   \DeclareMathOperator{\res}{res}
@@ -159,7 +159,8 @@
   \DeclareMathOperator{\Frac}{Frac}
   \DeclareMathOperator{\Spec}{Spec}
   \newcommand*{\completion}[1]{\widehat{#1}}
-  \DeclareMathOperator{\char}{char}
+  %\let\char\relax
+  %\DeclareMathOperator{\char}{char}
   % use variant limits
     \let\@projlim\varprojlim
     \let\@injlim\varinjlim
@@ -186,18 +187,18 @@
   \newcommand{\limpl}{\to}
   \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
   % define \lquot as corner quotes
-    \newbox\gnBoxA
-    \newdimen\gnCornerHgt
-    \setbox\gnBoxA=\hbox{$\ulcorner$}
-    \global\gnCornerHgt=\ht\gnBoxA
-    \newdimen\gnArgHgt
-    \def\lquot #1{%
-    \setbox\gnBoxA=\hbox{$#1$}%
-    \gnArgHgt=\ht\gnBoxA%
-    \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
-    \else \advance \gnArgHgt by -\gnCornerHgt%
-    \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
-    \raise\gnArgHgt\hbox{$\urcorner$}}
+  %  \newbox\gnBoxA
+  %  \newdimen\gnCornerHgt
+  %  \setbox\gnBoxA=\hbox{$\ulcorner$}
+  %  \global\gnCornerHgt=\ht\gnBoxA
+  %  \newdimen\gnArgHgt
+  %  \def\lquot #1{%
+  %  \setbox\gnBoxA=\hbox{$#1$}%
+  %  \gnArgHgt=\ht\gnBoxA%
+  %  \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
+  %  \else \advance \gnArgHgt by -\gnCornerHgt%
+  %  \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
+  %  \raise\gnArgHgt\hbox{$\urcorner$}}
   \newcommand*{\bq}[1]{\brk*{\lquot{#1}}}
   \DeclareMathOperator{\Bew}{Bew}
   \DeclareMathOperator{\isproof}{B}
