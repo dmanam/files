@@ -147,9 +147,9 @@
   \DeclareMathOperator{\Var}{Var}
 
 % algebra
-  \DeclareMathOperator{\GL}{GL}
+  \newcommand{\GL}{\mathrm{GL}}
   \DeclareMathOperator{\Tr}{Tr}
-  \DeclareMathOperator{\N}{N}
+  \newcommand{\N}{\mathrm{N}}
   \newcommand{\herm}{\dagger}
   \newcommand*{\pmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
   \DeclareMathOperator{\Ind}{Ind}
@@ -164,8 +164,8 @@
   \newcommand*{\completion}[1]{\widehat{#1}}
   \def\dual{\@ifstar\widehat\hat}
   \DeclareMathOperator{\charf}{char}
-  \newcommand{\nsubgrpeq}{\trianglelefteq}
-  \newcommand{\nsupgrpeq}{\trianglerighteq}
+  \newcommand{\nsubgrp}{\trianglelefteq}
+  \newcommand{\nsupgrp}{\trianglerighteq}
   % use variant limits
     \let\@projlim\varprojlim
     \let\@injlim\varinjlim
