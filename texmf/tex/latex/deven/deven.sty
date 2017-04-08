@@ -23,7 +23,7 @@
 \RequirePackage[supstfm=libertinesups]{superiors}
 \RequirePackage[varqu]{inconsolata}
 \RequirePackage[libertine,vvarbb]{newtxmath} %smallerops
-\RequirePackage[euler-digits,euler-hat-accent,small]{eulervm}
+\RequirePackage[OT1,euler-digits,small]{eulervm}
   \let\varmathbf=\mathbf\relax
   \let\mathbf=\mathbold\relax
   \DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
@@ -98,7 +98,7 @@
   \let\varvec\vec\relax
   \renewcommand*{\vec}[1]{\mathbf{#1}}
   \newcommand*{\conj}[1]{\overline{#1}}
-  \newcommand*{\closure}[1]{\overline{#1}}
+  \def\closure{\@ifstar\overline\bar}
   \DeclareMathOperator{\dom}{dom}
   \DeclareMathOperator{\im}{im}
   \newcommand{\id}{\mathrm{id}}
@@ -160,8 +160,8 @@
   \DeclareMathOperator{\Frac}{Frac}
   \DeclareMathOperator{\Spec}{Spec}
   \newcommand*{\completion}[1]{\widehat{#1}}
-  %\let\char\relax
-  %\DeclareMathOperator{\char}{char}
+  \def\dual{\@ifstar\widehat\hat}
+  \DeclareMathOperator{\charf}{char}
   % use variant limits
     \let\@projlim\varprojlim
     \let\@injlim\varinjlim
@@ -182,24 +182,26 @@
   \DeclareMathOperator{\Succ}{S}
   \DeclareMathOperator{\fst}{fst}
   \DeclareMathOperator{\snd}{snd}
-  \newcommand*{\card}[1]{\abs*{#1}}
+  \def\card{\@ifstar\@@card\@card}
+    \newcommand*{\@card}[1]{\##1}
+    \newcommand*{\@@card}[1]{\#\prn*{#1}}
   \newcommand{\proves}{\vdash}
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
   \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
   % define \lquot as corner quotes
-  %  \newbox\gnBoxA
-  %  \newdimen\gnCornerHgt
-  %  \setbox\gnBoxA=\hbox{$\ulcorner$}
-  %  \global\gnCornerHgt=\ht\gnBoxA
-  %  \newdimen\gnArgHgt
-  %  \def\lquot #1{%
-  %  \setbox\gnBoxA=\hbox{$#1$}%
-  %  \gnArgHgt=\ht\gnBoxA%
-  %  \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
-  %  \else \advance \gnArgHgt by -\gnCornerHgt%
-  %  \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
-  %  \raise\gnArgHgt\hbox{$\urcorner$}}
+    \newbox\gnBoxA
+    \newdimen\gnCornerHgt
+    \setbox\gnBoxA=\hbox{$\ulcorner$}
+    \global\gnCornerHgt=\ht\gnBoxA
+    \newdimen\gnArgHgt
+    \def\lquot #1{%
+    \setbox\gnBoxA=\hbox{$#1$}%
+    \gnArgHgt=\ht\gnBoxA%
+    \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
+    \else \advance \gnArgHgt by -\gnCornerHgt%
+    \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
+    \raise\gnArgHgt\hbox{$\urcorner$}}
   \newcommand*{\bq}[1]{\brk*{\lquot{#1}}}
   \DeclareMathOperator{\Bew}{Bew}
   \DeclareMathOperator{\isproof}{B}
