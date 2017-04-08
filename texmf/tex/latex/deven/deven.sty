@@ -162,6 +162,8 @@
   \newcommand*{\completion}[1]{\widehat{#1}}
   \def\dual{\@ifstar\widehat\hat}
   \DeclareMathOperator{\charf}{char}
+  \newcommand{\nsubgrpeq}{\trianglelefteq}
+  \newcommand{\nsupgrpeq}{\trianglerighteq}
   % use variant limits
     \let\@projlim\varprojlim
     \let\@injlim\varinjlim
@@ -183,8 +185,8 @@
   \DeclareMathOperator{\fst}{fst}
   \DeclareMathOperator{\snd}{snd}
   \def\card{\@ifstar\@@card\@card}
-    \newcommand*{\@card}[1]{\##1}
-    \newcommand*{\@@card}[1]{\#\prn*{#1}}
+    \newcommand*{\@card}[1]{\textrm{\#}#1}
+    \newcommand*{\@@card}[1]{\textrm{\#}\prn*{#1}}
   \newcommand{\proves}{\vdash}
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
