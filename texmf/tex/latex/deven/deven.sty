@@ -7,27 +7,28 @@
   \let\norm\relax
   \let\dd\relax
   \let\Tr\relax
-  \let\pmat\relax
   \let\Res\relax
+\RequirePackage[american]{babel}
 \RequirePackage[no-math]{fontspec}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{ifthen}
+\RequirePackage{xparse}
 \RequirePackage{clrscode4e}
   \let\ident\id
   \let\id\relax
-\RequirePackage[american]{babel}
 \RequirePackage{csquotes}
 \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \RequirePackage[protrusion=true,expansion=true]{microtype}
-\RequirePackage{libertine}
+\RequirePackage[type1]{libertine}
 \RequirePackage[supstfm=libertinesups]{superiors}
 \RequirePackage[varqu]{inconsolata}
 \RequirePackage[libertine,vvarbb]{newtxmath} %smallerops
-\RequirePackage[OT1,euler-digits,small]{eulervm}
+\RequirePackage[T1,euler-digits,small]{eulervm}
   \let\varmathbf=\mathbf\relax
   \let\mathbf=\mathbold\relax
   \DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
   \SetMathAlphabet\mathcal{bold}{OMS}{cmsy}{b}{n}
+  \mathchardef\mathhyphen="2D
 
 \DeclareOption{6046}{%
   \let\reals\relax
@@ -59,6 +60,7 @@
 
 \ProcessOptions\relax
 
+\renewcommand{\rmdefault}{minlibertine}
 \setmainfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setsansfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Biolinum O}
 \newfontfamily{\ligatured}[Ligatures={Required, TeX, Common, Contextual, Rare, Historic}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
@@ -82,8 +84,7 @@
     \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 % theorem environments
-  %\newtheoremstyle{plainsl}{\topsep}{\topsep}{\slshape}{}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
-  %\theoremstyle{plainsl}
+  \newtheoremstyle{plain}{\topsep}{\topsep}{\slshape}{}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
   \newtheorem{theorem}{Theorem}
   \newtheorem{lemma}{Lemma}
   \newtheorem{proposition}{Proposition}
@@ -153,15 +154,17 @@
 
 % algebra
   \newcommand{\GL}{\mathrm{GL}}
+  \newcommand{\SL}{\mathrm{SL}}
   \DeclareMathOperator{\Tr}{Tr}
   \newcommand{\N}{\mathrm{N}}
   \newcommand{\herm}{\dagger}
-  \newcommand*{\pmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
   \DeclareMathOperator{\Ind}{Ind}
   \DeclareMathOperator{\Res}{Res}
   \newcommand{\dominatedby}{\triangleleft}
+  \newcommand{\dominatedbyeq}{\trianglelefteq}
   \newcommand{\dominates}{\triangleright}
-  \newcommand*{\residue}[1]{\overline{#1}}
+  \newcommand{\dominateseq}{\trianglerighteq}
+  \def\residue{\@ifstar\overline\bar}
   \DeclareMathOperator{\Gal}{Gal}
   \DeclareMathOperator{\Aut}{Aut}
   \DeclareMathOperator{\Frac}{Frac}
@@ -171,13 +174,8 @@
   \DeclareMathOperator{\charf}{char}
   \newcommand{\nsubgrp}{\trianglelefteq}
   \newcommand{\nsupgrp}{\trianglerighteq}
-  % use variant limits
-    \let\@projlim\varprojlim
-    \let\@injlim\varinjlim
-    \let\varprojlim\projlim
-    \let\varinjlim\injlim
-    \renewcommand{\projlim}{\@projlim\limits}
-    \renewcommand{\injlim}{\@injlim\limits}
+  \newcommand{\semitimes}{\rtimes}
+  \DeclareMathOperator{\Stab}{Stab}
 
 % algebraic geometry
   \DeclareMathOperator{\Div}{Div}
@@ -227,13 +225,16 @@
   \newcommand{\inarrow}{\otimes}
 
 % category theory
-  \mathchardef\mathhyphen="2D
-  \newcommand*{\category}[2][]{%
-    \ifx&#1&%
-      \textup{\sffamily{#2}}%
-    \else%
-      #1\mathhyphen\textup{\sffamily{#2}}%
-    \fi%
-  }
+  \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
+  \NewDocumentCommand{\category}{ >{\@addhyphen} o m }{\IfNoValueF{#1}{#1}\textup{\sffamily{#2}}}
+  %\newcommand{\category}[2][]{\ifthenelse{\equal{#1}{}}{}{#1\mathhyphen}}
+  % use variant limits
+    \let\@projlim\varprojlim
+    \let\@injlim\varinjlim
+    \let\varprojlim\projlim
+    \let\varinjlim\injlim
+    \renewcommand{\projlim}{\@projlim\limits}
+    \renewcommand{\injlim}{\@injlim\limits}
+  \newcommand{\Mor}{\mathrm{Mor}}
 
 \endinput
