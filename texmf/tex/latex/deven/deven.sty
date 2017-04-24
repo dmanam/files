@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2017/03/02 Deven custom macros]
+\ProvidesPackage{deven}[2017/04/24 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
 \RequirePackage{physics,slashed}
@@ -26,10 +26,12 @@
 \RequirePackage[varqu]{inconsolata}
 \RequirePackage[libertine,vvarbb]{newtxmath} %smallerops
 \RequirePackage[T1,euler-digits,small]{eulervm}
-  \let\varmathbf=\mathbf\relax
+  \let\mathvarbf=\mathbf\relax
   \let\mathbf=\mathbold\relax
   \DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
   \SetMathAlphabet\mathcal{bold}{OMS}{cmsy}{b}{n}
+  \DeclareMathAlphabet\mathvarcal{U}{eus}{m}{n}
+  \SetMathAlphabet\mathvarcal{bold}{U}{eus}{b}{n}
 
 \DeclareOption{6046}{%
   \let\reals\relax
@@ -316,8 +318,28 @@
   \newcommand{\inarrow}{\otimes}
 
 % category theory
-  \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
-  \NewDocumentCommand{\category}{ >{\@addhyphen} o m }{\IfNoValueF{#1}{#1}\textup{\sffamily{#2}}}
   \newcommand{\Mor}{\mathrm{Mor}}
+  \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
+  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathvarcal{#2}}{\textup{\sffamily{#2}}}}
+  \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname cat#1\endcsname{\cat{\IfValueTF{#2}{#2}{#1}}}}
+  \DeclareCategory{Set}
+  \DeclareCategory{Grp}
+  \DeclareCategory{Rep}
+  \DeclareCategory{Ab}
+  \DeclareCategory{CRing}
+  \DeclareCategory{Ring}
+  \DeclareCategory{RingNU}[Ring\ensuremath{^{\slashed{1}}}]
+  \DeclareCategory{Mod}
+  \DeclareCategory{LMod}
+  \DeclareCategory{RMod}
+  \DeclareCategory{CAlg}
+  \DeclareCategory{Alg}
+  \DeclareCategory{CAlgNU}[CAlg\ensuremath{^{\slashed{1}}}]
+  \DeclareCategory{Coalg}
+  \DeclareCategory{Aff}
+  \DeclareCategory{Sch}
+  \DeclareCategory{PSh}
+  \DeclareCategory{Sh}
+  \DeclareCategory{QCoh}
 
 \endinput
