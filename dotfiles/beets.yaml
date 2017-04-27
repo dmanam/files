@@ -1,0 +1,24 @@
+directory: ~/music
+library: ~/music/.db
+plugins: badfiles chroma convert edit fromfilename fuzzy lastgenre lyrics missing replaygain scrub the types
+
+import:
+        move: yes
+        write: yes
+
+paths:
+        default: %lower{%asciify{%ifdef{albumartist_sort,$albumartist_sort,$albumartist}}}/%if{$year,$year }%lower{%the{%asciify{$album}}%aunique{year albumartist album, albumtype catalognum albumdisambig}}/$track $title
+        singleton: %lower{%asciify{%ifdef{artist_sort,$artist_sort,$artist}}}/%if{$year,$year }%lower{%asciify{$title}}
+        comp: compilations/$year %lower{%the{%asciify{$album}}%aunique{year album, albumtype catalognum albumdisambig}}/$track $title
+
+chroma:
+        auto: yes
+
+acoustid:
+        apikey: tI1VvWXZzi
+
+replaygain:
+        backend: gstreamer
+
+lyrics:
+        sources: '*'
