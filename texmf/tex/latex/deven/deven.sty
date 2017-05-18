@@ -22,16 +22,17 @@
 \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \RequirePackage[protrusion=true,expansion=true]{microtype}
 \RequirePackage[type1]{libertine}
+\RequirePackage{libertine}
 \RequirePackage[supstfm=libertinesups]{superiors}
 \RequirePackage[varqu]{inconsolata}
 \RequirePackage[libertine,vvarbb]{newtxmath} %smallerops
 \RequirePackage[T1,euler-digits,small]{eulervm}
   \let\mathvarbf=\mathbf\relax
   \let\mathbf=\mathbold\relax
-  \DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
-  \SetMathAlphabet\mathcal{bold}{OMS}{cmsy}{b}{n}
-  \DeclareMathAlphabet\mathvarcal{U}{eus}{m}{n}
-  \SetMathAlphabet\mathvarcal{bold}{U}{eus}{b}{n}
+  \DeclareMathAlphabet\mathvarcal{OMS}{cmsy}{m}{n}
+  \SetMathAlphabet\mathvarcal{bold}{OMS}{cmsy}{b}{n}
+  %\DeclareMathAlphabet\mathvarcal{U}{eus}{m}{n}
+  %\SetMathAlphabet\mathvarcal{bold}{U}{eus}{b}{n}
 
 \DeclareOption{6046}{%
   \let\reals\relax
@@ -77,30 +78,31 @@
   \def\stix@MathDelimiter#1#2#3#4#5#6{%
       \stix@undefine#1%
       \DeclareMathDelimiter{#1}{#2}{#3}{#4}{#5}{#6}}
-  \stix@MathDelimiter{(}          {\mathopen} {stixoperators}   {"2E}{stixlargesymbols}{"00}
-  \stix@MathDelimiter{)}          {\mathclose}{stixoperators}   {"2F}{stixlargesymbols}{"01}
-  \stix@MathDelimiter{[}          {\mathopen} {stixoperators}   {"5B}{stixlargesymbols}{"04}
-  \stix@MathDelimiter{]}          {\mathclose}{stixoperators}   {"5D}{stixlargesymbols}{"05}
-  \stix@MathDelimiter{\lfloor}    {\mathopen} {stixlargesymbols}{"E2}{stixlargesymbols}{"08}
-  \stix@MathDelimiter{\rfloor}    {\mathclose}{stixlargesymbols}{"E3}{stixlargesymbols}{"09}
-  \stix@MathDelimiter{\lceil}     {\mathopen} {stixlargesymbols}{"E4}{stixlargesymbols}{"0A}
-  \stix@MathDelimiter{\rceil}     {\mathclose}{stixlargesymbols}{"E5}{stixlargesymbols}{"0B}
-  \stix@MathDelimiter{\lbrace}    {\mathopen} {stixoperators}   {"5E}{stixlargesymbols}{"0C}
-  \stix@MathDelimiter{\rbrace}    {\mathclose}{stixoperators}   {"60}{stixlargesymbols}{"0D}
-  \stix@MathDelimiter{\langle}    {\mathopen} {stixlargesymbols}{"EA}{stixlargesymbols}{"10}
-  \stix@MathDelimiter{\rangle}    {\mathclose}{stixlargesymbols}{"EB}{stixlargesymbols}{"11}
-  \stix@MathDelimiter{\lmoustache}{\mathopen} {stixlargesymbols}{"E6}{stixlargesymbols}{"EC}
-  \stix@MathDelimiter{\rmoustache}{\mathclose}{stixlargesymbols}{"E7}{stixlargesymbols}{"ED}
-  \stix@MathDelimiter{/}          {\mathord}  {stixoperators}   {"5F}{stixlargesymbols}{"16}
-  \stix@MathDelimiter{\backslash} {\mathord}  {stixoperators}   {"5C}{stixlargesymbols}{"17}
-  \stix@MathDelimiter{|}          {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  \stix@MathDelimiter{\vert}      {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  \stix@MathDelimiter{\Vert}      {\mathord}  {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
-          \let\|=\Vert
-  \stix@MathDelimiter{\lvert}     {\mathopen} {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  \stix@MathDelimiter{\rvert}     {\mathclose}{stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  \stix@MathDelimiter{\lVert}     {\mathopen} {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
-  \stix@MathDelimiter{\rVert}     {\mathclose}{stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
+  %\stix@MathDelimiter{(}          {\mathopen} {stixoperators}   {"2E}{stixlargesymbols}{"00}
+  %\stix@MathDelimiter{)}          {\mathclose}{stixoperators}   {"2F}{stixlargesymbols}{"01}
+  %\stix@MathDelimiter{[}          {\mathopen} {stixoperators}   {"5B}{stixlargesymbols}{"04}
+  %\stix@MathDelimiter{]}          {\mathclose}{stixoperators}   {"5D}{stixlargesymbols}{"05}
+  %\stix@MathDelimiter{\lfloor}    {\mathopen} {stixlargesymbols}{"E2}{stixlargesymbols}{"08}
+  %\stix@MathDelimiter{\rfloor}    {\mathclose}{stixlargesymbols}{"E3}{stixlargesymbols}{"09}
+  %\stix@MathDelimiter{\lceil}     {\mathopen} {stixlargesymbols}{"E4}{stixlargesymbols}{"0A}
+  %\stix@MathDelimiter{\rceil}     {\mathclose}{stixlargesymbols}{"E5}{stixlargesymbols}{"0B}
+  %\stix@MathDelimiter{\lbrace}    {\mathopen} {stixoperators}   {"5E}{stixlargesymbols}{"0C}
+  %\stix@MathDelimiter{\rbrace}    {\mathclose}{stixoperators}   {"60}{stixlargesymbols}{"0D}
+  %\stix@MathDelimiter{\langle}    {\mathopen} {stixlargesymbols}{"EA}{stixlargesymbols}{"10}
+  %\stix@MathDelimiter{\rangle}    {\mathclose}{stixlargesymbols}{"EB}{stixlargesymbols}{"11}
+  %\stix@MathDelimiter{\lmoustache}{\mathopen} {stixlargesymbols}{"E6}{stixlargesymbols}{"EC}
+  %\stix@MathDelimiter{\rmoustache}{\mathclose}{stixlargesymbols}{"E7}{stixlargesymbols}{"ED}
+  %\stix@MathDelimiter{/}          {\mathord}  {stixoperators}   {"5F}{stixlargesymbols}{"16}
+  %\stix@MathDelimiter{\backslash} {\mathord}  {stixoperators}   {"5C}{stixlargesymbols}{"17}
+  %\expandafter\DeclareMathDelimiter\@backslashchar{\mathord}{stixoperators}{"5C}{stixlargesymbols}{"17}
+  %\stix@MathDelimiter{|}          {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+  %\stix@MathDelimiter{\vert}      {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+  %\stix@MathDelimiter{\Vert}      {\mathord}  {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
+  %        \let\|=\Vert
+  %\stix@MathDelimiter{\lvert}     {\mathopen} {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+  %\stix@MathDelimiter{\rvert}     {\mathclose}{stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+  %\stix@MathDelimiter{\lVert}     {\mathopen} {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
+  %\stix@MathDelimiter{\rVert}     {\mathclose}{stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
   \stix@MathDelimiter{\lParen}    {\mathopen} {stixlargesymbols}{"DE}{stixlargesymbols}{"02}
   \stix@MathDelimiter{\rParen}    {\mathclose}{stixlargesymbols}{"DF}{stixlargesymbols}{"03}
   \stix@MathDelimiter{\lBrack}    {\mathopen} {stixlargesymbols}{"E0}{stixlargesymbols}{"06}
@@ -115,7 +117,6 @@
   \stix@MathDelimiter{\rgroup}    {\mathclose}{stixlargesymbols}{"DD}{stixlargesymbols}{"6B}
   \stix@MathDelimiter{\bracevert} {\mathord}  {stixlargesymbols}{"6E}{stixlargesymbols}{"6E}
   \stix@MathDelimiter{\Vvert}     {\mathord}  {stixlargesymbols}{"F2}{stixlargesymbols}{"F5}
-  \expandafter\DeclareMathDelimiter\@backslashchar{\mathord}{stixoperators}{"5C}{stixlargesymbols}{"17}
 
 \mathchardef\mathhyphen="2D
 % use \varphi instead of \phi by default
@@ -203,6 +204,8 @@
   \let\varvec\vec\relax
   \renewcommand*{\vec}[1]{\mathbf{#1}}
   \newcommand*{\conj}[1]{\overline{#1}}
+  \let\mod\relax
+    \DeclareMathOperator{\mod}{mod}
   \def\closure{\@ifstar\overline\bar}
   \DeclareMathOperator{\dom}{dom}
   \DeclareMathOperator{\im}{im}
@@ -228,6 +231,8 @@
 
 % computer science
   \DeclareMathOperator{\polylog}{polylog}
+  \newcommand{\True}{\textbf{true}}
+  \newcommand{\False}{\textbf{false}}
 
 % number theory
   \newcommand{\divides}{\mid}
@@ -257,6 +262,7 @@
   \newcommand{\SL}{\mathrm{SL}}
   \DeclareMathOperator{\Tr}{Tr}
   \newcommand{\N}{\mathrm{N}}
+  \newcommand{\transpose}{\textsc{T}}
   \newcommand{\herm}{\dagger}
   \DeclareMathOperator{\Ind}{Ind}
   \DeclareMathOperator{\Res}{Res}
@@ -281,6 +287,10 @@
   \DeclareMathOperator{\Sym}{Sym}
   \DeclareMathOperator{\End}{End}
 
+% Lie theory
+  \newcommand{\Gl}{\mathfrak{gl}}
+  \newcommand{\Sl}{\mathfrak{sl}}
+
 % algebraic geometry
   \DeclareMathOperator{\Div}{Div}
   \let\div\relax
@@ -290,12 +300,14 @@
   \newcommand{\sh}{\mathrm{sh}}
 
 % logic and set theory
+  \newcommand{\union}{\cup}
+  \newcommand{\intersect}{\cap}
   \DeclareMathOperator{\Succ}{S}
   \DeclareMathOperator{\fst}{fst}
   \DeclareMathOperator{\snd}{snd}
   \def\card{\@ifstar\@@card\@card}
-    \newcommand*{\@card}[1]{\textup{\#}\,#1}
-    \newcommand*{\@@card}[1]{\textup{\#}\,\prn*{#1}}
+    \newcommand*{\@card}[1]{\mathop{}\!\textup{\#}#1}
+    \newcommand*{\@@card}[1]{\mathop{}\!\textup{\#}\,\prn*{#1}}
   \newcommand{\proves}{\vdash}
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
