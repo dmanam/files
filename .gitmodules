@@ -4,3 +4,6 @@
 [submodule "texmf/tex/latex/tikz-feynman"]
 	path = texmf/tex/latex/tikz-feynman
 	url = https://github.com/JP-Ellis/tikz-feynman.git
+[submodule "autosub"]
+	path = autosub
+	url = https://gist.github.com/ce3fb37e775dbd15c698.git
