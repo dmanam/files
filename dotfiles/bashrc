@@ -48,4 +48,4 @@ function __prompt_command () {
 }
 
 FORTUNE_MOD="zippy paradoxum linux wisdom songs-poems science riddles politics platitudes pets people news medicine literature linuxcookie law goedel fortunes food education drugs definitions cookie computers ascii-art art tao taow chalkboard zx-error kernelcookies"
-/usr/bin/fortune ${FORTUNE_MOD} | ~/documents/files/scripts/animalsay.sh # | /usr/bin/lolcat
+#/usr/bin/fortune ${FORTUNE_MOD} | ~/documents/files/scripts/animalsay.sh # | /usr/bin/lolcat
