@@ -20,7 +20,7 @@
     \let\End\relax
 \RequirePackage{csquotes}
 \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\RequirePackage[protrusion=true,expansion=true]{microtype}
+\RequirePackage[protrusion=true]{microtype}
 \RequirePackage[type1]{libertine}
 \RequirePackage{libertine}
 \RequirePackage[supstfm=libertinesups]{superiors}
@@ -342,11 +342,12 @@
 
 % category theory
   \newcommand{\Mor}{\mathrm{Mor}}
-  \newcommand{\adjoint}{\dashv}
+  \newcommand{\adjoins}{\dashv}
   \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
-  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathvarcal{#2}}{\textup{\sffamily{#2}}}}
+  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\sffamily{#2}}}}
   \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname cat#1\endcsname{\cat{\IfValueTF{#2}{#2}{#1}}}}
   \DeclareCategory{Set}
+  \DeclareCategory{Top}
   \DeclareCategory{Grp}
   \DeclareCategory{Rep}
   \DeclareCategory{Ab}
