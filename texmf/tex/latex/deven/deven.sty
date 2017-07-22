@@ -139,6 +139,7 @@
 \renewcommand{\rmdefault}{minlibertine}
 \setmainfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setsansfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Biolinum O}
+\newfontfamily{\lmsffamily}{Latin Modern Sans}
 \newfontfamily{\ligatured}[Ligatures={Required, TeX, Common, Contextual, Rare, Historic}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setmonofont[StylisticSet={1,3}]{Inconsolatazi4}
 
@@ -344,7 +345,7 @@
   \newcommand{\Mor}{\mathrm{Mor}}
   \newcommand{\adjoins}{\dashv}
   \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
-  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\sffamily{#2}}}}
+  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\lmsffamily{#2}}}}
   \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname cat#1\endcsname{\cat{\IfValueTF{#2}{#2}{#1}}}}
   \DeclareCategory{Set}
   \DeclareCategory{Top}
