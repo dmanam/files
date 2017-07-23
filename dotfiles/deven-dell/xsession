@@ -1,1 +1,3 @@
 xinput disable 'ELAN Touchscreen'
+
+synergys -a 10.69.69.69

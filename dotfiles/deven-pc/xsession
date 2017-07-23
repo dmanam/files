@@ -1,4 +1,8 @@
 #!/bin/sh
 
 numlockx &
-qjackctl &
+#qjackctl &
+
+synergyc deven-dell
+
+#x11vnc -listen 10.42.0.69 -rfbauth ~/.config/x11vnc/passwd -forever -bg -o ~/.cache/x11vnc.log
