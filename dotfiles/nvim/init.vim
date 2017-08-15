@@ -82,7 +82,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	autocmd FileType tex setlocal indentexpr&
 	autocmd FileType tex setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	let g:tex_flavor = "latex"
-	let g:neomake_tex_enabled_makers = ['chktex', 'rubberinfo', 'proselint']
+	let g:neomake_tex_enabled_makers = ['chktex'] ", 'rubberinfo', 'proselint']
 
 
 " coq
