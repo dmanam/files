@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2017/04/24 Deven custom macros]
+\ProvidesPackage{deven}[2017/07/15 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
 \RequirePackage{physics,slashed}
@@ -69,9 +69,9 @@
   \DeclareFontEncoding{LS2}{}{\noaccents@}
   \DeclareFontSubstitution{LS1}{stix}{m}{n}
   \DeclareFontSubstitution{LS2}{stix}{m}{n}
-  \DeclareSymbolFont{stixoperators}{LS1}{stix}{m}{n}
+  %\DeclareSymbolFont{stixoperators}{LS1}{stix}{m}{n}
   \DeclareSymbolFont{stixlargesymbols}{LS2}{stixex}{m}{n}
-  \SetSymbolFont{stixoperators}{bold}{LS1}{stix}{b}{n}
+  %\SetSymbolFont{stixoperators}{bold}{LS1}{stix}{b}{n}
   \SetSymbolFont{stixlargesymbols}{bold}{LS2}{stixex}{b}{n}
   \def\stix@undefine#1{%
       \if\relax\noexpand#1\let#1=\@undefined\fi}
@@ -118,6 +118,29 @@
   \stix@MathDelimiter{\bracevert} {\mathord}  {stixlargesymbols}{"6E}{stixlargesymbols}{"6E}
   \stix@MathDelimiter{\Vvert}     {\mathord}  {stixlargesymbols}{"F2}{stixlargesymbols}{"F5}
 
+% the following taken from the `fdsymbol' package
+  \DeclareFontFamily{U}{FdSymbolF}{}
+  \DeclareFontShape{U}{FdSymbolF}{m}{n}{
+      <-7.1> s * [1.0] FdSymbolF-Book
+      <7.1-> s * [1.0] FdSymbolF-Book
+  }{}
+  \DeclareFontShape{U}{FdSymbolF}{b}{n}{
+      <-7.1> s * [1.0] FdSymbolF-Medium
+      <7.1-> s * [1.0] FdSymbolF-Medium
+  }{}
+  \DeclareSymbolFont{fddelimiters}{U}{FdSymbolF}{m}{n}
+  \SetSymbolFont{fddelimiters}{bold}{U}{FdSymbolF}{b}{n}
+  \newcommand\fdsy@DeclareDelimiter[4]{%
+    \if\relax\noexpand#1\let#1\undefined\fi
+    \DeclareMathDelimiter{#1}{#2}{#3}{#4}{#3}{#4}
+  }
+  \fdsy@DeclareDelimiter{\ulcorner} {\mathopen} {fddelimiters}{"37}
+  \fdsy@DeclareDelimiter{\urcorner} {\mathclose}{fddelimiters}{"3D}
+  \fdsy@DeclareDelimiter{\llcorner} {\mathopen} {fddelimiters}{"43}
+  \fdsy@DeclareDelimiter{\lrcorner} {\mathclose}{fddelimiters}{"49}
+  \fdsy@DeclareDelimiter{\ullcorner}{\mathopen} {fddelimiters}{"4F}
+  \fdsy@DeclareDelimiter{\ulrcorner}{\mathclose}{fddelimiters}{"55}
+
 \mathchardef\mathhyphen="2D
 % use \varphi instead of \phi by default
   \let\temp\phi
@@ -163,6 +186,9 @@
   \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
   \let\ceil\relax
     \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+  \DeclarePairedDelimiter{\ucorners}{\ulcorner}{\urcorner}
+  \DeclarePairedDelimiter{\lcorners}{\llcorner}{\lrcorner}
+  \DeclarePairedDelimiter{\ulcorners}{\ullcorner}{\ulrcorner}
 
 % theorem environments
   %\newtheoremstyle{proof}{0pt}{\topsep}{}{}{\slshape}{.}{5pt plus 1pt minus 1pt}{}
@@ -314,19 +340,7 @@
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
   \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
-  % define \lquot as corner quotes
-    \newbox\gnBoxA
-    \newdimen\gnCornerHgt
-    \setbox\gnBoxA=\hbox{$\ulcorner$}
-    \global\gnCornerHgt=\ht\gnBoxA
-    \newdimen\gnArgHgt
-    \def\lquot #1{%
-    \setbox\gnBoxA=\hbox{$#1$}%
-    \gnArgHgt=\ht\gnBoxA%
-    \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
-    \else \advance \gnArgHgt by -\gnCornerHgt%
-    \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
-    \raise\gnArgHgt\hbox{$\urcorner$}}
+  \let\lquot\ucorners\relax
   \newcommand*{\bq}[1]{\brk*{\lquot{#1}}}
   \DeclareMathOperator{\Bew}{Bew}
   \DeclareMathOperator{\isproof}{B}
