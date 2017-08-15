@@ -348,7 +348,7 @@
   \newcommand{\adjoins}{\dashv}
   \newcommand{\opp}{\textrm{op}}
   \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
-  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\lmsffamily{#2}}}}
+  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\sffamily{#2}}}}
   \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname cat#1\endcsname{\cat{\IfValueTF{#2}{#2}{#1}}}}
   \DeclareCategory{Set}
   \DeclareCategory{Top}
