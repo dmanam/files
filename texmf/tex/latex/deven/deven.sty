@@ -163,6 +163,7 @@
 \setmainfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setsansfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Biolinum O}
 \newfontfamily{\lmsffamily}{Latin Modern Sans}
+\newfontfamily{\bfseries}{LinLibertine_RB.otf}
 \newfontfamily{\ligatured}[Ligatures={Required, TeX, Common, Contextual, Rare, Historic}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setmonofont[StylisticSet={1,3}]{Inconsolatazi4}
 
@@ -218,7 +219,7 @@
   \newtheorem*{exercise*}{Exercise}
   \newtheorem*{fact*}{Fact}
   \newtheorem*{example*}{Example}
-  \renewenvironment{proof}[1][\proofname]{\par
+  \renewenvironment{proof}[1][\proofname]{\vspace{-2.5em}\par
     \pushQED{\qed}%
     \normalfont \topsep6\p@\@plus6\p@\relax%
     \trivlist%
@@ -233,7 +234,7 @@
   \newcommand*{\conj}[1]{\overline{#1}}
   \let\mod\relax
     \DeclareMathOperator{\mod}{mod}
-  \def\closure{\@ifstar\overline\bar}
+  \def\closure\overline
   \DeclareMathOperator{\dom}{dom}
   \DeclareMathOperator{\im}{im}
   \DeclareMathOperator{\sgn}{sgn}
@@ -337,8 +338,15 @@
     \newcommand*{\@card}[1]{\mathop{}\!\textup{\#}#1}
     \newcommand*{\@@card}[1]{\mathop{}\!\textup{\#}\,\prn*{#1}}
   \newcommand{\proves}{\vdash}
+  \renewcommand{\models}{\vDash}
+  \newcommand{\lconj}{\wedge}
+  \newcommand{\lmeet}{\wedge}
+  \newcommand{\ldisj}{\vee}
+  \newcommand{\ljoin}{\vee}
   \newcommand{\liff}{\leftrightarrow}
   \newcommand{\limpl}{\to}
+  \newcommand{\lImpl}{\Rightarrow}
+  \newcommand{\lexp}{\Rightarrow}
   \newcommand*{\axiom}[1]{\textsc{\lowercase{#1}}}
   \let\lquot\ucorners\relax
   \newcommand*{\bq}[1]{\brk*{\lquot{#1}}}
