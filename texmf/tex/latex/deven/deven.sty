@@ -142,6 +142,9 @@
   \fdsy@DeclareDelimiter{\ulrcorner}{\mathclose}{fddelimiters}{"55}
 
 \mathchardef\mathhyphen="2D
+% use sans-serif math operator font
+  \AtBeginDocument{\sbox0{$\mathsf{\xdef\mathsfgroup{\the\mathgroup}}$}}
+  \def\operator@font{\mathgroup\mathsfgroup}
 % use \varphi instead of \phi by default
   \let\temp\phi
   \let\phi\varphi
@@ -162,8 +165,8 @@
 \renewcommand{\rmdefault}{minlibertine}
 \setmainfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setsansfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Biolinum O}
-\newfontfamily{\lmsffamily}{Latin Modern Sans}
 \newfontfamily{\bfseries}{LinLibertine_RB.otf}
+\newfontfamily{\lmsffamily}[Scale=0.92]{Latin Modern Sans}
 \newfontfamily{\ligatured}[Ligatures={Required, TeX, Common, Contextual, Rare, Historic}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
 \setmonofont[StylisticSet={1,3}]{Inconsolatazi4}
 
@@ -219,7 +222,7 @@
   \newtheorem*{exercise*}{Exercise}
   \newtheorem*{fact*}{Fact}
   \newtheorem*{example*}{Example}
-  \renewenvironment{proof}[1][\proofname]{\vspace{-2.5em}\par
+  \renewenvironment{proof}[1][\proofname]{\vspace{-2.25em}\par
     \pushQED{\qed}%
     \normalfont \topsep6\p@\@plus6\p@\relax%
     \trivlist%
@@ -239,7 +242,7 @@
   \DeclareMathOperator{\im}{im}
   \DeclareMathOperator{\sgn}{sgn}
   \DeclareMathOperator{\lc}{lc}
-  \newcommand{\id}{\mathrm{id}}
+  \newcommand{\id}{\operator@font{id}}
   \newcommand{\isom}{\cong}
   \newcommand{\from}{\leftarrow}
   \newcommand{\bij}{\xrightarrow{\sim}}
@@ -271,10 +274,10 @@
   \DeclareMathOperator{\disc}{disc}
   \newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
   \DeclareMathOperator{\val}{val}
-  \newcommand{\Frob}{\mathrm{Frob}}
+  \newcommand{\Frob}{\operator@font{Frob}}
 
 % analysis
-  \newcommand{\dd}{\mathop{}\!\mathrm{d}}
+  \newcommand{\dd}{\mathop{}\!\operator@font{d}}
   \newcommand*{\der}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\dd #2}{\dd #3}}{\frac{\dd^#1 #2}{{\dd #3}^#1}}}
   \newcommand*{\pd}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\partial #2}{\partial #3}}{\frac{\partial^#1 #2}{{\partial #3}^#1}}}
   \DeclareMathOperator{\bdry}{bdry}
@@ -286,10 +289,10 @@
   \DeclareMathOperator{\Var}{Var}
 
 % algebra
-  \newcommand{\GL}{\mathrm{GL}}
-  \newcommand{\SL}{\mathrm{SL}}
+  \newcommand{\GL}{\operator@font{GL}}
+  \newcommand{\SL}{\operator@font{SL}}
   \DeclareMathOperator{\Tr}{Tr}
-  \newcommand{\N}{\mathrm{N}}
+  \newcommand{\N}{\operator@font{N}}
   \newcommand{\transpose}{\textsc{T}}
   \newcommand{\herm}{\dagger}
   \DeclareMathOperator{\Ind}{Ind}
@@ -325,7 +328,7 @@
   \DeclareMathOperator{\div}{div}
   \DeclareMathOperator{\Pic}{Pic}
   \DeclareMathOperator{\Supp}{Supp}
-  \newcommand{\sh}{\mathrm{sh}}
+  \newcommand{\sh}{\operator@font{sh}}
 
 % logic and set theory
   \newcommand{\union}{\cup}
@@ -353,8 +356,8 @@
   \DeclareMathOperator{\Bew}{Bew}
   \DeclareMathOperator{\isproof}{B}
   \DeclareMathOperator{\Con}{Con}
-  \newcommand{\PA}{\mathrm{PA}}
-  \newcommand{\QE}{\mathrm{Q_E}}
+  \newcommand{\PA}{\operator@font{PA}}
+  \newcommand{\QE}{\operator@font{Q_E}}
   \newcommand{\lbox}{\Box}
   \newcommand{\ldiam}{\Diamond}
   \newcommand{\power}{\mathscr{P}}
@@ -365,13 +368,13 @@
   \newcommand{\inarrow}{\otimes}
 
 % category theory
-  \newcommand{\Mor}{\mathrm{Mor}}
-  \newcommand{\Nat}{\mathrm{Nat}}
+  \newcommand{\Mor}{\operator@font{Mor}}
+  \newcommand{\Nat}{\operator@font{Nat}}
   \DeclareMathOperator{\Sh}{Sh}
   \newcommand{\adjoins}{\dashv}
-  \newcommand{\opp}{\textrm{op}}
+  \newcommand{\opp}{{\operator@font{op}}}
   \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
-  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\sffamily{#2}}}}
+  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\lmsffamily{#2}}}}
   \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname cat#1\endcsname{\cat{\IfValueTF{#2}{#2}{#1}}}}
   \DeclareCategory{Set}
   \DeclareCategory{Top}
