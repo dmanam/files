@@ -47,10 +47,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	ca w!! SudoWrite
 	ca ww SudoWrite
 
-" supercollider
-	Plug 'sbl/scvim', { 'for': 'supercollider' }
-	let g:sclangTerm = "urxvtc -e"
-
 " haskell
 	Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
 	autocmd FileType *.hs compiler ghc
@@ -95,17 +91,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 		let b:current_syntax = 'tex'
 	endfunction
 	autocmd FileType tex call BibHighlight()
-
-
-" coq
-	Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
-	Plug 'the-lambda-church/coquille', { 'for': 'coq' }
-	au FileType coq call coquille#FNMapping()
-	au FileType coq map <F8> :CoqLaunch<CR>
-	au FileType coq map <F9> :CoqKill<CR>
-
-" bluespec system verilog
-	Plug 'mtikekar/vim-bsv', { 'for': 'bsv' }
 
 " easily delete view files
 	Plug 'vim-scripts/delview'
