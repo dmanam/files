@@ -201,7 +201,9 @@
   %%\let\c@proof\relax
   %\newtheorem*{bareproof}{Proof}
   %\renewenvironment{proof}[1][]{\begin{bareproof}\pushQED{\qed}#1\popQED\end{bareproof}}
-  \newtheoremstyle{plain}{\topsep}{\topsep}{\slshape}{}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
+  \newtheoremstyle{plain}{\topsep}{}
+    {\slshape\setlength{\parskip}{0em}\setlength{\parindent}{2em}}
+    {}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
   \theoremstyle{plain}
   \newcounter{thm}
   \newtheorem{theorem}[thm]{Theorem}
@@ -222,11 +224,13 @@
   \newtheorem*{exercise*}{Exercise}
   \newtheorem*{fact*}{Fact}
   \newtheorem*{example*}{Example}
-  \renewenvironment{proof}[1][\proofname]{\vspace{-2.25em}\par
+  \renewenvironment{proof}[1][\proofname]{\par
     \pushQED{\qed}%
     \normalfont \topsep6\p@\@plus6\p@\relax%
     \trivlist%
     \item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces%
+    \setlength{\parskip}{0em}%
+    \setlength{\parindent}{2em}%
   }{%
     \popQED\endtrivlist\@endpefalse%
   }
@@ -342,6 +346,7 @@
     \newcommand*{\@@card}[1]{\mathop{}\!\textup{\#}\,\prn*{#1}}
   \newcommand{\proves}{\vdash}
   \renewcommand{\models}{\vDash}
+  \newcommand{\forces}{\Vdash}
   \newcommand{\lconj}{\wedge}
   \newcommand{\lmeet}{\wedge}
   \newcommand{\ldisj}{\vee}
