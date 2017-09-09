@@ -1,3 +1,5 @@
 xinput disable 'ELAN Touchscreen'
 
+redshift-gtk &
+
 synergys -a 10.69.69.69
