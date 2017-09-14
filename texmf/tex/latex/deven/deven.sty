@@ -25,7 +25,6 @@
 \RequirePackage{libertine}
 \RequirePackage[supstfm=libertinesups]{superiors}
 \RequirePackage[varqu]{inconsolata}
-\RequirePackage[libertine,vvarbb]{deven-newtxmath} %smallerops
 \RequirePackage[T1,euler-digits,small]{eulervm}
   \let\mathvarbf=\mathbf\relax
   \let\mathbf=\mathbold\relax
@@ -69,6 +68,11 @@
   \DeclareFontEncoding{LS2}{}{\noaccents@}
   \DeclareFontSubstitution{LS1}{stix}{m}{n}
   \DeclareFontSubstitution{LS2}{stix}{m}{n}
+  \DeclareFontFamily{LS1}{stixbb}{\skewchar\font127 }
+  \DeclareFontShape{LS1}{stixbb}{m}{n} {<-> s*[1.032631] stix-mathbb}{}
+  \DeclareFontShape{LS1}{stixbb}{b}{n} {<-> s*[1.032631] stix-mathbb-bold}{}
+  \DeclareMathAlphabet{\mathbb}{LS1}{stixbb}{m}{n}
+  \SetMathAlphabet{\mathbb}{bold}{LS1}{stixbb}{b}{n}
   %\DeclareSymbolFont{stixoperators}{LS1}{stix}{m}{n}
   \DeclareSymbolFont{stixlargesymbols}{LS2}{stixex}{m}{n}
   %\SetSymbolFont{stixoperators}{bold}{LS1}{stix}{b}{n}
@@ -116,7 +120,6 @@
   \stix@MathDelimiter{\lgroup}    {\mathopen} {stixlargesymbols}{"DC}{stixlargesymbols}{"6A}
   \stix@MathDelimiter{\rgroup}    {\mathclose}{stixlargesymbols}{"DD}{stixlargesymbols}{"6B}
   \stix@MathDelimiter{\bracevert} {\mathord}  {stixlargesymbols}{"6E}{stixlargesymbols}{"6E}
-  \stix@MathDelimiter{\Vvert}     {\mathord}  {stixlargesymbols}{"F2}{stixlargesymbols}{"F5}
 
 % the following taken from the `fdsymbol' package
   \DeclareFontFamily{U}{FdSymbolF}{}
