@@ -30,15 +30,15 @@ import System.Random (randomR, newStdGen)
 import System.Environment (lookupEnv)
 import Data.Maybe (fromMaybe)
 
-myModMask       = mod4Mask
-myTerminal      = "urxvtc"
+myModMask = mod4Mask
+myTerminal = "urxvtc"
 myFocusFollowsMouse = False
 myClickJustFocuses = False
-myBorderWidth   = 1
+myBorderWidth = 1
 homeDir = "/home/deven"
 screenshotDir = homeDir </> "pictures/screenshots"
 backgroundDir = homeDir </> "pictures/backgrounds"
-myWorkspaces    = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
+myWorkspaces = (:[]) <$> ['α'..'κ']
 myNormalBorderColor  = "#121212"
 myFocusedBorderColor = "#d7d7d7"
 
@@ -61,11 +61,8 @@ myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm .|.   shiftMask, xK_s     ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z     ), spawn "slock") -- lock screen
     , ((modm .|. controlMask, xK_z     ), spawn "xtrlock") -- alternate lock screen
---  , ((         controlMask, xK_Print ), spawn $ "cd " ++ screenshotDir ++ "; sleep 0.2; scrot -s") -- ++ screenshotDir ++ "'/%Y-%m-%d-%H%M%S_$wx$h_scrot.png'") -- screenshot window
---  , ((0,                    xK_Print ), spawn $ "cd " ++ screenshotDir ++ "; scrot") -- ++ screenshotDir ++ "'/%Y-%m-%d-%H%M%S_$wx$h_scrot.png'") -- screenshot all
     , ((0,                    xK_Print ), captureWorkspacesWhenId activePredicate moveHook horizontally)
     , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
---  , ((modm,                 xK_p     ), spawn "dmenu_run") -- launch dmenu
     , ((modm,                 xK_p     ), shellPrompt myXPConfig) -- command launcher
     , ((modm .|.   shiftMask, xK_n     ), envPrompt myXPConfig) -- environment variable changer
     , ((modm .|.   shiftMask, xK_c     ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
@@ -112,7 +109,6 @@ moveHook fp = do
 myMouseBindings XConfig{XMonad.modMask = modm} = M.fromList
     [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)   -- grab and drag
     , ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster) -- grab and resize
---  , ((modm, button3), \w -> focus w >> windows W.shiftMaster)                        -- grab
     ]
 
 -- layouts: use 'mod-shift-space' after updating
@@ -133,8 +129,6 @@ myManageHook = composeAll $
     , className =? "qjackctl"       --> doFloat
     , className =? "Qjackctl"       --> doFloat
     ]
---    [ title =? snd bg --> doBackground (fst bg) | bg <- bgs]
---    where doBackground ws = ask >>= (\w -> liftX (sendMessage . Merge "bgs" $ [w]) >> doF (W.shiftWin ws w))
 
 -- return (All True) to run default handler afterwards
 myEventHook = fullscreenEventHook
@@ -153,26 +147,13 @@ newBackground ws = spawn $ "feh --bg-fill --no-fehbg '" <> backgroundDir </> ws 
 myLogHook = updateBackground
 
 myStartupHook = do
-  setDefaultCursor xC_left_ptr 
+  setDefaultCursor xC_left_ptr
   io $ createDirectoryIfMissing True screenshotDir
---  spawnBgs bgs
   spawn "taffybar"
   spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
 
---spawnBgs = mapM_ $ \(ws, w) -> spawn $ "feh '" <> backgroundDir </> ws <> ".png' -^'" <> w <> "'"
-
-randStrings r n gen = randStrings' r gen !! n
-  where randStrings' r gen = iterate (randString r n) (gen, [])
-randString r n (gen, strs) = (gen', str:strs)
-  where (gen', str) = randString' r gen !! n
-        randString' r gen = iterate (randString'' r) (gen, [])
-        randString'' r (gen, str) = (gen', c:str)
-          where (c, gen') = randomR r gen
-
 main = do
   initCapturing
---  rands <- snd . randStrings ('a', 'z') 20 <$> newStdGen
---  let bgs = zip myWorkspaces $ rands
   browserEnv <- fromMaybe "" <$> lookupEnv "BROWSER"
   let browser = if browserEnv == "" then "firefox" else browserEnv
   xmonad $ ewmh . pagerHints $ def
