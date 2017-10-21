@@ -131,7 +131,7 @@ myManageHook = composeAll $
     ]
 
 -- return (All True) to run default handler afterwards
-myEventHook = fullscreenEventHook
+myEventHook = fullscreenEventHook <+> docksEventHook
 
 data BackgroundState = BackgroundState WorkspaceId deriving Typeable
 instance ExtensionClass BackgroundState where
@@ -151,6 +151,7 @@ myStartupHook = do
   io $ createDirectoryIfMissing True screenshotDir
   spawn "taffybar"
   spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
+  docksStartupHook
 
 main = do
   browserEnv <- fromMaybe "" <$> lookupEnv "BROWSER"
