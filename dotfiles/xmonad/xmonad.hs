@@ -12,7 +12,7 @@ import XMonad.Core (windowset)
 import qualified XMonad.Util.ExtensibleState as XS
 import qualified XMonad.StackSet as W
 import XMonad.Util.WorkspaceScreenshot
-import XMonad.Prompt (XPConfig (..), defaultXPConfig, XPPosition (Top))
+import XMonad.Prompt (XPConfig (..), XPPosition (Top))
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Prompt.Env (envPrompt)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
@@ -42,7 +42,7 @@ myWorkspaces = (:[]) <$> ['α'..'κ']
 myNormalBorderColor  = "#121212"
 myFocusedBorderColor = "#d7d7d7"
 
-myXPConfig = defaultXPConfig
+myXPConfig = def
   { font              = "xft:DejaVuSansMono:size=10"
   , bgColor           = "#000000"
   , fgColor           = "#d7d7d7"
@@ -153,9 +153,9 @@ myStartupHook = do
   spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
 
 main = do
-  initCapturing
   browserEnv <- fromMaybe "" <$> lookupEnv "BROWSER"
   let browser = if browserEnv == "" then "firefox" else browserEnv
+  initCapturing
   xmonad $ ewmh . pagerHints $ def
     { terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
