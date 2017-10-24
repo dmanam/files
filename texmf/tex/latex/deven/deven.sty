@@ -69,13 +69,16 @@
   \DeclareFontSubstitution{LS1}{stix}{m}{n}
   \DeclareFontSubstitution{LS2}{stix}{m}{n}
   \DeclareFontFamily{LS1}{stixbb}{\skewchar\font127 }
-  \DeclareFontShape{LS1}{stixbb}{m}{n} {<-> s*[1.032631] stix-mathbb}{}
-  \DeclareFontShape{LS1}{stixbb}{b}{n} {<-> s*[1.032631] stix-mathbb-bold}{}
+  \DeclareFontShape{LS1}{stixbb}{m}{n}  {<-> s*[1.032631] stix-mathbb}{}
+  \DeclareFontShape{LS1}{stixbb}{m}{it} {<-> s*[1.032631] stix-mathbbit}{}
+  \DeclareFontShape{LS1}{stixbb}{b}{n}  {<-> s*[1.032631] stix-mathbb-bold}{}
   \DeclareMathAlphabet{\mathbb}{LS1}{stixbb}{m}{n}
   \SetMathAlphabet{\mathbb}{bold}{LS1}{stixbb}{b}{n}
   %\DeclareSymbolFont{stixoperators}{LS1}{stix}{m}{n}
+  \DeclareSymbolFont{stixsymbols4}{LS1}{stixbb}{m}{it}
   \DeclareSymbolFont{stixlargesymbols}{LS2}{stixex}{m}{n}
   %\SetSymbolFont{stixoperators}{bold}{LS1}{stix}{b}{n}
+  \SetSymbolFont{stixsymbols4}{bold}{LS1}{stixbb}{b}{it}
   \SetSymbolFont{stixlargesymbols}{bold}{LS2}{stixex}{b}{n}
   \def\stix@undefine#1{%
       \if\relax\noexpand#1\let#1=\@undefined\fi}
@@ -120,6 +123,7 @@
   \stix@MathDelimiter{\lgroup}    {\mathopen} {stixlargesymbols}{"DC}{stixlargesymbols}{"6A}
   \stix@MathDelimiter{\rgroup}    {\mathclose}{stixlargesymbols}{"DD}{stixlargesymbols}{"6B}
   \stix@MathDelimiter{\bracevert} {\mathord}  {stixlargesymbols}{"6E}{stixlargesymbols}{"6E}
+  \DeclareMathSymbol{\sslash}{\mathbin}{stixsymbols4}{"CB}
 
 % the following taken from the `fdsymbol' package
   \DeclareFontFamily{U}{FdSymbolF}{}
