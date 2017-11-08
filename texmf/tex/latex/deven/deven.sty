@@ -123,7 +123,6 @@
   \stix@MathDelimiter{\lgroup}    {\mathopen} {stixlargesymbols}{"DC}{stixlargesymbols}{"6A}
   \stix@MathDelimiter{\rgroup}    {\mathclose}{stixlargesymbols}{"DD}{stixlargesymbols}{"6B}
   \stix@MathDelimiter{\bracevert} {\mathord}  {stixlargesymbols}{"6E}{stixlargesymbols}{"6E}
-  \DeclareMathSymbol{\sslash}{\mathbin}{stixsymbols4}{"CB}
 
 % the following (mostly) taken from https://tex.stackexchange.com/a/109399
   \DeclareFontFamily{OMX}{MnSymbolE}{}
@@ -161,6 +160,7 @@
       {\mathclose}{MnLargeSymbols}{'067}{MnLargeSymbols}{'067}
 
 \mathchardef\mathhyphen="2D
+\newcommand{\sslash}{\mathbin{/\mkern-6mu/}}
 % use sans-serif math operator font
   \AtBeginDocument{\sbox0{$\mathsf{\xdef\mathsfgroup{\the\mathgroup}}$}}
   \def\operator@font{\mathgroup\mathsfgroup}
