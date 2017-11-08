@@ -125,28 +125,40 @@
   \stix@MathDelimiter{\bracevert} {\mathord}  {stixlargesymbols}{"6E}{stixlargesymbols}{"6E}
   \DeclareMathSymbol{\sslash}{\mathbin}{stixsymbols4}{"CB}
 
-% the following taken from the `fdsymbol' package
-  \DeclareFontFamily{U}{FdSymbolF}{}
-  \DeclareFontShape{U}{FdSymbolF}{m}{n}{
-      <-7.1> s * [1.0] FdSymbolF-Book
-      <7.1-> s * [1.0] FdSymbolF-Book
+% the following (mostly) taken from https://tex.stackexchange.com/a/109399
+  \DeclareFontFamily{OMX}{MnSymbolE}{}
+  \DeclareSymbolFont{MnLargeSymbols}{OMX}{MnSymbolE}{m}{n}
+  \SetSymbolFont{MnLargeSymbols}{bold}{OMX}{MnSymbolE}{b}{n}
+  \DeclareFontShape{OMX}{MnSymbolE}{m}{n}{
+      <-6>  MnSymbolE5
+     <6-7>  MnSymbolE6
+     <7-8>  MnSymbolE7
+     <8-9>  MnSymbolE8
+     <9-10> MnSymbolE9
+    <10-12> MnSymbolE10
+    <12->   MnSymbolE12
   }{}
-  \DeclareFontShape{U}{FdSymbolF}{b}{n}{
-      <-7.1> s * [1.0] FdSymbolF-Medium
-      <7.1-> s * [1.0] FdSymbolF-Medium
+  \DeclareFontShape{OMX}{MnSymbolE}{b}{n}{
+      <-6>  MnSymbolE-Bold5
+     <6-7>  MnSymbolE-Bold6
+     <7-8>  MnSymbolE-Bold7
+     <8-9>  MnSymbolE-Bold8
+     <9-10> MnSymbolE-Bold9
+    <10-12> MnSymbolE-Bold10
+    <12->   MnSymbolE-Bold12
   }{}
-  \DeclareSymbolFont{fddelimiters}{U}{FdSymbolF}{m}{n}
-  \SetSymbolFont{fddelimiters}{bold}{U}{FdSymbolF}{b}{n}
-  \newcommand\fdsy@DeclareDelimiter[4]{%
-    \if\relax\noexpand#1\let#1\undefined\fi
-    \DeclareMathDelimiter{#1}{#2}{#3}{#4}{#3}{#4}
-  }
-  \fdsy@DeclareDelimiter{\ulcorner} {\mathopen} {fddelimiters}{"37}
-  \fdsy@DeclareDelimiter{\urcorner} {\mathclose}{fddelimiters}{"3D}
-  \fdsy@DeclareDelimiter{\llcorner} {\mathopen} {fddelimiters}{"43}
-  \fdsy@DeclareDelimiter{\lrcorner} {\mathclose}{fddelimiters}{"49}
-  \fdsy@DeclareDelimiter{\ullcorner}{\mathopen} {fddelimiters}{"4F}
-  \fdsy@DeclareDelimiter{\ulrcorner}{\mathclose}{fddelimiters}{"55}
+  \DeclareMathDelimiter{\ulcorner}
+      {\mathopen}{MnLargeSymbols}{'036}{MnLargeSymbols}{'036}
+  \DeclareMathDelimiter{\urcorner}
+      {\mathclose}{MnLargeSymbols}{'043}{MnLargeSymbols}{'043}
+  \DeclareMathDelimiter{\llcorner}
+      {\mathopen}{MnLargeSymbols}{'050}{MnLargeSymbols}{'050}
+  \DeclareMathDelimiter{\lrcorner}
+      {\mathclose}{MnLargeSymbols}{'055}{MnLargeSymbols}{'055}
+  \DeclareMathDelimiter{\ullcorner}
+      {\mathopen}{MnLargeSymbols}{'062}{MnLargeSymbols}{'062}
+  \DeclareMathDelimiter{\ulrcorner}
+      {\mathclose}{MnLargeSymbols}{'067}{MnLargeSymbols}{'067}
 
 \mathchardef\mathhyphen="2D
 % use sans-serif math operator font
