@@ -1,6 +1,6 @@
 directory: ~/music
 library: ~/music/.db
-plugins: badfiles chroma convert edit fromfilename fuzzy lastgenre lyrics missing replaygain scrub the types
+plugins: badfiles chroma convert discogs edit fetchart fromfilename fuzzy lastgenre lyrics missing replaygain scrub the types
 
 import:
         move: yes
