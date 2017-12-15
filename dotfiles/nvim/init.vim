@@ -52,8 +52,8 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	autocmd FileType *.hs compiler ghc
 	let g:haddock_browser = "xdg-open"
 	let g:haddock_browser_callformat="sh -c '%s file://%s >/dev/null 2>&1 &'"
-	autocmd FileType haskell setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
-	autocmd FileType cabal setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
+	"autocmd FileType haskell setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
+	"autocmd FileType cabal setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	autocmd BufRead,BufNewFile *.hsc setlocal filetype=haskell
 	autocmd BufRead,BufNewFile *.chs setlocal filetype=haskell
 
@@ -76,7 +76,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	au FileType tex set indentkeys=
 	autocmd BufRead,BufNewFile *.cls setlocal filetype=tex
 	autocmd FileType tex setlocal indentexpr&
-	autocmd FileType tex setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
+	"autocmd FileType tex setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	let g:tex_flavor = "latex"
 	let g:neomake_tex_enabled_makers = ['chktex'] ", 'rubberinfo', 'proselint']
 	function BibHighlight()
@@ -103,7 +103,7 @@ call plug#end()
 	LuciusBlack
 
 " indentation
-	set tabstop=8 softtabstop=8 shiftwidth=8
+	set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 	set ai
 	set si
 
