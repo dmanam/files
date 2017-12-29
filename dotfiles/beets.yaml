@@ -1,15 +1,34 @@
 directory: ~/music
 library: ~/music/.db
-plugins: badfiles chroma convert discogs edit fetchart fromfilename fuzzy lastgenre lyrics missing replaygain scrub the types
+plugins: |
+        badfiles
+        chroma
+        convert
+        discogs
+        edit
+        fetchart
+        fromfilename
+        fuzzy
+        inline
+        lastgenre
+        lyrics
+        missing
+        replaygain
+        scrub
+        the
+        types
+
+item_fields:
+        smarttrack: ('%%0%ii' % max(2, len(str(tracktotal))) % track)
 
 import:
         move: yes
         write: yes
 
 paths:
-        default: %lower{%asciify{%ifdef{albumartist_sort,$albumartist_sort,$albumartist}}}/%if{$year,$year }%lower{%the{%asciify{$album}}%aunique{year albumartist album, albumtype catalognum albumdisambig}}/$track $title
+        default: %lower{%asciify{%ifdef{albumartist_sort,$albumartist_sort,$albumartist}}}/%if{$year,$year }%lower{%the{%asciify{$album}}%aunique{year albumartist album, albumtype catalognum albumdisambig}}/$smarttrack $title
         singleton: %lower{%asciify{%ifdef{artist_sort,$artist_sort,$artist}}}/%if{$year,$year }%lower{%asciify{$title}}
-        comp: compilations/$year %lower{%the{%asciify{$album}}%aunique{year album, albumtype catalognum albumdisambig}}/$track $title
+        comp: compilations/$year %lower{%the{%asciify{$album}}%aunique{year album, albumtype catalognum albumdisambig}}/$smarttrack $title
 
 chroma:
         auto: yes
