@@ -6039,7 +6039,8 @@
 <Multi_key> <U2375> <underscore>                : "⍹"   U2379   # ⍵ _ APL FUNCTIONAL SYMBOL OMEGA UNDERBAR
 <Multi_key> <underscore> <U2375>                : "⍹"   U2379   # _ ⍵ APL FUNCTIONAL SYMBOL OMEGA UNDERBAR
 
-#Greek letters
+# Greek letters
+# taken from somewhere
 
 # Custom additions: Greek letters. Mapping corresponds to Emacs Greek
 # input method. Aristotle Pagaltzis informs me that this is the
@@ -6132,3 +6133,9 @@
 <Multi_key> <Multi_key> <asterisk> <period> <r> : "ϱ" U03F1 # GREEK RHO SYMBOL
 <Multi_key> <Multi_key> <asterisk> <period> <U> : "ϴ" U03F4 # GREEK CAPITAL THETA SYMBOL
 <Multi_key> <Multi_key> <asterisk> <period> <e> : "ϵ" U03F5 # GREEK LUNATE EPSILON SYMBOL
+
+
+# hw
+
+<Multi_key> <H> <w> : "Ƕ" # LATIN CAPITAL LETTER HWAIR
+<Multi_key> <h> <w> : "ƕ" # LATIN SMALL LETTER HWAIR
