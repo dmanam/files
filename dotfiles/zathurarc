@@ -3,8 +3,11 @@ map k navigate previous
 map J scroll down
 map K scroll up
 
-set continuous-hist-save true
+map A set 'first-page-column 0:1'
+map S set 'first-page-column 1:2'
 
+set continuous-hist-save true
 set vertical-center true
 set zoom-center true
+
 set font "18px DejaVuSansMono"
