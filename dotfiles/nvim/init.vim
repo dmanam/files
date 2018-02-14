@@ -31,12 +31,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	Plug 'neomake/neomake'
 	autocmd! BufWritePost * Neomake
 
-" notetaking
-	let isnotefile = match(@%, 'note:') == 0
-	Plug 'xolox/vim-misc', Cond(isnotefile)
-	Plug 'xolox/vim-notes', Cond(isnotefile)
-	let g:notes_directories = ['~/athena/documents/notes']
-
 " general utilities
 	Plug 'tpope/vim-repeat'
 	Plug 'tpope/vim-endwise'
