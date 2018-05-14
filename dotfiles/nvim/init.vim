@@ -59,6 +59,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	let g:vimtex_indent_enabled = 0
 	let g:vimtex_latexmk_continuous = 0
 	let g:vimtex_latexmk_background = 1
+	let g:vimtex_imaps_enabled = 0
 	augroup vimtex_config
 		au!
 		au User VimtexEventQuit VimtexClean
