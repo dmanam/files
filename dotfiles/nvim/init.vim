@@ -87,6 +87,13 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 	endfunction
 	autocmd FileType tex call BibHighlight()
 
+" coq
+        Plug 'def-lkb/vimbufsync', { 'for': 'coq' }
+        Plug 'the-lambda-church/coquille', { 'for': 'coq' }
+        au FileType coq call coquille#FNMapping()
+        au FileType coq map <F8> :CoqLaunch<CR>
+        au FileType coq map <F9> :CoqKill<CR>
+
 " easily delete view files
 	Plug 'vim-scripts/delview'
 	ca delview Delview
