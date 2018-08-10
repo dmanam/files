@@ -11,7 +11,6 @@ import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Core (windowset)
 import qualified XMonad.Util.ExtensibleState as XS
 import qualified XMonad.StackSet as W
-import XMonad.Util.WorkspaceScreenshot
 import XMonad.Prompt (XPConfig (..), XPPosition (Top))
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Prompt.Env (envPrompt)
@@ -27,7 +26,7 @@ import Data.Functor ((<$>))
 import Data.Default
 import Data.Time (getCurrentTime, getCurrentTimeZone, utcToLocalTime, formatTime, defaultTimeLocale)
 import System.Random (randomR, newStdGen)
-import System.Environment (lookupEnv)
+import System.Environment (setEnv, lookupEnv)
 import Data.Maybe (fromMaybe)
 
 myModMask = mod4Mask
@@ -50,7 +49,7 @@ myXPConfig = def
   , bgHLight          = "#87d7ff"
   , promptBorderWidth = 0
   , position          = Top
-  , height            = 25
+  , height            = 30
   , searchPredicate   = isInfixOf
   }
 
@@ -61,8 +60,8 @@ myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm .|.   shiftMask, xK_s     ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z     ), spawn "slock") -- lock screen
     , ((modm .|. controlMask, xK_z     ), spawn "xtrlock") -- alternate lock screen
-    , ((0,                    xK_Print ), captureWorkspacesWhenId activePredicate moveHook horizontally)
-    , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
+--    , ((0,                    xK_Print ), captureWorkspacesWhenId activePredicate moveHook horizontally)
+--    , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
     , ((modm,                 xK_p     ), shellPrompt myXPConfig) -- command launcher
     , ((modm .|.   shiftMask, xK_n     ), envPrompt myXPConfig) -- environment variable changer
     , ((modm .|.   shiftMask, xK_c     ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
@@ -96,15 +95,6 @@ myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     ++ [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
-activePredicate wksp = (== wksp) . W.tag . W.workspace . W.current . windowset <$> (get :: X XState)
-moveHook fp = do
-  createDirectoryIfMissing True screenshotDir
-  utctime <- getCurrentTime
-  localtz <- getCurrentTimeZone
-  let localtime = utcToLocalTime localtz utctime
-  let filename = formatTime defaultTimeLocale "%0Y-%m-%d-%H-%M-%S-%q" localtime ++ ".png"
-  renameFile fp (screenshotDir </> filename)
 
 myMouseBindings XConfig{XMonad.modMask = modm} = M.fromList
     [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)   -- grab and drag
@@ -149,14 +139,10 @@ myLogHook = updateBackground
 myStartupHook = do
   setDefaultCursor xC_left_ptr
   io $ createDirectoryIfMissing True screenshotDir
-  spawn "taffybar"
-  spawn "which wpa_gui && (pgrep wpa_gui || (sleep 2; wpa_gui -t))"
   docksStartupHook
 
 main = do
-  browserEnv <- fromMaybe "" <$> lookupEnv "BROWSER"
-  let browser = if browserEnv == "" then "firefox" else browserEnv
-  initCapturing
+  browser <- fromMaybe "firefox" <$> lookupEnv "BROWSER"
   xmonad $ ewmh . pagerHints $ def
     { terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse

@@ -1,0 +1,8 @@
+. ~/.dotfiles/profile
+
+xrdb -merge ~/.dotfiles/xresources
+xrdb -merge ~/.dotfiles/`hostname`/xresources
+
+. ~/.dotfiles/`hostname`/xprofile
+
+taffybar &
