@@ -61,8 +61,7 @@ netReader = let old = unsafePerformIO $ newIORef (-1, -1) in do
   writeIORef old (rx, tx)
   return $ (/ netMax) . fromInteger <$> [rx - rx', tx - tx']
 
-batReader = fmap (fromMaybe (0, "", (0, 0, 0, 0))) . runMaybeT $ do
-  ctx <- MaybeT batteryContextNew
+batReader ctx = fmap (fromMaybe (0, "", (0, 0, 0, 0))) . runMaybeT $ do
   info <- MaybeT $ getBatteryInfo ctx
   let val = batteryPercentage info / 100
       formatTime seconds =
@@ -128,7 +127,7 @@ mem = pollingGraphNew memCfg 1 memReader
 cpu = cpuMonitorNew cpuCfg 1 "cpu"
 net = pollingGraphNew netCfg 1 netReader
 dio = dioMonitorNew dioCfg 1 "sda"
-bat = pollingOverlayGraphNew batCfg 1 60 batReader
+bat = pollingOverlayGraphNew batCfg 1 60 . batReader
 vol = pollingBarXNew volCfg 0.25 volReader
 
 tray = systrayNew
@@ -143,7 +142,9 @@ main = do
   -- display <- openDisplay =<< getEnv "DISPLAY"
   -- let getRes = MaybeT . getDefault display "taffybar"
   -- colors <- sequence . fmap getRes $ fmap (("color" ++) . show) [0..15] ++ ["background", "foreground", "cursorColor"]
+  ctx <- batteryContextNew
+  let batl = maybe [] ((:[]) . bat) ctx
   defaultTaffybar $ defaultTaffybarConfig { startWidgets = [pager]
-                                          , endWidgets = [clock, bat, dio, net, mem, cpu, vol, tray, note]
+                                          , endWidgets = [clock] ++ batl ++ [dio, net, mem, cpu, vol, tray, note]
                                           , barHeight = 30
                                           }
