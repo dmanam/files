@@ -14,6 +14,8 @@ import qualified XMonad.StackSet as W
 import XMonad.Prompt (XPConfig (..), XPPosition (Top))
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Prompt.Env (envPrompt)
+import XMonad.Prompt.Power (powerPrompt)
+import Graphics.X11.ExtraTypes.XF86 (xF86XK_PowerOff)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
 import Data.Monoid
 import qualified Data.Map as M
@@ -54,36 +56,37 @@ myXPConfig = def
   }
 
 myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
-    [ ((modm .|.   shiftMask, xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal
-    , ((modm,                 xK_f     ), spawn browser) -- open the default browser
-    , ((modm,                 xK_s     ), spawn "xinput enable 'ELAN Touchscreen'") -- enable touchscreen
-    , ((modm .|.   shiftMask, xK_s     ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
-    , ((modm .|.   shiftMask, xK_z     ), spawn "slock") -- lock screen
-    , ((modm .|. controlMask, xK_z     ), spawn "xtrlock") -- alternate lock screen
---    , ((0,                    xK_Print ), captureWorkspacesWhenId activePredicate moveHook horizontally)
---    , ((modm,                 xK_Print ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
-    , ((modm,                 xK_p     ), shellPrompt myXPConfig) -- command launcher
-    , ((modm .|.   shiftMask, xK_n     ), envPrompt myXPConfig) -- environment variable changer
-    , ((modm .|.   shiftMask, xK_c     ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
-    , ((modm,                 xK_space ), sendMessage NextLayout) -- rotate through the available layout algorithms
-    , ((modm .|.   shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf) -- reset the layouts on the current workspace to default
-    , ((modm,                 xK_n     ), refresh) -- resize viewed windows to the correct size
-    , ((modm,                 xK_j     ), windows W.focusDown) -- move focus to the next window
-    , ((modm,                 xK_k     ), windows W.focusUp) -- move focus to the previous window
-    , ((modm,                 xK_m     ), windows W.focusMaster) -- move focus to the master window
-    , ((modm,                 xK_Return), windows W.swapMaster) -- swap the focused window and the master window
-    , ((modm .|.   shiftMask, xK_j     ), windows W.swapDown) -- swap the focused window with the next window
-    , ((modm .|.   shiftMask, xK_k     ), windows W.swapUp) -- swap the focused window with the previous window
-    , ((modm,                 xK_h     ), sendMessage Shrink) -- shrink the master area
-    , ((modm,                 xK_l     ), sendMessage Expand) -- expand the master area
-    , ((modm,                 xK_t     ), withFocused $ windows . W.sink) -- push window back into tiling
-    , ((modm,                 xK_comma ), sendMessage (IncMasterN 1)) -- increment the number of windows in the master area
-    , ((modm,                 xK_period), sendMessage (IncMasterN (-1))) -- deincrement the number of windows in the master area
-    , ((modm,                 xK_b     ), sendMessage ToggleStruts) -- toggle the status bar gap
-    , ((modm .|.   shiftMask, xK_q     ), io exitSuccess) -- quit xmonad
-    , ((modm,                 xK_q     ), spawn "xmonad --restart") -- restart xmonad
-    , ((modm,                 xK_v     ), pasteSelection) -- X-selection-paste buffer
-    , ((modm,                 xK_g     ), withFocused toggleBorder) -- toggle showing border of current window
+    [ ((modm .|.   shiftMask, xK_Return      ), spawn $ XMonad.terminal conf) -- launch a terminal
+    , ((modm,                 xK_f           ), spawn browser) -- open the default browser
+    , ((modm,                 xK_s           ), spawn "xinput enable 'ELAN Touchscreen'") -- enable touchscreen
+    , ((modm .|.   shiftMask, xK_s           ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
+    , ((modm .|.   shiftMask, xK_z           ), spawn "slock") -- lock screen
+    , ((modm .|. controlMask, xK_z           ), spawn "xtrlock") -- alternate lock screen
+--  , ((0,                    xK_Print       ), captureWorkspacesWhenId activePredicate moveHook horizontally)
+--  , ((modm,                 xK_Print       ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
+    , ((modm,                 xK_p           ), shellPrompt myXPConfig) -- command launcher
+    , ((modm .|.   shiftMask, xK_n           ), envPrompt myXPConfig) -- environment variable changer
+    , ((modm .|.   shiftMask, xK_c           ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
+    , ((modm,                 xK_space       ), sendMessage NextLayout) -- rotate through the available layout algorithms
+    , ((modm .|.   shiftMask, xK_space       ), setLayout $ XMonad.layoutHook conf) -- reset the layouts on the current workspace to default
+    , ((modm,                 xK_n           ), refresh) -- resize viewed windows to the correct size
+    , ((modm,                 xK_j           ), windows W.focusDown) -- move focus to the next window
+    , ((modm,                 xK_k           ), windows W.focusUp) -- move focus to the previous window
+    , ((modm,                 xK_m           ), windows W.focusMaster) -- move focus to the master window
+    , ((modm,                 xK_Return      ), windows W.swapMaster) -- swap the focused window and the master window
+    , ((modm .|.   shiftMask, xK_j           ), windows W.swapDown) -- swap the focused window with the next window
+    , ((modm .|.   shiftMask, xK_k           ), windows W.swapUp) -- swap the focused window with the previous window
+    , ((modm,                 xK_h           ), sendMessage Shrink) -- shrink the master area
+    , ((modm,                 xK_l           ), sendMessage Expand) -- expand the master area
+    , ((modm,                 xK_t           ), withFocused $ windows . W.sink) -- push window back into tiling
+    , ((modm,                 xK_comma       ), sendMessage (IncMasterN 1)) -- increment the number of windows in the master area
+    , ((modm,                 xK_period      ), sendMessage (IncMasterN (-1))) -- deincrement the number of windows in the master area
+    , ((modm,                 xK_b           ), sendMessage ToggleStruts) -- toggle the status bar gap
+    , ((modm .|.   shiftMask, xK_q           ), io exitSuccess) -- quit xmonad
+    , ((modm,                 xK_q           ), spawn "xmonad --restart") -- restart xmonad
+    , ((modm,                 xK_v           ), pasteSelection) -- X-selection-paste buffer
+    , ((modm,                 xK_g           ), withFocused toggleBorder) -- toggle showing border of current window
+    , ((0,                    xF86XK_PowerOff), powerPrompt myXPConfig)
     ]
     -- mod-[1..0], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
