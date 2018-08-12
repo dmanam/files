@@ -108,10 +108,7 @@ graphUpdate' addSample (GH mv) (rawData, label, color) = do
   let drawArea = graphCanvas s
       histSize = ographHistorySize (graphConfig s)
       newVal = clamp 0 1 rawData
-      oldHist = graphHistory s
-      newHist = if not addSample then oldHist else case oldHist of
-        S.Empty -> S.replicate histSize newVal
-        old :|> _ -> newVal <| old
+      newHist = (if addSample then (newVal <|) else id) $ graphHistory s
   case graphIsBootstrapped s of
     False -> return ()
     True -> do
@@ -160,6 +157,13 @@ renderGraph hist layout color cfg w h xStep = do
 
   C.setLineWidth 0.1
 
+  Gtk.PangoRectangle _ _ wl hl <- liftIO $ snd <$> Gtk.layoutGetExtents layout
+  let [xl, yl] = zipWith (\a b -> (fromIntegral a - b) / 2) [w, h] [wl, hl]
+  let (r, g, b) = ographLabelColor cfg
+  C.setSourceRGB r g b
+  C.moveTo xl yl
+  P.showLayout layout
+
   let pad = fromIntegral $ ographPadding cfg
   let framePad = fromIntegral $ ographBorderWidth cfg
 
@@ -191,18 +195,16 @@ renderGraph hist layout color cfg w h xStep = do
       (endX, _) <- C.getCurrentPoint
       C.lineTo endX (fromIntegral h)
       C.lineTo 0 (fromIntegral h)
+      C.clipPreserve
       C.fill
+      C.identityMatrix
+      C.setSourceRGB 0 0 0
+      C.moveTo xl yl
+      P.showLayout layout
     Line -> do
       C.setLineWidth 1.0
       C.stroke
 
-  C.identityMatrix
-  let (r, g, b) = ographLabelColor cfg
-  C.setSourceRGB r g b
-  Gtk.PangoRectangle _ _ w' h' <- liftIO $ snd <$> Gtk.layoutGetExtents layout
-  let [x, y] = zipWith (\a b -> (fromIntegral a - b) / 2) [w, h] [w', h']
-  C.moveTo x y
-  P.showLayout layout
 
 drawBorder :: MVar GraphState -> Gtk.DrawingArea -> IO ()
 drawBorder mv drawArea = do
