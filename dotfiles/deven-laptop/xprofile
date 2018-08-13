@@ -1,3 +1,0 @@
-xinput disable 'ELAN Touchscreen'
-
-(sleep 2; wpa_gui -t) &
