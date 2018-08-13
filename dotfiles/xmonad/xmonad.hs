@@ -30,6 +30,7 @@ import Data.Time (getCurrentTime, getCurrentTimeZone, utcToLocalTime, formatTime
 import System.Random (randomR, newStdGen)
 import System.Environment (setEnv, lookupEnv)
 import Data.Maybe (fromMaybe)
+import System.Process (spawnProcess)
 
 myModMask = mod4Mask
 myTerminal = "urxvtc"
@@ -62,8 +63,9 @@ myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm .|.   shiftMask, xK_s                    ), spawn "xinput disable 'ELAN Touchscreen'") -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z                    ), spawn "slock") -- lock screen
     , ((modm .|. controlMask, xK_z                    ), spawn "xtrlock") -- alternate lock screen
---  , ((0,                    xK_Print                ), captureWorkspacesWhenId activePredicate moveHook horizontally)
---  , ((modm,                 xK_Print                ), captureWorkspacesWhenId defaultPredicate moveHook horizontally)
+    , ((0,                    xK_Print                ), maim)
+    , ((modm,                 xK_Print                ), maimSel)
+    , ((modm .|.   shiftMask, xK_Print                ), maimCur)
     , ((modm,                 xK_p                    ), shellPrompt myXPConfig) -- command launcher
     , ((modm .|.   shiftMask, xK_n                    ), envPrompt myXPConfig) -- environment variable changer
     , ((modm .|.   shiftMask, xK_c                    ), kill) -- sendKey (modm .|. shiftMask) xK_c >> kill) -- close focused window
@@ -103,6 +105,23 @@ myKeys browser conf@XConfig{XMonad.modMask = modm} = M.fromList $
     ++ [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+maim = maim' []
+maimSel = maim' ["-s"]
+maimCur = do
+  Just st <- W.stack . W.workspace . W.current . windowset <$> get
+  maim' ["-i", show $ W.focus st]
+maim' :: [String] -> X ()
+maim' args = io $ do
+  utctime <- getCurrentTime
+  localtz <- getCurrentTimeZone
+  let localtime = utcToLocalTime localtz utctime
+      filename = formatTime defaultTimeLocale "%04Y-%m-%d-%H%M%S" localtime
+              ++ formatTime defaultTimeLocale "%Z" localtz
+              ++ ".png"
+  createDirectoryIfMissing True screenshotDir
+  spawnProcess "maim" $ (screenshotDir </> filename) : "-u" : args
+  return ()
 
 myMouseBindings XConfig{XMonad.modMask = modm} = M.fromList
     [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)   -- grab and drag
