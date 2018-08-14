@@ -11,8 +11,6 @@ shopt -s histappend
 alias qmv='qmv -fdo'
 alias vim='nvim'
 
-(kinit -R && aklog &) >/dev/null 2>&1
-
 # Test for an interactive shell.  There is no need to set anything
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
@@ -24,7 +22,6 @@ fi
 # Put your fun stuff here.
 
 export PROMPT_COMMAND=__prompt_command
-
 function __prompt_command () {
   local EXIT="$?"
 
