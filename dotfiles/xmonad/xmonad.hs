@@ -64,8 +64,8 @@ promptConfig = def
 myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     [ ((modm .|.   shiftMask, xK_Return               ), spawnPX (XMonad.terminal conf) []) -- launch a terminal
     , ((modm,                 xK_f                    ), spawnPX "firefox" []) -- open firefox
-    , ((modm,                 xK_s                    ), spawnPX "xinput" ["enable", "'ELAN Touchscreen'"]) -- enable touchscreen
-    , ((modm .|.   shiftMask, xK_s                    ), spawnPX "xinput" ["disable", "'ELAN Touchscreen'"]) -- disable touchscreen
+    , ((modm,                 xK_s                    ), spawnPX "xinput" ["enable", "ELAN Touchscreen"]) -- enable touchscreen
+    , ((modm .|.   shiftMask, xK_s                    ), spawnPX "xinput" ["disable", "ELAN Touchscreen"]) -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z                    ), spawnPX "slock" []) -- lock screen
     , ((modm .|. controlMask, xK_z                    ), spawnPX "xtrlock" []) -- alternate lock screen
     , ((0,                    xK_Print                ), maim) -- screenshot
