@@ -5,10 +5,6 @@
 # that can't tolerate any output.  So make sure this doesn't display
 # anything or bad things will happen !
 
-mkdir -p "${XDG_CACHE_HOME}/bash"
-export HISTFILE="${XDG_CACHE_HOME}/bash/history"
-shopt -s histappend
-
 alias qmv='qmv -fdo'
 alias vim='nvim'
 
@@ -21,6 +17,10 @@ if [[ $- != *i* ]] ; then
 fi
 
 # Put your fun stuff here.
+
+mkdir -p "${XDG_CACHE_HOME}/bash"
+export HISTFILE="${XDG_CACHE_HOME}/bash/history"
+shopt -s histappend
 
 export PROMPT_COMMAND=__prompt_command
 function __prompt_command () {
