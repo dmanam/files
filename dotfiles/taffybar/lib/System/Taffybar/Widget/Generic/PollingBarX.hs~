@@ -1,6 +1,6 @@
 -- | A vertical bar that can plot data in the range [0, 1].  The
 -- colors are configurable.
-module System.Taffybar.Widgets.PollingBarX (
+module System.Taffybar.Widget.Generic.PollingBarX (
   -- * Types
   BarXConfig(..),
   BarDirection(..),
@@ -11,11 +11,11 @@ module System.Taffybar.Widgets.PollingBarX (
 
 import Control.Concurrent
 import Control.Monad
-import qualified Graphics.Rendering.Cairo as C
-import Graphics.UI.Gtk
+import qualified GI.Cairo.Render as C
+import GI.Gtk
 import qualified Control.Exception.Enclosed as E
 
-import System.Taffybar.Widgets.PollingBar (BarDirection(..))
+import System.Taffybar.Widget.Generic.PollingBar (BarDirection(..))
 
 pollingBarXNew :: BarXConfig -> Double -> IO (Double, Bool) -> IO Widget
 pollingBarXNew cfg pollSeconds action = do
