@@ -5,6 +5,7 @@
 # that can't tolerate any output.  So make sure this doesn't display
 # anything or bad things will happen !
 
+mkdir -p "${XDG_CACHE_HOME}/bash"
 export HISTFILE="${XDG_CACHE_HOME}/bash/history"
 shopt -s histappend
 
