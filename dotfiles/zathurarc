@@ -10,4 +10,4 @@ set continuous-hist-save true
 set vertical-center true
 set zoom-center true
 
-set font "18px DejaVuSansMono"
+set font "12px DejaVuSansMono"
