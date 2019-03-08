@@ -33,7 +33,6 @@ import           Data.Foldable ( mapM_ )
 import           Data.Sequence ( Seq, (<|), viewl, ViewL(..) )
 import qualified Data.Sequence as S
 import qualified Data.Text as T
-import           Data.Monoid ((<>))
 import qualified GI.Cairo.Render as C
 import           GI.Cairo.Render.Connector as C
 import qualified GI.Cairo.Render.Matrix as M
@@ -224,10 +223,8 @@ drawGraph mv drawArea = do
       -- any movement in the X direction
       xStep = fromIntegral w / fromIntegral (histSize - 1)
 
-  -- this is pretty hacky
   Gtk.labelSetMarkup label overlay
   layout <- Gtk.labelGetLayout label
-  Gtk.labelSetMarkup label T.empty
 
   case hist of
     [] -> renderFrameAndBackground cfg w h
@@ -246,16 +243,14 @@ oGraphNew cfg ofg = liftIO $ do
                                   , oGraphOverlayConfig = ofg
                                   }
 
-  ov <- Gtk.overlayNew
-  Gtk.containerAdd ov drawArea
-  Gtk.overlayAddOverlay ov label
+  labelWindow <- Gtk.offscreenWindowNew
+  Gtk.containerAdd labelWindow label
 
   Gtk.widgetSetSizeRequest drawArea (fromIntegral $ graphWidth cfg) (-1)
-
   _ <- Gtk.onWidgetDraw drawArea (\ctx -> C.renderWithContext (drawGraph mv drawArea) ctx >> return True)
 
   Gtk.widgetSetVexpand drawArea True
-  Gtk.widgetSetVexpand ov True
-  Gtk.widgetShowAll ov
-  giWidget <- Gtk.toWidget ov
+  Gtk.widgetShow drawArea
+  Gtk.widgetShowAll labelWindow
+  giWidget <- Gtk.toWidget drawArea
   return (giWidget, OGH mv)

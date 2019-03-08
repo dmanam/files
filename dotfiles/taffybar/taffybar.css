@@ -16,6 +16,11 @@
 
 /* Top level styling */
 
+* {
+  font-family: "DejaVu Sans Mono", sans-serif;
+  font-size: 11pt;
+}
+
 .taffy-window * {
   /*
      This removes any existing styling from UI elements. Taffybar will not cohere
@@ -23,8 +28,6 @@
    */
   all: unset;
 
-  font-family: "DejaVu Sans Mono", sans-serif;
-  font-size: 11pt;
   color: @font-color;
 }
 
