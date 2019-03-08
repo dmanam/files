@@ -18,8 +18,8 @@ fi
 
 # Put your fun stuff here.
 
-mkdir -p "${XDG_CACHE_HOME}/bash"
-export HISTFILE="${XDG_CACHE_HOME}/bash/history"
+mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/bash"
+export HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/bash/history"
 shopt -s histappend
 
 export PROMPT_COMMAND=__prompt_command
