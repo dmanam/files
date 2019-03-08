@@ -33,6 +33,7 @@ import           Data.Foldable ( mapM_ )
 import           Data.Sequence ( Seq, (<|), viewl, ViewL(..) )
 import qualified Data.Sequence as S
 import qualified Data.Text as T
+import           Data.Monoid ((<>))
 import qualified GI.Cairo.Render as C
 import           GI.Cairo.Render.Connector as C
 import qualified GI.Cairo.Render.Matrix as M
@@ -51,7 +52,7 @@ data OverlayGraphState =
                     , oGraphHistory :: [Seq Double]
                     , oGraphOverlay :: T.Text
                     , oGraphCanvas :: Gtk.DrawingArea
-                    , oGraphLayout :: P.Layout
+                    , oGraphLabel :: Gtk.Label
                     , oGraphConfig :: GraphConfig
                     , oGraphOverlayConfig :: GraphOverlayConfig
                     }
@@ -217,13 +218,16 @@ drawGraph mv drawArea = do
       overlay = oGraphOverlay s
       cfg = oGraphConfig s
       ofg = oGraphOverlayConfig s
-      layout = oGraphLayout s
+      label = oGraphLabel s
       histSize = graphHistorySize cfg
       -- Subtract 1 here since the first data point doesn't require
       -- any movement in the X direction
       xStep = fromIntegral w / fromIntegral (histSize - 1)
 
-  P.layoutSetText layout overlay (-1)
+  -- this is pretty hacky
+  Gtk.labelSetMarkup label overlay
+  layout <- Gtk.labelGetLayout label
+  Gtk.labelSetMarkup label T.empty
 
   case hist of
     [] -> renderFrameAndBackground cfg w h
@@ -232,24 +236,26 @@ drawGraph mv drawArea = do
 oGraphNew :: MonadIO m => GraphConfig -> GraphOverlayConfig -> m (Gtk.Widget, OverlayGraphHandle)
 oGraphNew cfg ofg = liftIO $ do
   drawArea <- Gtk.drawingAreaNew
-  l <- Gtk.labelNew (Nothing :: Maybe T.Text)
-  layout <- Gtk.labelGetLayout l
+  label <- Gtk.labelNew (Nothing :: Maybe T.Text)
   mv <- newMVar OverlayGraphState { oGraphIsBootstrapped = False
                                   , oGraphHistory = []
                                   , oGraphOverlay = T.empty
                                   , oGraphCanvas = drawArea
-                                  , oGraphLayout = layout
+                                  , oGraphLabel = label
                                   , oGraphConfig = cfg
                                   , oGraphOverlayConfig = ofg
                                   }
 
+  ov <- Gtk.overlayNew
+  Gtk.containerAdd ov drawArea
+  Gtk.overlayAddOverlay ov label
+
   Gtk.widgetSetSizeRequest drawArea (fromIntegral $ graphWidth cfg) (-1)
+
   _ <- Gtk.onWidgetDraw drawArea (\ctx -> C.renderWithContext (drawGraph mv drawArea) ctx >> return True)
-  box <- Gtk.boxNew Gtk.OrientationHorizontal 1
 
   Gtk.widgetSetVexpand drawArea True
-  Gtk.widgetSetVexpand box True
-  Gtk.boxPackStart box drawArea True True 0
-  Gtk.widgetShowAll box
-  giBox <- Gtk.toWidget box
-  return (giBox, OGH mv)
+  Gtk.widgetSetVexpand ov True
+  Gtk.widgetShowAll ov
+  giWidget <- Gtk.toWidget ov
+  return (giWidget, OGH mv)
