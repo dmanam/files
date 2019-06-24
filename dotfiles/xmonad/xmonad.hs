@@ -57,7 +57,7 @@ promptConfig = def
   , bgHLight          = "#87d7ff"
   , promptBorderWidth = 0
   , position          = Top
-  , height            = 30
+  , height            = 35
   , searchPredicate   = isInfixOf
   }
 
