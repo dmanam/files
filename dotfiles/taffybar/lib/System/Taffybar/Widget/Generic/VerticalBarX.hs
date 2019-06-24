@@ -18,8 +18,9 @@ import           Control.Applicative
 import           Control.Concurrent
 import           Control.Monad
 import           Control.Monad.IO.Class
+import qualified GI.Cairo.Render as C
+import           GI.Cairo.Render.Connector
 import           GI.Gtk hiding (widgetGetAllocatedSize)
-import qualified Graphics.Rendering.Cairo as C
 import           System.Taffybar.Util
 import           System.Taffybar.Widget.Util
 
@@ -168,7 +169,7 @@ verticalBarXNew cfg xfg = liftIO $ do
       , barXXConfig = xfg
       }
   widgetSetSizeRequest drawArea (fromIntegral $ barWidth cfg) (-1)
-  _ <- onWidgetDraw drawArea $ \ctx -> renderWithContext ctx (drawBar mv drawArea) >> return True
+  _ <- onWidgetDraw drawArea $ \ctx -> renderWithContext (drawBar mv drawArea) ctx >> return True
   box <- boxNew OrientationHorizontal 1
   boxPackStart box drawArea True True 0
   widgetShowAll box
