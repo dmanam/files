@@ -67,7 +67,7 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm,                 xK_s                    ), spawnPX "xinput" ["enable", "ELAN Touchscreen"]) -- enable touchscreen
     , ((modm .|.   shiftMask, xK_s                    ), spawnPX "xinput" ["disable", "ELAN Touchscreen"]) -- disable touchscreen
     , ((modm .|.   shiftMask, xK_z                    ), spawnPX "slock" []) -- lock screen
-    , ((modm .|. controlMask, xK_z                    ), spawnPX "xtrlock" []) -- alternate lock screen
+    , ((modm .|. controlMask, xK_z                    ), spawnPX "xtrlock-pam" ["-b", "none"]) -- alternate lock screen
     , ((0,                    xK_Print                ), maim) -- screenshot
     , ((modm,                 xK_Print                ), maimSel) -- screenshot selection
     , ((modm .|.   shiftMask, xK_Print                ), maimCur) -- screenshot current window
