@@ -10,7 +10,7 @@ data Power = Power
 instance XPrompt Power where
   showXPrompt _ = ""
 
-actions = ["poweroff", "restart", "suspend", "hibernate"]
+actions = ["poweroff", "reboot", "suspend", "hibernate"]
 
 powerCompl = mkComplFunFromList' actions
 
