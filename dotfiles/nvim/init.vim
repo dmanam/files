@@ -145,8 +145,8 @@ call plug#end()
 	set foldmethod=syntax
 
 " automatically save and load views
-	autocmd BufWinLeave *.* mkview
-	autocmd BufWinEnter *.* silent! loadview
+	autocmd BufWinLeave ?* mkview
+	autocmd BufWinEnter ?* silent! loadview
 
 " persistent undo
 	set undofile
