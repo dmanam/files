@@ -103,7 +103,7 @@ graphcfg colors = defaultGraphConfig
   , graphDataColors = colors
   }
 notCfg = defaultNotificationConfig
-  { notificationMaxTimeout = Just 2
+  { notificationMaxTimeout = Just 2000
   , notificationFormatter = T.replace "\n" " | " . notificationFormatter defaultNotificationConfig
   }
 memCfg = graphcfg [(1, 95/255, 95/255, 1)]
