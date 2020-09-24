@@ -1,66 +1,41 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2018/09/30 Deven custom macros]
+\ProvidesPackage{deven}[2020/09/23 Deven custom macros]
+
+\RequirePackage{lmodern,kpfonts}
+\RequirePackage[small,euler-digits]{eulervm}
+  \renewcommand{\ttdefault}{lmtt}
 
 \RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
-\RequirePackage{physics,slashed}
-  \let\abs\relax
-  \let\norm\relax
-  \let\dd\relax
-  \let\Tr\relax
-  \let\Res\relax
-\RequirePackage[american]{babel}
-\RequirePackage[no-math]{fontspec}
-\RequirePackage[shortlabels]{enumitem}
-\RequirePackage{ifthen}
-\RequirePackage{xparse}
-\RequirePackage{clrscode4e}
-  \let\ident\id
-    \let\id\relax
-  \let\Endblock\End
-    \let\End\relax
-\RequirePackage{csquotes}
-\RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\RequirePackage{hyperref}
-\RequirePackage{cleveref}
-\RequirePackage[protrusion=true]{microtype}
-\RequirePackage[type1]{libertine}
-\RequirePackage{libertine}
-\RequirePackage[supstfm=libertinesups]{superiors}
-\RequirePackage[varqu]{inconsolata}
-\RequirePackage[T1,euler-digits,small]{eulervm}
-  \let\mathvarbf=\mathbf\relax
-  \let\mathbf=\mathbold\relax
-  \DeclareMathAlphabet\mathvarcal{OMS}{cmsy}{m}{n}
-  \SetMathAlphabet\mathvarcal{bold}{OMS}{cmsy}{b}{n}
-  %\DeclareMathAlphabet\mathvarcal{U}{eus}{m}{n}
-  %\SetMathAlphabet\mathvarcal{bold}{U}{eus}{b}{n}
+\RequirePackage{xy}
+  \newcommand{\pullbackcorner}[1][ul]{\save*!/#1-1.5pc/#1:(-1,1)@^{|-}\restore}
 
-\DeclareOption{6046}{%
-  \let\reals\relax
-  \let\integers\relax
-  \let\naturals\relax
-  \let\rationals\relax
-  \let\complex\relax
-  \let\abs\relax
-  \let\card\relax
-  \let\norm\relax
-  \let\floor\relax
-  \let\ceil\relax
-  \let\sbrace\relax
-  \let\cbrace\relax
-  \let\paren\relax
-  \let\prob\relax
-  \let\expect\relax
-  \let\expectsq\relax
-  \let\variance\relax
-  \let\choose\relax
-  \let\goesto\relax
-  \let\pmod\relax
-  \let\matx\relaj
-  \let\Adj\relax
-  \let\percent\relax
-  \let\transpose\relax
-  \let\proof\relax
+\RequirePackage{xcolor,marginfix}
+  \newcommand*{\TODO}[1][]{\unskip\textsuperscript{\color{red}\ttfamily{[!]}}\marginpar{\color{red}\ttfamily{#1}}}
+
+\RequirePackage[shortlabels]{enumitem}
+  \renewcommand*{\descriptionlabel}[1]{\hspace{\labelsep}(#1)}
+
+\RequirePackage{ifthen,xparse}
+
+\DeclareOption{bib}{%
+  \RequirePackage[style=alphabetic,maxbibnames=99,minalphanames=3]{biblatex}
+    \renewcommand*{\labelalphaothers}{\textsuperscript{+}}
+    \renewcommand*{\sortalphaothers}{+}
+    \DeclareFieldFormat{eprint:arXiv}{
+      \href{https://arxiv.org/abs/#1}{\!\!{\tt arXiv:#1\iffieldundef{eprintclass}{}{ [\thefield{eprintclass}]}}}
+    }
+    \addbibresource{\jobname.bib}
+  \RequirePackage{hyperref}
+}
+
+\newif\if@varcard\@varcardfalse
+\DeclareOption{varcard}{%
+  \@varcardtrue
+}
+
+\newif\if@addauthor\@addauthortrue
+\DeclareOption{noauthor}{%
+  \@addauthorfalse
 }
 
 \ProcessOptions\relax
@@ -74,12 +49,10 @@
   \DeclareFontShape{LS1}{stixbb}{m}{n}  {<-> s*[1.032631] stix-mathbb}{}
   \DeclareFontShape{LS1}{stixbb}{m}{it} {<-> s*[1.032631] stix-mathbbit}{}
   \DeclareFontShape{LS1}{stixbb}{b}{n}  {<-> s*[1.032631] stix-mathbb-bold}{}
-  \DeclareMathAlphabet{\mathbb}{LS1}{stixbb}{m}{n}
-  \SetMathAlphabet{\mathbb}{bold}{LS1}{stixbb}{b}{n}
-  %\DeclareSymbolFont{stixoperators}{LS1}{stix}{m}{n}
+% \DeclareSymbolFont{stixoperators}{LS1}{stix}{m}{n}
   \DeclareSymbolFont{stixsymbols4}{LS1}{stixbb}{m}{it}
   \DeclareSymbolFont{stixlargesymbols}{LS2}{stixex}{m}{n}
-  %\SetSymbolFont{stixoperators}{bold}{LS1}{stix}{b}{n}
+% \SetSymbolFont{stixoperators}{bold}{LS1}{stix}{b}{n}
   \SetSymbolFont{stixsymbols4}{bold}{LS1}{stixbb}{b}{it}
   \SetSymbolFont{stixlargesymbols}{bold}{LS2}{stixex}{b}{n}
   \def\stix@undefine#1{%
@@ -87,31 +60,31 @@
   \def\stix@MathDelimiter#1#2#3#4#5#6{%
       \stix@undefine#1%
       \DeclareMathDelimiter{#1}{#2}{#3}{#4}{#5}{#6}}
-  %\stix@MathDelimiter{(}          {\mathopen} {stixoperators}   {"2E}{stixlargesymbols}{"00}
-  %\stix@MathDelimiter{)}          {\mathclose}{stixoperators}   {"2F}{stixlargesymbols}{"01}
-  %\stix@MathDelimiter{[}          {\mathopen} {stixoperators}   {"5B}{stixlargesymbols}{"04}
-  %\stix@MathDelimiter{]}          {\mathclose}{stixoperators}   {"5D}{stixlargesymbols}{"05}
-  %\stix@MathDelimiter{\lfloor}    {\mathopen} {stixlargesymbols}{"E2}{stixlargesymbols}{"08}
-  %\stix@MathDelimiter{\rfloor}    {\mathclose}{stixlargesymbols}{"E3}{stixlargesymbols}{"09}
-  %\stix@MathDelimiter{\lceil}     {\mathopen} {stixlargesymbols}{"E4}{stixlargesymbols}{"0A}
-  %\stix@MathDelimiter{\rceil}     {\mathclose}{stixlargesymbols}{"E5}{stixlargesymbols}{"0B}
-  %\stix@MathDelimiter{\lbrace}    {\mathopen} {stixoperators}   {"5E}{stixlargesymbols}{"0C}
-  %\stix@MathDelimiter{\rbrace}    {\mathclose}{stixoperators}   {"60}{stixlargesymbols}{"0D}
-  %\stix@MathDelimiter{\langle}    {\mathopen} {stixlargesymbols}{"EA}{stixlargesymbols}{"10}
-  %\stix@MathDelimiter{\rangle}    {\mathclose}{stixlargesymbols}{"EB}{stixlargesymbols}{"11}
-  %\stix@MathDelimiter{\lmoustache}{\mathopen} {stixlargesymbols}{"E6}{stixlargesymbols}{"EC}
-  %\stix@MathDelimiter{\rmoustache}{\mathclose}{stixlargesymbols}{"E7}{stixlargesymbols}{"ED}
-  %\stix@MathDelimiter{/}          {\mathord}  {stixoperators}   {"5F}{stixlargesymbols}{"16}
-  %\stix@MathDelimiter{\backslash} {\mathord}  {stixoperators}   {"5C}{stixlargesymbols}{"17}
-  %\expandafter\DeclareMathDelimiter\@backslashchar{\mathord}{stixoperators}{"5C}{stixlargesymbols}{"17}
-  %\stix@MathDelimiter{|}          {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  %\stix@MathDelimiter{\vert}      {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  %\stix@MathDelimiter{\Vert}      {\mathord}  {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
-  %        \let\|=\Vert
-  %\stix@MathDelimiter{\lvert}     {\mathopen} {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  %\stix@MathDelimiter{\rvert}     {\mathclose}{stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
-  %\stix@MathDelimiter{\lVert}     {\mathopen} {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
-  %\stix@MathDelimiter{\rVert}     {\mathclose}{stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
+% \stix@MathDelimiter{(}          {\mathopen} {stixoperators}   {"2E}{stixlargesymbols}{"00}
+% \stix@MathDelimiter{)}          {\mathclose}{stixoperators}   {"2F}{stixlargesymbols}{"01}
+% \stix@MathDelimiter{[}          {\mathopen} {stixoperators}   {"5B}{stixlargesymbols}{"04}
+% \stix@MathDelimiter{]}          {\mathclose}{stixoperators}   {"5D}{stixlargesymbols}{"05}
+% \stix@MathDelimiter{\lfloor}    {\mathopen} {stixlargesymbols}{"E2}{stixlargesymbols}{"08}
+% \stix@MathDelimiter{\rfloor}    {\mathclose}{stixlargesymbols}{"E3}{stixlargesymbols}{"09}
+% \stix@MathDelimiter{\lceil}     {\mathopen} {stixlargesymbols}{"E4}{stixlargesymbols}{"0A}
+% \stix@MathDelimiter{\rceil}     {\mathclose}{stixlargesymbols}{"E5}{stixlargesymbols}{"0B}
+% \stix@MathDelimiter{\lbrace}    {\mathopen} {stixoperators}   {"5E}{stixlargesymbols}{"0C}
+% \stix@MathDelimiter{\rbrace}    {\mathclose}{stixoperators}   {"60}{stixlargesymbols}{"0D}
+% \stix@MathDelimiter{\langle}    {\mathopen} {stixlargesymbols}{"EA}{stixlargesymbols}{"10}
+% \stix@MathDelimiter{\rangle}    {\mathclose}{stixlargesymbols}{"EB}{stixlargesymbols}{"11}
+% \stix@MathDelimiter{\lmoustache}{\mathopen} {stixlargesymbols}{"E6}{stixlargesymbols}{"EC}
+% \stix@MathDelimiter{\rmoustache}{\mathclose}{stixlargesymbols}{"E7}{stixlargesymbols}{"ED}
+% \stix@MathDelimiter{/}          {\mathord}  {stixoperators}   {"5F}{stixlargesymbols}{"16}
+% \stix@MathDelimiter{\backslash} {\mathord}  {stixoperators}   {"5C}{stixlargesymbols}{"17}
+% \expandafter\DeclareMathDelimiter\@backslashchar{\mathord}{stixoperators}{"5C}{stixlargesymbols}{"17}
+% \stix@MathDelimiter{|}          {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+% \stix@MathDelimiter{\vert}      {\mathord}  {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+% \stix@MathDelimiter{\Vert}      {\mathord}  {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
+%         \let\|=\Vert
+% \stix@MathDelimiter{\lvert}     {\mathopen} {stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+% \stix@MathDelimiter{\rvert}     {\mathclose}{stixlargesymbols}{"F0}{stixlargesymbols}{"F3}
+% \stix@MathDelimiter{\lVert}     {\mathopen} {stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
+% \stix@MathDelimiter{\rVert}     {\mathclose}{stixlargesymbols}{"F1}{stixlargesymbols}{"F4}
   \stix@MathDelimiter{\lParen}    {\mathopen} {stixlargesymbols}{"DE}{stixlargesymbols}{"02}
   \stix@MathDelimiter{\rParen}    {\mathclose}{stixlargesymbols}{"DF}{stixlargesymbols}{"03}
   \stix@MathDelimiter{\lBrack}    {\mathopen} {stixlargesymbols}{"E0}{stixlargesymbols}{"06}
@@ -163,43 +136,28 @@
 
 \mathchardef\mathhyphen="2D
 \newcommand{\sslash}{\mathbin{/\mkern-6mu/}}
-% use sans-serif math operator font
-  \AtBeginDocument{\sbox0{$\mathsf{\xdef\mathsfgroup{\the\mathgroup}}$}}
-  \def\operator@font{\mathgroup\mathsfgroup}
-% use \varphi instead of \phi by default
+
+% variants
   \let\temp\phi
   \let\phi\varphi
   \let\varphi\temp
-% likewise for epsilon
   \let\temp\epsilon
   \let\epsilon\varepsilon
   \let\varepsilon\temp
-% same for \varnothing and \emptyset
   \let\temp\emptyset
   \let\emptyset\varnothing
   \let\varnothing\temp
   \let\temp\relax
-% use variant limits
   \let\@projlim\varprojlim
   \let\@injlim\varinjlim
   \let\varprojlim\projlim
   \let\varinjlim\injlim
   \renewcommand{\projlim}{\@projlim\limits}
   \renewcommand{\injlim}{\@injlim\limits}
-
-\renewcommand{\rmdefault}{minlibertine}
-\setmainfont[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
-\setsansfont[Ligatures={Required, TeX, Common}, Numbers={Proportional}]{Linux Biolinum O}
-\newfontfamily{\bfseries}[Ligatures={Required, TeX, Common}, Numbers={Proportional, OldStyle}]{LinLibertine_RB.otf}
-\newfontfamily{\lmsffamily}[Scale=0.94]{Latin Modern Sans}
-\newfontfamily{\ligatured}[Ligatures={Required, TeX, Common, Contextual, Rare, Historic}, Numbers={Proportional, OldStyle}]{Linux Libertine O}
-\setmonofont[StylisticSet={1,3}]{Inconsolatazi4}
-
-\MakeAutoQuote{<}{>}
+  \let\varvec\vec\relax
+  \renewcommand*{\vec}[1]{\mathbf{#1}}
 
 \linespread{1.25}
-
-\newcommand{\TODO}[1][TODO]{\text{\color{red}\ttfamily{#1}}}
 
 \allowdisplaybreaks
 
@@ -222,12 +180,12 @@
   \DeclarePairedDelimiter{\ulcorners}{\ullcorner}{\ulrcorner}
 
 % theorem environments
-  %\newtheoremstyle{proof}{0pt}{\topsep}{}{}{\slshape}{.}{5pt plus 1pt minus 1pt}{}
-  %\theoremstyle{proof}
-  %%\let\proof\relax
-  %%\let\c@proof\relax
-  %\newtheorem*{bareproof}{Proof}
-  %\renewenvironment{proof}[1][]{\begin{bareproof}\pushQED{\qed}#1\popQED\end{bareproof}}
+% \newtheoremstyle{proof}{0pt}{\topsep}{}{}{\slshape}{.}{5pt plus 1pt minus 1pt}{}
+% \theoremstyle{proof}
+% \let\proof\relax
+% \let\c@proof\relax
+% \newtheorem*{bareproof}{Proof}
+% \renewenvironment{proof}[1][]{\begin{bareproof}\pushQED{\qed}#1\popQED\end{bareproof}}
   \newtheoremstyle{plain}{\topsep}{}
     {\setlength{\parskip}{0em}\setlength{\parindent}{2em}}
     {}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
@@ -262,16 +220,19 @@
     \popQED\endtrivlist\@endpefalse%
   }
 
-% general
-  \let\varvec\vec\relax
-  \renewcommand*{\vec}[1]{\mathbf{#1}}
+% generally useful things
+  \newcommand*{\DeclareMathName}[2]{\newcommand{#1}{\operator@font{#2}}}
+  \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
+  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\mathsf{#2}}}
+  \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname #1\endcsname{{\cat{\IfValueTF{#2}{#2}{#1}}}}}
+
   \newcommand*{\conj}[1]{\overline{#1}}
   \let\mod\relax
     \DeclareMathOperator{\mod}{mod}
   \newcommand*{\closure}[1]{\overline{#1}}
   \DeclareMathOperator{\dom}{dom}
   \DeclareMathOperator{\im}{im}
-  \DeclareMathOperator{\sgn}{sgn}
+  \DeclareMathName{\sgn}{sgn}
   \DeclareMathOperator{\lc}{lc}
   \DeclareMathOperator{\supp}{supp}
   \newcommand{\id}{{\operator@font{id}}}
@@ -281,162 +242,52 @@
   \newcommand{\inj}{\hookrightarrow}
   \newcommand{\surj}{\twoheadrightarrow}
   \newcommand{\tensor}{\otimes}
+  \newcommand{\Tensor}{\bigotimes}
   \DeclareMathOperator{\res}{res}
-  \DeclareMathOperator{\Hom}{Hom}
   \newcommand{\defeq}{\coloneqq}
-  \newcommand*{\setbuild}[2]{\brc*{#1 : #2}}
+  \newcommand*{\setbuild}[2]{\brc*{#1\,:\,#2}}
   \newcommand*{\setdesc}[1]{\brc*{\textup{#1}}}
   % add \prod* as product with prime symbol
     \let\@prod\prod
     \newcommand{\@@prod}{\sideset{}{'}\@prod}
     \def\prod{\@ifstar\@@prod\@prod}
   \newcommand{\compose}{\circ}
-
-% computer science
-  \DeclareMathOperator{\polylog}{polylog}
-  \newcommand{\True}{\textbf{true}}
-  \newcommand{\False}{\textbf{false}}
-
-% number theory
   \newcommand{\divides}{\mid}
   \newcommand{\ndivides}{\nmid}
-  \DeclareMathOperator{\Cl}{Cl}
-  \DeclareMathOperator{\cl}{cl}
-  \DeclareMathOperator{\Spl}{Spl}
-  \DeclareMathOperator{\disc}{disc}
-  \newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
-  \DeclareMathOperator{\val}{val}
-  \newcommand{\Frob}{{\operator@font{Frob}}}
-
-% analysis
   \newcommand{\dd}{\mathop{}\!{\operator@font{d}}}
   \newcommand*{\der}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\dd #2}{\dd #3}}{\frac{\dd^#1 #2}{{\dd #3}^#1}}}
   \newcommand*{\pd}[3][1]{\ifthenelse{\equal{#1}{1}}{\frac{\partial #2}{\partial #3}}{\frac{\partial^#1 #2}{{\partial #3}^#1}}}
-  \newcommand{\del}{\partial}
-  \DeclareMathOperator{\bdry}{bdry}
-  \DeclareMathOperator{\interior}{int}
-  \DeclareMathOperator{\covol}{covol}
-  \DeclareMathOperator{\ind}{ind}
-  \DeclareMathOperator{\spec}{spec}
-
-% probability
-  \DeclareMathOperator{\Expect}{E}
-  \DeclareMathOperator{\Var}{Var}
-
-% algebra
-  \newcommand{\GL}{{\operator@font{GL}}}
-  \newcommand{\SL}{{\operator@font{SL}}}
-  \DeclareMathOperator{\Tr}{Tr}
-  \newcommand{\N}{{\operator@font{N}}}
-  \DeclareMathOperator{\coim}{coim}
-  \DeclareMathOperator{\coker}{coker}
   \newcommand{\transpose}{{\operator@font{T}}}
-  \newcommand{\herm}{\dagger}
-  \DeclareMathOperator{\Ind}{Ind}
-  \DeclareMathOperator{\Res}{Res}
-  \newcommand{\dominatedby}{\triangleleft}
-  \newcommand{\dominatedbyeq}{\trianglelefteq}
-  \newcommand{\dominates}{\triangleright}
-  \newcommand{\dominateseq}{\trianglerighteq}
-  \def\residue{\@ifstar\overline\bar}
-  \DeclareMathOperator{\Gal}{Gal}
-  \DeclareMathOperator{\Aut}{Aut}
-  \DeclareMathOperator{\Frac}{Frac}
-  \newcommand*{\completion}[1]{\widehat{#1}}
-  \def\dual{\@ifstar\widehat\hat}
-  \DeclareMathOperator{\khar}{char}
-  \newcommand{\nsubgrp}{\triangleleft}
-  \newcommand{\nsupgrp}{\triangleright}
-  \newcommand{\nsubgrpeq}{\trianglelefteq}
-  \newcommand{\nsupgrpeq}{\trianglerighteq}
-  \newcommand{\semitimes}{\rtimes}
-  \DeclareMathOperator{\Stab}{Stab}
-  \DeclareMathOperator{\Sym}{Sym}
-  \DeclareMathOperator{\End}{End}
-
-% Lie theory
-  \newcommand{\Gl}{\mathfrak{gl}}
-  \newcommand{\Sl}{\mathfrak{sl}}
-
-% algebraic geometry
-  \DeclareMathOperator{\Spec}{Spec}
-  \DeclareMathOperator{\Proj}{Proj}
-  \DeclareMathOperator{\Div}{Div}
-  \let\div\relax
-  \DeclareMathOperator{\div}{div}
-  \DeclareMathOperator{\Pic}{Pic}
-  \DeclareMathOperator{\Supp}{Supp}
-  \newcommand{\sh}{{\operator@font{sh}}}
-  \newcommand{\ratto}{\dashrightarrow}
-
-% logic and set theory
   \newcommand{\union}{\cup}
   \newcommand{\intersect}{\cap}
-  \newcommand{\powset}{\mathvarcal{P}}
-  \DeclareMathOperator{\Succ}{S}
-  \DeclareMathOperator{\fst}{fst}
-  \DeclareMathOperator{\snd}{snd}
-  \def\card{\@ifstar\@@card\@card}
+  \newcommand{\Union}{\bigcup}
+  \newcommand{\Intersect}{\bigcap}
+  \newcommand{\limpl}{\rightarrow}
+  \newcommand{\lImpl}{\Rightarrow}
+  \newcommand{\liff}{\leftrightarrow}
+  \newcommand{\lIff}{\Leftrightarrow}
+  \if@varcard
+    \DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+  \else
+    \def\card{\@ifstar\@@card\@card}
     \newcommand*{\@card}[1]{\mathop{}\!\textup{\#}#1}
     \newcommand*{\@@card}[1]{\mathop{}\!\textup{\#}\,\prn*{#1}}
-  \newcommand{\proves}{\vdash}
-  \newcommand{\nproves}{\nvdash}
-  \renewcommand{\models}{\vDash}
-  \newcommand{\nmodels}{\nvDash}
-  \newcommand{\forces}{\Vdash}
-  \newcommand{\nforces}{\nVdash}
-  \newcommand{\lconj}{\wedge}
-  \newcommand{\lmeet}{\wedge}
-  \newcommand{\ldisj}{\vee}
-  \newcommand{\ljoin}{\vee}
-  \newcommand{\liff}{\leftrightarrow}
-  \newcommand{\limpl}{\to}
-  \newcommand{\lImpl}{\Rightarrow}
-  \newcommand{\lexp}{\Rightarrow}
-  \let\lquot\ucorners\relax
-  \DeclareMathOperator{\Bew}{Bew}
-  \DeclareMathOperator{\isproof}{B}
-  \DeclareMathOperator{\Con}{Con}
-  \newcommand{\lbox}{\Box}
-  \newcommand{\ldiam}{\Diamond}
-  \newcommand{\power}{\mathscr{P}}
-  \DeclareMathOperator{\cf}{cf}
-
-% physics
-  \newcommand{\outarrow}{\odot}
-  \newcommand{\inarrow}{\otimes}
-
-% category theory
+  \fi
   \DeclareMathOperator{\colim}{colim}
-  \newcommand{\Mor}{{\operator@font{Mor}}}
-  \newcommand{\Nat}{{\operator@font{Nat}}}
-  \DeclareMathOperator{\Sh}{Sh}
+  \DeclareMathName{\Hom}{Hom}
+  \DeclareMathName{\Mor}{Mor}
+  \DeclareMathName{\Map}{Map}
+  \DeclareMathName{\map}{map}
   \newcommand{\adjoins}{\dashv}
-  \newcommand{\opp}{{\operator@font{op}}}
-  \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
-  \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\textup{\lmsffamily{#2}}}}
-  \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname cat#1\endcsname{\cat{\IfValueTF{#2}{#2}{#1}}}}
-  \DeclareCategory{Set}
-  \DeclareCategory{Top}
-  \DeclareCategory{Grp}
-  \DeclareCategory{Rep}
-  \DeclareCategory{Ab}
-  \DeclareCategory{CRing}
-  \DeclareCategory{Ring}
-  \DeclareCategory{RingNU}[Ring\ensuremath{^{\slashed{1}}}]
-  \DeclareCategory{Mod}
-  \DeclareCategory{LMod}
-  \DeclareCategory{RMod}
-  \DeclareCategory{CAlg}
-  \DeclareCategory{Alg}
-  \DeclareCategory{CAlgNU}[CAlg\ensuremath{^{\slashed{1}}}]
-  \DeclareCategory{Coalg}
-  \DeclareCategory{Aff}
-  \DeclareCategory{Sch}
-  \DeclareCategory{PSh}
-  \DeclareCategory{Sh}
-  \DeclareCategory{QCoh}
-  \DeclareCategory{Cat}
-  \DeclareCategory{Fun}
+  \newcommand{\adjoined}{\vdash}
+  \DeclareMathName{\opp}{op}
+  \newcommand{\bbN}{\mathbb{N}}
+  \newcommand{\bbZ}{\mathbb{Z}}
+  \newcommand{\bbQ}{\mathbb{Q}}
+  \newcommand{\bbR}{\mathbb{R}}
+
+\if@addauthor
+  \author{Deven Lahoti}
+\fi
 
 \endinput
