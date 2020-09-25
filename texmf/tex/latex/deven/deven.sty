@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2020/09/23 Deven custom macros]
+\ProvidesPackage{deven}[2020/09/24 Deven custom macros]
 
 \RequirePackage{lmodern,kpfonts}
 \RequirePackage[small,euler-digits]{eulervm}
@@ -221,7 +221,7 @@
   }
 
 % generally useful things
-  \newcommand*{\DeclareMathName}[2]{\newcommand{#1}{\operator@font{#2}}}
+  \newcommand*{\DeclareMathName}[2]{\newcommand{#1}{{\operator@font{#2}}}}
   \newcommand{\@addhyphen}[1]{\def\ProcessedArgument{#1\mathhyphen}}
   \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\mathsf{#2}}}
   \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname #1\endcsname{{\cat{\IfValueTF{#2}{#2}{#1}}}}}
