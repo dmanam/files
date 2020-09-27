@@ -126,7 +126,10 @@ workspaces = workspacesNew $ defaultWorkspacesConfig
   , underlineHeight = 0
   }
 layout = betterLayoutNew defaultLayoutConfig
-window = windowsNew defaultWindowsConfig
+window = windowsNew $ defaultWindowsConfig
+  { getMenuLabel = truncatedGetMenuLabel 150
+  , getActiveLabel = truncatedGetActiveLabel 150
+  }
 note = notifyAreaNew notCfg
 
 --wea = weatherNew ((defaultWeatherConfig "KBOS") {weatherTemplate = "$tempC$°F", weatherFormatter = WeatherFormatter ((++ " K") . fmt)}) 10
