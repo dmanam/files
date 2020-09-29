@@ -129,8 +129,9 @@ myLayout = avoidStruts $ two ||| tall ||| wide ||| full
 
 -- use `xprop | grep WM_CLASS` and click to find the class
 -- use 'title' to match on WM_NAME
-myManageHook = composeAll $ manageDocks
-  : fmap (\cl-> className =? cl --> doFloat) ["qjackctl", "Qjackctl"]
+myManageHook = composeAll $ manageDocks :
+  [ stringProperty "WM_WINDOW_ROLE" =? "Dialog" --> doFloat
+  ]
 
 -- return (All True) to run default handler afterwards
 myEventHook = fullscreenEventHook <+> docksEventHook
