@@ -134,6 +134,11 @@
   \DeclareMathDelimiter{\ulrcorner}
       {\mathclose}{MnLargeSymbols}{'067}{MnLargeSymbols}{'067}
 
+% define Zapf Chancery, scaled up slightly
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.15] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
 \mathchardef\mathhyphen="2D
 \newcommand{\sslash}{\mathbin{/\mkern-6mu/}}
 
@@ -278,6 +283,8 @@
   \DeclareMathName{\Mor}{Mor}
   \DeclareMathName{\Map}{Map}
   \DeclareMathName{\map}{map}
+  \DeclareMathName{\Aut}{Aut}
+  \DeclareMathName{\aut}{aut}
   \newcommand{\adjoins}{\dashv}
   \newcommand{\adjoined}{\vdash}
   \DeclareMathName{\opp}{op}
