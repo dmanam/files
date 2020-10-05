@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2020/09/24 Deven custom macros]
+\ProvidesPackage{deven}[2020/10/04 Deven custom macros]
 
 \RequirePackage{lmodern,kpfonts}
 \RequirePackage[small,euler-digits]{eulervm}
@@ -38,7 +38,27 @@
   \@addauthorfalse
 }
 
+\newif\if@setgeometry\@setgeometrytrue
+\DeclareOption{nogeometry}{%
+  \@setgeometryfalse
+}
+
 \ProcessOptions\relax
+
+\if@addauthor
+  \author{Deven Lahoti}
+\fi
+
+\if@setgeometry
+  \setlength{\topmargin}{0in}
+  \setlength{\oddsidemargin}{0in}
+  \setlength{\evensidemargin}{0in}
+  \setlength{\textwidth}{6.5in}
+  \setlength{\textheight}{9in}
+  \addtolength{\topmargin}{-\headheight}
+  \addtolength{\topmargin}{-\headsep}
+  \setlength{\footskip}{0.5in}
+\fi
 
 % the following taken from the `stix' package
   \DeclareFontEncoding{LS1}{}{}
@@ -292,9 +312,5 @@
   \newcommand{\bbZ}{\mathbb{Z}}
   \newcommand{\bbQ}{\mathbb{Q}}
   \newcommand{\bbR}{\mathbb{R}}
-
-\if@addauthor
-  \author{Deven Lahoti}
-\fi
 
 \endinput
