@@ -131,6 +131,8 @@ myLayout = avoidStruts $ two ||| tall ||| wide ||| full
 -- use 'title' to match on WM_NAME
 myManageHook = composeAll $ manageDocks :
   [ stringProperty "WM_WINDOW_ROLE" =? "Dialog" --> doFloat
+  , className =? "pavucontrol" --> doFloat
+  , className =? "Pavucontrol" --> doFloat
   ]
 
 -- return (All True) to run default handler afterwards
