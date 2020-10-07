@@ -1,15 +1,3 @@
 [user]
 	email = deven.lahoti@gmail.com
 	name = Deven Lahoti
-[push]
-	default = simple
-[core]
-	editor = nvim
-[merge]
-	tool = nvimdiff
-[mergetool "nvimdiff"]
-	cmd = "nvim -d \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c '$wincmd w' -c 'wincmd J'"
-[diff]
-	tool = nvimdiff
-[difftool "nvimdiff"]
-	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""

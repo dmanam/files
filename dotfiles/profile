@@ -1,21 +1,4 @@
 export TEXMFHOME="${HOME}/documents/files/texmf"
 export PASSWORD_STORE_DIR="${HOME}/documents/blobs/secrets/password-store"
 
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_DATA_HOME="${HOME}/.local/share"
-
-export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
-export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
-export TEXMFCONFIG="${XDG_CONFIG_HOME}/texmf"
-
-export TEXMFVAR="${XDG_CACHE_HOME}/texmf"
-
-export WINEPREFIX="${XDG_DATA_HOME}/wine"
-
-export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
-export RXVT_SOCKET="${XDG_RUNTIME_DIR}/urxvt"
-
-export MOSH_TITLE_NOPREFIX=1
-
 . ~/.dotfiles/`hostname`/profile

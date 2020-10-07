@@ -5,9 +5,6 @@
 # that can't tolerate any output.  So make sure this doesn't display
 # anything or bad things will happen !
 
-alias qmv='qmv -fdo'
-alias vim='nvim'
-
 # Test for an interactive shell.  There is no need to set anything
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
@@ -17,37 +14,3 @@ if [[ $- != *i* ]] ; then
 fi
 
 # Put your fun stuff here.
-
-mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/bash"
-export HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/bash/history"
-shopt -s histappend
-
-export PROMPT_COMMAND=__prompt_command
-function __prompt_command () {
-  local EXIT="$?"
-
-  local red='\[\e[31;1m\]'
-  local green='\[\e[32;1m\]'
-  local yellow='\[\e[33;1m\]'
-  local blue='\[\e[34;1m\]'
-  local magenta='\e[35;40m'
-  local cyan='\[\e[36;1m\]'
-  local white='\[\e[37;1m\]'
-  local colorreset='\[\e[0m\]'
-
-  local userstring
-  if [[ -z "$IN_NIX_SHELL" ]]; then
-    userstring='\u@\h'
-  else
-    userstring='nix-shell'
-  fi
-
-  PS1='\[\033]0;'"${userstring}"':\w\007\]'
-  PS1+="${yellow}["
-  if [[ $EXIT != 0 ]]; then
-    PS1+=${red}
-  else
-    PS1+=${green}
-  fi
-  PS1+="$(printf '%02x' $EXIT)${yellow}] ${cyan}${userstring} ${blue}\w ${yellow}\$ ${colorreset}"
-}
