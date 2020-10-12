@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2020/10/04 Deven custom macros]
+\ProvidesPackage{deven}[2020/10/12 Deven custom macros]
 
 \RequirePackage{lmodern,kpfonts}
 \RequirePackage[small,euler-digits]{eulervm}
@@ -298,7 +298,7 @@
     \newcommand*{\@card}[1]{\mathop{}\!\textup{\#}#1}
     \newcommand*{\@@card}[1]{\mathop{}\!\textup{\#}\,\prn*{#1}}
   \fi
-  \DeclareMathOperator{\colim}{colim}
+  \DeclareMathOperator*{\colim}{colim}
   \DeclareMathName{\Hom}{Hom}
   \DeclareMathName{\Mor}{Mor}
   \DeclareMathName{\Map}{Map}
@@ -312,6 +312,7 @@
   \newcommand{\bbZ}{\mathbb{Z}}
   \newcommand{\bbQ}{\mathbb{Q}}
   \newcommand{\bbR}{\mathbb{R}}
+  \newcommand{\bbC}{\mathbb{C}}
   \newcommand{\bbF}{\mathbb{F}}
 
 \endinput
