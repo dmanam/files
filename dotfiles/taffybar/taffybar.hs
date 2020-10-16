@@ -6,18 +6,11 @@ import System.Taffybar.SimpleConfig
 
 import System.Taffybar.Widget
 
---import System.Taffybar.Widget.DiskIOMonitor
---import System.Taffybar.Widget.CPUMonitor
---import System.Taffybar.Widget.SNITray
---import System.Taffybar.Widget.SimpleClock
---import System.Taffybar.Widget.FreedesktopNotifications
---import System.Taffybar.Widget.Weather
---import System.Taffybar.Widget.Battery
 import System.Taffybar.Widget.BetterLayout
+import System.Taffybar.Widget.Volume as Volume
 
 import System.Taffybar.Widget.Generic.PollingGraph
 import System.Taffybar.Widget.Generic.PollingOverlayGraph
-import System.Taffybar.Widget.Generic.PollingBarX as PBX
 
 import System.Taffybar.Information.Memory
 import System.Taffybar.Information.Network
@@ -66,7 +59,7 @@ memReader = do
 netMax = 10 * 1024 * 1024
 netReader = let old = unsafePerformIO $ newIORef (-1, -1) in do
   (rx', tx') <- readIORef old
-  rx:tx:_ <- fromMaybe [-1, -1] <$> getNetInfo "wlp2s0"
+  rx:tx:_ <- fromMaybe [-1, -1] <$> getNetInfo "enp7s0"
   writeIORef old (rx, tx)
   return $ (/ netMax) . fromIntegral <$> [rx - rx', tx - tx']
 
@@ -89,18 +82,12 @@ batReader ctx btx = fmap (fromMaybe ([0], T.empty, [(0, 0, 0, 0)])) . runMaybeT 
         _ -> ((255 - 40 * val)/255, (95 + 120 * val)/255, (95 + 80 * val)/255, 1.0)
   return ([val], T.pack battTime, [color])
 
-volReader = fmap (fromMaybe (-1, False)) . runMaybeT $ do
-  let exec arg = MaybeT $ do
-        (_, r:et, _) <- readProcessWithExitCode "pamixer" [arg] ""
-        return $ readMaybe $ toUpper r:et
-  vol  <- exec "--get-volume"
-  mute <- exec "--get-mute"
-  return (vol/100, mute)
-
 graphcfg colors = defaultGraphConfig
   { graphLabel = Nothing
   , graphDirection = RIGHT_TO_LEFT
   , graphDataColors = colors
+  , graphBorderWidth = 2
+  , graphPadding = 4
   }
 notCfg = defaultNotificationConfig
   { notificationMaxTimeout = Just 2000
@@ -114,12 +101,14 @@ batCfg = defaultGraphConfig
   { graphHistorySize = 60
   , graphWidth = 80
   , graphDirection = RIGHT_TO_LEFT
+  , graphBorderWidth = 2
+  , graphPadding = 4
   }
 batOfg = defaultGraphOverlayConfig
-volCfg = (defaultBarConfig $ const (0.5, 0.5, 0.5)) { barWidth = 19, PBX.barPadding = 4 }
-volXfg = defaultBarXXConfig { barXXColor = (1, 95/255, 95/255) }
+volCfg = (defaultBarConfig $ const (0.5, 0.5, 0.5)) { barWidth = 19, Volume.barPadding = 4 }
+volXfg = defaultBarXXConfig { barXXColor = (1, 95/255, 95/255), barXXBorderWidth = 2.25 }
 
-clock = textClockNew Nothing ("<span fgcolor='" ++ colors !! 3 ++ "'>%a %b %_d %H:%M:%S</span>") 1
+clock = textClockNew Nothing (colorize (colors !! 3) "" "%a %b %_d %H:%M:%S") 1
 workspaces = workspacesNew $ defaultWorkspacesConfig
   { maxIcons = Just 0
   , showWorkspaceFn = hideEmpty
@@ -132,12 +121,12 @@ window = windowsNew $ defaultWindowsConfig
   }
 note = notifyAreaNew notCfg
 
---wea = weatherNew ((defaultWeatherConfig "KBOS") {weatherTemplate = "$tempC$°F", weatherFormatter = WeatherFormatter ((++ " K") . fmt)}) 10
---  where fmt WI {tempC = temp}
---          | temp > 30 = colorize (colors !! 1) "" . show $ temp + 273
---          | temp > 26 = colorize (colors !! 3) "" . show $ temp + 273
---          | temp > 15 = colorize (colors !! 2) "" . show $ temp + 273
---          | otherwise = colorize (colors !! 4) "" . show $ temp + 273
+--wea = weatherNew ((defaultWeatherConfig "KDPA") {weatherFormatter = WeatherFormatter ((++ " °F") . fmt)}) 10
+--  where fmt WI {tempF = tempF, tempC = tempC}
+--          | tempC > 30 = colorize (colors !! 1) "" . show $ tempF
+--          | tempC > 26 = colorize (colors !! 3) "" . show $ tempF
+--          | tempC > 15 = colorize (colors !! 2) "" . show $ tempF
+--          | otherwise  = colorize (colors !! 4) "" . show $ tempF
 mem = pollingGraphNew memCfg 1 memReader
 cpu = cpuMonitorNew cpuCfg 1 "cpu"
 net = pollingGraphNew netCfg 1 netReader
@@ -150,9 +139,9 @@ bat = do
     _ -> do
       l <- Gtk.labelNew Nothing
       Gtk.toWidget l
-vol = pollingBarXNew volCfg volXfg 0.25 volReader
+vol = volumeMonitorNew volCfg volXfg
 
-tray = sniTrayThatStartsWatcherEvenThoughThisIsABadWayToDoIt
+tray = sniTrayNew
 
 main = do
   simpleTaffybar $ defaultSimpleTaffyConfig

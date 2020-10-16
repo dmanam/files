@@ -42,12 +42,14 @@ data VerticalBarXState = VerticalBarXState
   }
 
 data BarXXConfig
-  = BarXXConfig {
-       barXXColor :: (Double, Double, Double)
-     , barXXPadding :: Int}
+  = BarXXConfig
+     { barXXColor :: (Double, Double, Double)
+     , barXXPadding :: Int
+     , barXXBorderWidth :: Double
+     }
 
 defaultBarXXConfig :: BarXXConfig
-defaultBarXXConfig = BarXXConfig (1, 0, 0) 0
+defaultBarXXConfig = BarXXConfig (1, 0, 0) 0 1
 
 verticalBarXSetState :: VerticalBarXHandle -> (Double, Bool) -> IO ()
 verticalBarXSetState (VBH mv) (pct, x) = do
@@ -79,9 +81,10 @@ liftedBarColor bc pct =
   case bc of
     BarConfig { barColor = c } -> return (c pct)
     BarConfigIO { barColorIO = c } -> c pct
+-- end unmodified code
 
-renderFrame_ :: Double -> BarConfig -> Int -> Int -> C.Render ()
-renderFrame_ pct cfg width height = do
+renderFrame_ :: Double -> BarConfig -> Int -> Int -> Double -> C.Render ()
+renderFrame_ pct cfg width height thickness = do
   let fwidth = fromIntegral width
       fheight = fromIntegral height
 
@@ -96,10 +99,9 @@ renderFrame_ pct cfg width height = do
   -- Now draw a nice frame
   (frameR, frameG, frameB) <- C.liftIO $ liftedBorderColor cfg
   C.setSourceRGB frameR frameG frameB
-  C.setLineWidth 1.0
+  C.setLineWidth thickness
   C.rectangle (fpad + 0.5) (fpad + 0.5) (fwidth - 2 * fpad - 1) (fheight - 2 * fpad - 1)
   C.stroke
--- end unmodified code
 
 renderBar :: Double -> Bool -> BarConfig -> BarXXConfig -> Int -> Int -> C.Render ()
 renderBar pct x cfg xfg width height = do
@@ -115,7 +117,7 @@ renderBar pct x cfg xfg width height = do
                        HORIZONTAL -> 0
       pad = barPadding cfg
 
-  renderFrame_ pct cfg width height
+  renderFrame_ pct cfg width height (barXXBorderWidth xfg)
 
   ctm <- C.getMatrix
 
