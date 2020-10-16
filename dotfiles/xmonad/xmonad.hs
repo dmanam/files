@@ -15,6 +15,7 @@ import System.Taffybar.Support.PagerHints (pagerHints)
 import XMonad.Actions.NoBorders (toggleBorder)
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, docksStartupHook, manageDocks, ToggleStruts (ToggleStruts))
+import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Layout.NoBorders (noBorders, lessBorders, Ambiguity (Screen))
 import XMonad.Layout.Renamed (renamed, Rename (Replace))
 import XMonad.Layout.TwoPane (TwoPane (TwoPane))
@@ -32,7 +33,7 @@ main = xmonad $ ewmh . pagerHints $ def
   { terminal           = "urxvtc"
   , focusFollowsMouse  = False
   , clickJustFocuses   = False
-  , borderWidth        = 1
+  , borderWidth        = 2
   , modMask            = mod4Mask
   , workspaces         = (:[]) <$> ['α'..'κ']
   , normalBorderColor  = "#121212"
@@ -130,9 +131,9 @@ myLayout = avoidStruts $ two ||| tall ||| wide ||| full
 -- use `xprop | grep WM_CLASS` and click to find the class
 -- use 'title' to match on WM_NAME
 myManageHook = composeAll $ manageDocks :
-  [ stringProperty "WM_WINDOW_ROLE" =? "Dialog" --> doFloat
-  , className =? "pavucontrol" --> doFloat
-  , className =? "Pavucontrol" --> doFloat
+  [ stringProperty "WM_WINDOW_ROLE" =? "Dialog" --> doCenterFloat
+  , className =? "pavucontrol" --> doCenterFloat
+  , className =? "Pavucontrol" --> doCenterFloat
   ]
 
 -- return (All True) to run default handler afterwards
