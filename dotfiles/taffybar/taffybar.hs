@@ -1,13 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TupleSections #-}
 
 import System.Taffybar
 
-import System.Taffybar.SimpleConfig
+import System.Taffybar.SimpleConfig as SC
 
 import System.Taffybar.Widget
 
 import System.Taffybar.Widget.BetterLayout
-import System.Taffybar.Widget.Volume as Volume
+import System.Taffybar.Widget.BetterWeather as Wea
+import System.Taffybar.Widget.Volume as Vol
 
 import System.Taffybar.Widget.Generic.PollingGraph
 import System.Taffybar.Widget.Generic.PollingOverlayGraph
@@ -19,37 +21,42 @@ import System.Taffybar.Information.Battery
 import System.Process (readProcessWithExitCode)
 import System.IO.Unsafe (unsafePerformIO)
 
+import Data.Function
 import Data.Char (toUpper)
 import Data.Either.Combinators (rightToMaybe)
 import Data.Maybe (fromMaybe)
 import qualified Data.Text as T
+import Data.String
 import Text.Read (readMaybe)
 import Text.Printf (printf)
+import Text.StringTemplate (newSTMP)
 import Control.Monad.Trans.Maybe
 import Control.Monad.Trans.Reader
 import Data.IORef (newIORef, readIORef, writeIORef)
 import qualified GI.Gtk as Gtk
+import GI.GLib (markupEscapeText)
 
-colors = fmap ('#':)
-  [ "121212"
-  , "ff5f5f"
-  , "afd787"
-  , "d7d7af"
-  , "87d7ff"
-  , "d7afd7"
-  , "87d7af"
-  , "d7d7d7"
-  , "121212"
-  , "ff5f5f"
-  , "afd787"
-  , "d7d7af"
-  , "87d7ff"
-  , "d7afd7"
-  , "87d7af"
-  , "d7d7d7"
-  , "000000"
-  , "d7d7d7"
-  , "87afd7"
+colors :: IsString s => [s]
+colors =
+  [ "#121212"
+  , "#ff5f5f"
+  , "#afd787"
+  , "#d7d7af"
+  , "#87d7ff"
+  , "#d7afd7"
+  , "#87d7af"
+  , "#d7d7d7"
+  , "#121212"
+  , "#ff5f5f"
+  , "#afd787"
+  , "#d7d7af"
+  , "#87d7ff"
+  , "#d7afd7"
+  , "#87d7af"
+  , "#d7d7d7"
+  , "#000000"
+  , "#d7d7d7"
+  , "#87afd7"
   ]
 
 memReader = do
@@ -87,7 +94,6 @@ graphcfg colors = defaultGraphConfig
   , graphDirection = RIGHT_TO_LEFT
   , graphDataColors = colors
   , graphBorderWidth = 2
-  , graphPadding = 4
   }
 notCfg = defaultNotificationConfig
   { notificationMaxTimeout = Just 2000
@@ -105,7 +111,7 @@ batCfg = defaultGraphConfig
   , graphPadding = 4
   }
 batOfg = defaultGraphOverlayConfig
-volCfg = (defaultBarConfig $ const (0.5, 0.5, 0.5)) { barWidth = 19, Volume.barPadding = 4 }
+volCfg = (defaultBarConfig $ const (0.5, 0.5, 0.5)) { barWidth = 19 }
 volXfg = defaultBarXXConfig { barXXColor = (1, 95/255, 95/255), barXXBorderWidth = 2.25 }
 
 clock = textClockNew Nothing (colorize (colors !! 3) "" "%a %b %_d %H:%M:%S") 1
@@ -121,12 +127,14 @@ window = windowsNew $ defaultWindowsConfig
   }
 note = notifyAreaNew notCfg
 
---wea = weatherNew ((defaultWeatherConfig "KDPA") {weatherFormatter = WeatherFormatter ((++ " °F") . fmt)}) 10
---  where fmt WI {tempF = tempF, tempC = tempC}
---          | tempC > 30 = colorize (colors !! 1) "" . show $ tempF
---          | tempC > 26 = colorize (colors !! 3) "" . show $ tempF
---          | tempC > 15 = colorize (colors !! 2) "" . show $ tempF
---          | otherwise  = colorize (colors !! 4) "" . show $ tempF
+wea = Wea.weatherNew ((Wea.defaultWeatherConfig "KDPA") {Wea.weatherFormatter = Wea.WeatherFormatter fmt}) 10
+  where fmt wi = (fmt' (Wea.tempC wi) (Wea.tempF wi) ,) . Just & fmap $ flip markupEscapeText (-1) . flip Wea.defaultWeatherFormatter wi . newSTMP . Wea.weatherTemplateTooltip . Wea.defaultWeatherConfig $ ""
+        fmt' tempC tempF = "<span fgcolor='" <> weaColor tempC <> "'>" <> T.pack (show tempF) <> "°</span>"
+        weaColor tempC
+          | tempC > 30 = colors !! 1
+          | tempC > 26 = colors !! 3
+          | tempC > 15 = colors !! 2
+          | otherwise  = colors !! 4
 mem = pollingGraphNew memCfg 1 memReader
 cpu = cpuMonitorNew cpuCfg 1 "cpu"
 net = pollingGraphNew netCfg 1 netReader
@@ -146,6 +154,7 @@ tray = sniTrayNew
 main = do
   simpleTaffybar $ defaultSimpleTaffyConfig
     { startWidgets = [workspaces, layout, window]
-    , endWidgets = [clock, bat, dio, net, mem, cpu, vol, tray, note]
-    , barHeight = 35
+    , endWidgets = [clock, wea, bat, dio, net, mem, cpu, vol, tray, note]
+    , barHeight = 40
+    , SC.barPadding = 6
     }
