@@ -134,6 +134,8 @@ myManageHook = composeAll $ manageDocks :
   [ stringProperty "WM_WINDOW_ROLE" =? "Dialog" --> doCenterFloat
   , className =? "pavucontrol" --> doCenterFloat
   , className =? "Pavucontrol" --> doCenterFloat
+  , className =? "gcr-prompter" --> doCenterFloat
+  , className =? "Gcr-prompter" --> doCenterFloat
   ]
 
 -- return (All True) to run default handler afterwards
