@@ -27,9 +27,9 @@ import Data.Word (Word32)
 import System.Taffybar.Widget.Util
 import System.Taffybar.Widget.Generic.VerticalBarX
 
-mean :: [Double] -> Double
-mean = uncurry (/) . foldl mean' (0, 0)
-  where mean' (tot, len) next = (tot + next, len + 1)
+w32mean :: [Volume] -> Double
+w32mean = uncurry (/) . foldl mean' (0.0, 0.0)
+  where mean' (tot, len) next = (tot + fromIntegral next / 65536, len + 1)
 
 contextBlock :: Context -> IO ()
 contextBlock ctx = do
@@ -45,8 +45,8 @@ updateBar :: Context -> VerticalBarXHandle -> IO ()
 updateBar ctx h = runPulse_ ctx $ do
   sink <- defaultSinkName <$> getServerInfoM
   info <- getContextSinkByNameM sink
-  let vol = mean . cVolumeToLinear . siVolume $ info
-  liftIO $ verticalBarXSetState h (vol, siMute info)
+  let CVolume vols = siVolume info
+  liftIO $ verticalBarXSetState h (w32mean vols, siMute info)
 
 eventCb :: Context -> VerticalBarXHandle -> (SubscriptionEventFacility, SubscriptionEventType) -> Word32 -> IO ()
 eventCb ctx h _ _ = updateBar ctx h
