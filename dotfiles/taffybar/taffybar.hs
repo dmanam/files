@@ -108,7 +108,6 @@ batCfg = defaultGraphConfig
   , graphWidth = 80
   , graphDirection = RIGHT_TO_LEFT
   , graphBorderWidth = 2
-  , graphPadding = 4
   }
 batOfg = defaultGraphOverlayConfig
 volCfg = (defaultBarConfig $ const (0.5, 0.5, 0.5)) { barWidth = 19 }
@@ -156,5 +155,5 @@ main = do
     { startWidgets = [workspaces, layout, window]
     , endWidgets = [clock, wea, bat, dio, net, mem, cpu, vol, tray, note]
     , barHeight = 40
-    , SC.barPadding = 6
+    , widgetSpacing = 10
     }
