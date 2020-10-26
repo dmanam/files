@@ -7,7 +7,6 @@ import System.Taffybar.SimpleConfig as SC
 
 import System.Taffybar.Widget
 
-import System.Taffybar.Widget.BetterLayout
 import System.Taffybar.Widget.BetterWeather as Wea
 import System.Taffybar.Widget.Volume as Vol
 
@@ -119,7 +118,7 @@ workspaces = workspacesNew $ defaultWorkspacesConfig
   , showWorkspaceFn = hideEmpty
   , underlineHeight = 0
   }
-layout = betterLayoutNew defaultLayoutConfig
+layout = layoutNew defaultLayoutConfig
 window = windowsNew $ defaultWindowsConfig
   { getMenuLabel = truncatedGetMenuLabel 150
   , getActiveLabel = truncatedGetActiveLabel 150
