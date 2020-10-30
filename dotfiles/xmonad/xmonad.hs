@@ -14,7 +14,7 @@ import System.Random (randomR, newStdGen)
 import System.Taffybar.Support.PagerHints (pagerHints)
 import XMonad.Actions.NoBorders (toggleBorder)
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
-import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, docksStartupHook, manageDocks, ToggleStruts (ToggleStruts))
+import XMonad.Hooks.ManageDocks (docks, avoidStruts, ToggleStruts (ToggleStruts))
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Layout.NoBorders (noBorders, lessBorders, Ambiguity (Screen))
 import XMonad.Layout.Renamed (renamed, Rename (Replace))
@@ -29,7 +29,7 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.ExtensibleState as XS
 
-main = xmonad $ ewmh . pagerHints $ def
+main = xmonad $ docks . ewmh . pagerHints $ def
   { terminal           = "urxvtc"
   , focusFollowsMouse  = False
   , clickJustFocuses   = False
@@ -130,7 +130,7 @@ myLayout = avoidStruts $ two ||| tall ||| wide ||| full
 
 -- use `xprop | grep WM_CLASS` and click to find the class
 -- use 'title' to match on WM_NAME
-myManageHook = composeAll $ manageDocks :
+myManageHook = composeAll
   [ stringProperty "WM_WINDOW_ROLE" =? "Dialog" --> doCenterFloat
   , className =? "pavucontrol" --> doCenterFloat
   , className =? "Pavucontrol" --> doCenterFloat
@@ -139,13 +139,11 @@ myManageHook = composeAll $ manageDocks :
   ]
 
 -- return (All True) to run default handler afterwards
-myEventHook = fullscreenEventHook <+> docksEventHook
+myEventHook = fullscreenEventHook
 
 myLogHook = updateBackground
 
-myStartupHook = do
-  setDefaultCursor xC_left_ptr
-  docksStartupHook
+myStartupHook = setDefaultCursor xC_left_ptr
 
 
 -- auxiliary functions
