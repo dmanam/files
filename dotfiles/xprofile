@@ -1,11 +1,1 @@
-. ~/.dotfiles/profile
-
-xrdb -merge ~/.dotfiles/xresources
-xrdb -merge ~/.dotfiles/`hostname`/xresources
-
-. ~/.dotfiles/`hostname`/xprofile
-
-systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS
-systemctl --no-block --user start xsession.target
-
-taffybar &
+profile
