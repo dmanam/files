@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2020/10/25 Deven custom macros]
+\ProvidesPackage{deven}[2020/11/06 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
 \RequirePackage{xy}
@@ -14,7 +14,9 @@
   \newcommand*{\TODO}[1][]{\unskip\textsuperscript{\color{red}\ttfamily{[!]}}\marginpar{\color{red}\ttfamily{#1}}}
 
 \RequirePackage[shortlabels]{enumitem}
-  \renewcommand*{\descriptionlabel}[1]{\hspace{\labelsep}(#1)}
+\RequirePackage{setspace, eqparbox, etoolbox}
+  % https://tex.stackexchange.com/a/360236
+  \renewcommand*{\descriptionlabel}[2][Des]{\hspace{\labelsep}\eqmakebox[Des][r]{\hfill\normalfont{(#2)}}}\setlist[description]{leftmargin =\dimexpr\eqboxwidth{Des}+\labelsep}
 
 \RequirePackage{ifthen,xparse}
 
