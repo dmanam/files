@@ -195,9 +195,11 @@
 
 % paired delimiters
   \DeclarePairedDelimiter{\prn}{(}{)}
-  \DeclarePairedDelimiter{\Prn}{\lParen}{\rParen}
+  \newcommand{\Prn}{\@ifstar\@Prnstar\@Prn}
+    \newcommand{\@Prnstar}[1]{\prn*{\mkern-5mu\prn*{#1}\mkern-5mu}}
+    \newcommand{\@Prn}[1]{\prn{\mkern-5mu\prn{#1}\mkern-5mu}}
   \DeclarePairedDelimiter{\brk}{[}{]}
-  \DeclarePairedDelimiter{\Brk}{\lBrack}{\rBrack}
+  \DeclarePairedDelimiter{\Brk}{\llbracket}{\rrbracket}
   \DeclarePairedDelimiter{\brc}{\lbrace}{\rbrace}
   \DeclarePairedDelimiter{\Brc}{\lBrace}{\rBrace}
   \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
