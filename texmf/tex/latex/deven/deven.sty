@@ -2,8 +2,7 @@
 \ProvidesPackage{deven}[2020/11/12 Deven custom macros]
 
 \RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
-\RequirePackage{xy}
-  \newcommand{\pullbackcorner}[1][ul]{\save*!/#1-1.5pc/#1:(-1,1)@^{|-}\restore}
+\RequirePackage[all]{xy}
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage{lmodern,kpfonts}
@@ -256,6 +255,8 @@
   \NewDocumentCommand{\cat}{ s m >{\@addhyphen} o }{\IfNoValueF{#3}{#3}\IfBooleanTF{#1}{\mathcal{#2}}{\mathsf{#2}}}
   \NewDocumentCommand{\DeclareCategory}{ m o }{\@xp\def\csname #1\endcsname{{\cat{\IfValueTF{#2}{#2}{#1}}}}}
 
+  \newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.5pc/#1:(-1,1)@^{|-}\restore}
+
   \newcommand*{\conj}[1]{\overline{#1}}
   \let\mod\relax
     \DeclareMathOperator{\mod}{mod}
@@ -312,6 +313,7 @@
   \DeclareMathName{\map}{map}
   \DeclareMathName{\Aut}{Aut}
   \DeclareMathName{\aut}{aut}
+  \DeclareMathOperator{\Spec}{Spec}
   \newcommand{\adjoins}{\dashv}
   \newcommand{\adjoined}{\vdash}
   \DeclareMathName{\opp}{op}
