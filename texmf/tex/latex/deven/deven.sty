@@ -14,8 +14,11 @@
 
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{setspace, eqparbox, etoolbox}
+  \setlist{leftmargin=*}
   % https://tex.stackexchange.com/a/360236
   \renewcommand*{\descriptionlabel}[2][Des]{\hspace{\labelsep}\eqmakebox[Des][r]{\hfill\normalfont{(#2)}}}\setlist[description]{leftmargin =\dimexpr\eqboxwidth{Des}+\labelsep}
+  % https://tex.stackexchange.com/a/27578
+  \newcommand*{\itemno}[1]{\setcounter{enum\romannumeral\@enumdepth}{#1-1}\item}
 
 \RequirePackage{ifthen,xparse}
 
