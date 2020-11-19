@@ -1,3 +1,0 @@
-#!/bin/sh
-
-xrdb -query -all | grep "^$@:" | head -n1 | awk '{ print $2 }'

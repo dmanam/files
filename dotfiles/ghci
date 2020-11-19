@@ -1,5 +1,0 @@
-let singleQuote s = concat ["'", s, "'"]
-let escapeSingleQuote c = if c == '\'' then "'\"'\"'" else [c]
-let simpleShellEscape = singleQuote . concatMap escapeSingleQuote
-:def hoogle \x -> return $ ":!hoogle --color " ++ (simpleShellEscape x)
-:def doc \x -> return $ ":!hoogle --info --color " ++ (simpleShellEscape x)
