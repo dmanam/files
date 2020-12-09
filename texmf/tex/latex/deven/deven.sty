@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2020/11/12 Deven custom macros]
+\ProvidesPackage{deven}[2020/12/09 Deven custom macros]
 
 \newif\if@bib\@bibfalse
 \DeclareOption{bib}{%
@@ -296,6 +296,9 @@
 
   \newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.5pc/#1:(-1,1)@^{|-}\restore}
 
+  \newcommand*{\textpunct}[1]{\rlap{\,\textrm{#1}}}
+
+  \newcommand*{\dual}[1]{{#1}^{\smash{\scalebox{.8}[1.5]{\rotatebox{90}{\guilsinglleft}}}}}
   \newcommand*{\conj}[1]{\overline{#1}}
   \let\mod\relax
     \DeclareMathOperator{\mod}{mod}
@@ -306,6 +309,9 @@
   \DeclareMathName{\sgn}{sgn}
   \DeclareMathOperator{\lc}{lc}
   \DeclareMathOperator{\supp}{supp}
+  \DeclareMathOperator{\Gal}{Gal}
+  \DeclareMathOperator{\khar}{char}
+  \DeclareMathOperator{\rank}{rank}
   \newcommand{\id}{{\operator@font{id}}}
   \newcommand{\isom}{\cong}
   \newcommand{\from}{\leftarrow}
@@ -351,8 +357,9 @@
   \DeclareMathName{\Mor}{Mor}
   \DeclareMathName{\Map}{Map}
   \DeclareMathName{\map}{map}
-  \DeclareMathName{\Aut}{Aut}
-  \DeclareMathName{\aut}{aut}
+  \DeclareMathOperator{\Aut}{Aut}
+  \DeclareMathOperator{\aut}{aut}
+  \DeclareMathOperator{\End}{End}
   \DeclareMathOperator{\Spec}{Spec}
   \newcommand{\adjoins}{\dashv}
   \newcommand{\adjoined}{\vdash}
