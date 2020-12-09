@@ -1,42 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{deven}[2020/11/12 Deven custom macros]
 
-\RequirePackage[utf8]{inputenc}
-
-\RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
-\RequirePackage[all]{xy}
-
-\RequirePackage{kpfonts}
-\RequirePackage[small,euler-digits]{eulervm}
-\RequirePackage[scaled=0.86]{berasans}
-\RequirePackage{inconsolata}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{microtype}
-
-\RequirePackage{xcolor,marginfix}
-  \newcommand*{\TODO}[1][]{\unskip\textsuperscript{\color{red}\ttfamily{[!]}}\marginpar{\color{red}\ttfamily{#1}}}
-
-\RequirePackage[shortlabels]{enumitem}
-\RequirePackage{setspace, eqparbox, etoolbox}
-  \setlist{leftmargin=*}
-  % https://tex.stackexchange.com/a/360236
-  \renewcommand*{\descriptionlabel}[2][Des]{\hspace{\labelsep}\eqmakebox[Des][r]{\hfill\normalfont{(#2)}}}\setlist[description]{leftmargin =\dimexpr\eqboxwidth{Des}+\labelsep}
-  % https://tex.stackexchange.com/a/27578
-  \newcommand*{\itemno}[1]{\setcounter{enum\romannumeral\@enumdepth}{#1-1}\item}
-
-\RequirePackage{ifthen,xparse}
-
-\RequirePackage{graphicx}
-
+\newif\if@bib\@bibfalse
 \DeclareOption{bib}{%
-  \RequirePackage[style=alphabetic,maxbibnames=99,minalphanames=3]{biblatex}
-    \renewcommand*{\labelalphaothers}{\textsuperscript{+}}
-    \renewcommand*{\sortalphaothers}{+}
-    \DeclareFieldFormat{eprint:arXiv}{
-      \href{https://arxiv.org/abs/#1}{\!\!{\tt arXiv:#1\iffieldundef{eprintclass}{}{ [\thefield{eprintclass}]}}}
-    }
-    \addbibresource{\jobname.bib}
-  \RequirePackage{hyperref}
+  \@bibtrue
 }
 
 \newif\if@varcard\@varcardfalse
@@ -56,6 +23,46 @@
 
 \ProcessOptions\relax
 
+\RequirePackage[utf8]{inputenc}
+
+\RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
+\RequirePackage[all]{xy}
+
+\RequirePackage{kpfonts}
+\RequirePackage[small,euler-digits]{eulervm}
+\RequirePackage[scaled=0.86]{berasans}
+\RequirePackage{inconsolata}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{microtype}
+
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{setspace, eqparbox, etoolbox}
+  \setlist{leftmargin=*}
+  % https://tex.stackexchange.com/a/360236
+  \renewcommand*{\descriptionlabel}[2][Des]{\hspace{\labelsep}\eqmakebox[Des][r]{\hfill\normalfont{(#2)}}}\setlist[description]{leftmargin =\dimexpr\eqboxwidth{Des}+\labelsep}
+  % https://tex.stackexchange.com/a/27578
+  \newcommand*{\itemno}[1]{\setcounter{enum\romannumeral\@enumdepth}{#1-1}\item}
+
+\RequirePackage{ifthen,xparse}
+
+\RequirePackage{graphicx,xcolor}
+
+\RequirePackage{hyperref,cleveref}
+
+\RequirePackage{marginfix}
+
+\if@bib
+  \RequirePackage[style=alphabetic,maxbibnames=99,minalphanames=3]{biblatex}
+    \renewcommand*{\labelalphaothers}{\textsuperscript{+}}
+    \renewcommand*{\sortalphaothers}{+}
+    \DeclareFieldFormat{eprint:arXiv}{
+      \href{https://arxiv.org/abs/#1}{\!\!{\tt arXiv:#1\iffieldundef{eprintclass}{}{ [\thefield{eprintclass}]}}}
+    }
+    \addbibresource{\jobname.bib}
+  \RequirePackage{silence}
+    \@expandtwoargs\WarningFilter{latex}{File `\jobname.bib' already exists on the system.}
+\fi
+
 \if@addauthor
   \author{Deven Manam}
 \fi
@@ -70,6 +77,8 @@
   \addtolength{\topmargin}{-\headsep}
   \setlength{\footskip}{0.5in}
 \fi
+
+\newcommand*{\TODO}[1][]{\unskip\textsuperscript{\color{red}\ttfamily{[!]}}\marginpar{\color{red}\ttfamily{#1}}}
 
 % the following taken from the `stix' package
   \DeclareFontEncoding{LS1}{}{}
