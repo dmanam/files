@@ -207,12 +207,33 @@
 \allowdisplaybreaks
 
 % paired delimiters
+  % https://tex.stackexchange.com/a/316429
+    \newlength{\negph@wd}
+    \DeclareRobustCommand{\@doubleassistspace}[2]{%
+      \ifmmode
+        \mathchoice
+          {\negph@math\displaystyle{#1}{#2}}%
+          {\negph@math\textstyle{#1}{#2}}%
+          {\negph@math\scriptstyle{#1}{#2}}%
+          {\negph@math\scriptscriptstyle{#1}{#2}}%
+      \else
+        \negph@do{#1}{#2}%
+      \fi
+    }
+    \newcommand{\negph@math}[3]{\negph@do{$\m@th#1#2$}{#3}}
+    \newcommand{\negph@do}[2]{%
+      \settowidth{\negph@wd}{#1}%
+      \hspace*{-0.5\negph@wd}%
+      #2
+      \hspace*{-0.5\negph@wd}%
+    }
+    \newcommand{\@doubleassist}[3]{#1{\@doubleassistspace{#1{\mathclap{#3}}}{\mkern#2#1{#3}\mkern#2}}}
+    \NewDocumentCommand{\@DoubledPairedDelimiter}{m m s o m}{\@doubleassist{\IfBooleanTF{#3}{#1*}{\IfValueTF{#4}{#1[#4]}{#1}}}{#2}{#5}}
+    \newcommand*{\DeclareDoubledPairedDelimiter}[3]{\newcommand{#1}{\@DoubledPairedDelimiter{#2}{#3}}}
   \DeclarePairedDelimiter{\prn}{(}{)}
-  \newcommand{\Prn}{\@ifstar\@Prnstar\@Prn}
-    \newcommand{\@Prnstar}[1]{\prn*{\mkern-5mu\prn*{#1}\mkern-5mu}}
-    \newcommand{\@Prn}[1]{\prn{\mkern-5mu\prn{#1}\mkern-5mu}}
+  \DeclareDoubledPairedDelimiter{\Prn}{\prn}{2mu}
   \DeclarePairedDelimiter{\brk}{[}{]}
-  \DeclarePairedDelimiter{\Brk}{\llbracket}{\rrbracket}
+  \DeclareDoubledPairedDelimiter{\Brk}{\brk}{2mu}
   \DeclarePairedDelimiter{\brc}{\lbrace}{\rbrace}
   \DeclarePairedDelimiter{\Brc}{\lBrace}{\rBrace}
   \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
