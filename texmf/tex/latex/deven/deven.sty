@@ -1,13 +1,17 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{deven}[2020/11/12 Deven custom macros]
 
+\RequirePackage[utf8]{inputenc}
+
 \RequirePackage{amssymb,amsmath,amsfonts,amsthm,mathtools,mathrsfs}
 \RequirePackage[all]{xy}
 
+\RequirePackage{kpfonts}
+\RequirePackage[small,euler-digits]{eulervm}
+\RequirePackage[scaled=0.86]{berasans}
+\RequirePackage{inconsolata}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern,kpfonts}
-\RequirePackage[small,euler-digits,T1]{eulervm}
-  \renewcommand{\ttdefault}{lmtt}
+\RequirePackage{microtype}
 
 \RequirePackage{xcolor,marginfix}
   \newcommand*{\TODO}[1][]{\unskip\textsuperscript{\color{red}\ttfamily{[!]}}\marginpar{\color{red}\ttfamily{#1}}}
