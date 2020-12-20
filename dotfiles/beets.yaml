@@ -1,39 +1,51 @@
 directory: ~/music
 library: ~/music/.db
 plugins: |
-        badfiles
-        chroma
-        convert
-        discogs
-        edit
-        fetchart
-        fromfilename
-        fuzzy
-        inline
-        lastgenre
-        lyrics
-        missing
-        replaygain
-        scrub
-        the
-        types
+  alternatives
+  badfiles
+  chroma
+  convert
+  discogs
+  edit
+  fetchart
+  fromfilename
+  fuzzy
+  inline
+  lastgenre
+  lyrics
+  missing
+  replaygain
+  scrub
+  the
+  types
 
 item_fields:
-        smarttrack: ('%%0%ii' % max(2, len(str(tracktotal))) % track)
+  smarttrack: ('%%0%ii' % max(2, len(str(tracktotal))) % track)
 
 paths:
-        default: %lower{%asciify{%ifdef{albumartist_sort,$albumartist_sort,$albumartist}}}/%if{$year,$year }%lower{%the{%asciify{$album}}%aunique{year albumartist album, albumtype catalognum albumdisambig}}/$smarttrack $title
-        singleton: %lower{%asciify{%ifdef{artist_sort,$artist_sort,$artist}}}/%if{$year,$year }%lower{%asciify{$title}}
-        comp: compilations/$year %lower{%the{%asciify{$album}}%aunique{year album, albumtype catalognum albumdisambig}}/$smarttrack $title
+  default: %lower{%asciify{%ifdef{albumartist_sort,$albumartist_sort,$albumartist}}}/%if{$year,$year }%lower{%the{%asciify{$album}}%aunique{year albumartist album, albumtype catalognum albumdisambig}}/$smarttrack $title
+  singleton: %lower{%asciify{%ifdef{artist_sort,$artist_sort,$artist}}}/%if{$year,$year }%lower{%asciify{$title}}
+  comp: compilations/$year %lower{%the{%asciify{$album}}%aunique{year album, albumtype catalognum albumdisambig}}/$smarttrack $title
 
 chroma:
-        auto: yes
+  auto: yes
 
 acoustid:
-        apikey: tI1VvWXZzi
+  apikey: tI1VvWXZzi
 
 replaygain:
-        backend: gstreamer
+  backend: gstreamer
 
 lyrics:
-        sources: '*'
+  sources: '*'
+
+alternatives:
+  jellyfin:
+    directory: .jellyfin
+    paths:
+      default: albums/$albumartist/$album%aunique{albumartist album, year albumtype catalognum albumdisambig}/$track $title
+      singleton: singles/$artist/$title/$title
+      comp: compilations/$album%aunique{album, year albumtype catalognum albumdisambig}/$track $title
+    removable: false
+    formats: link
+    link_type: relative
