@@ -47,5 +47,13 @@ alternatives:
       singleton: singles/$artist/$title/$title
       comp: compilations/$album%aunique{album, year albumtype catalognum albumdisambig}/$track $title
     removable: false
-    formats: link
-    link_type: relative
+    query: ''
+  lossy:
+    directory: /media/storage/lossy-music
+    paths:
+      default: albums/$albumartist/$album%aunique{albumartist album, year albumtype catalognum albumdisambig}/$track $title
+      singleton: singles/$artist/$title/$title
+      comp: compilations/$album%aunique{album, year albumtype catalognum albumdisambig}/$track $title
+    removable: false
+    formats: opus ogg aac mp3
+    query: '^nolossy:true'
