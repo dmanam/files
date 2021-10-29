@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{deven}[2020/12/09 Deven custom macros]
+\ProvidesPackage{deven}[2021/10/29 Deven custom macros]
 
 \newif\if@bib\@bibfalse
 \DeclareOption{bib}{%
@@ -22,6 +22,8 @@
 }
 
 \ProcessOptions\relax
+
+\RequirePackage{luatex85}
 
 \RequirePackage[utf8]{inputenc}
 
