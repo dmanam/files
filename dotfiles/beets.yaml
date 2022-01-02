@@ -19,6 +19,10 @@ plugins: |
   the
   types
 
+import:
+  write: no
+  hardlink: yes
+
 item_fields:
   smarttrack: ('%%0%ii' % max(2, len(str(tracktotal))) % track)
 
