@@ -12,7 +12,6 @@ plugins: |
   fuzzy
   inline
   lastgenre
-  lyrics
   missing
   replaygain
   scrub
@@ -39,9 +38,6 @@ acoustid:
 
 replaygain:
   backend: gstreamer
-
-lyrics:
-  sources: '*'
 
 alternatives:
   jellyfin:
